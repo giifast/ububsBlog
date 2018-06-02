@@ -1,0 +1,158 @@
+.user-info-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background: #fff;
+    float: left;
+    z-index: 999;
+    .header-info-container {
+        background: #4d4d4d;
+        height: 20%;
+        position: relative;
+        .mobile-menu-btn {
+            display: none;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 200;
+        }
+        .user-face {
+            text-align: center;
+            position: relative;
+            bottom: -50%;
+            height: 100%;
+            width: 100%;
+            display: table;
+            .user-link {
+                display: inline-block;
+                display: table-cell;
+                vertical-align: middle;
+                img {
+                    border-radius: 50%;
+                    width: 35%;
+                    padding: 5px;
+                    background: #fff;
+                }
+            }
+        }
+    }
+    .footer-info-container {
+        text-align: center;
+        padding-top: 25%;
+        .website-title {
+            font-weight: normal;
+            color: #696969;
+            font-family: Roboto, serif;
+            font-size: 30px;
+        }
+        .website-sign {
+            font-size: 0.9rem;
+            color: #999;
+            font-family: Roboto, serif;
+            margin-bottom: 15px;
+        }
+        .website-menu {
+            padding: 1rem 0 0.5rem 0;
+            border-bottom: 0.1px solid #eee;
+            display: inline-block;
+            width: 50%;
+            p {
+                line-height: 220%;
+                a {
+                    font-size: 0.9rem;
+                }
+                a:hover {
+                    color: #000;
+                    font-size: 1.2rem;
+                }
+            }
+            p.footer-menu {
+                margin-top: 1.5rem;
+                a {
+                    font-size: 0.6rem;
+                }
+                a:first-child:after {
+                    content: "/";
+                }
+            }
+        }
+        .website-fastmenu {
+            margin-top: 1rem;
+        }
+        .website-menu-mobile {
+            margin-top: 1rem;
+            display: none;
+            ul {
+                font-size: 0px;
+                li {
+                    display: inline-block;
+                    border: 1px solid #a0a0a0;
+                    border-right: none;
+                    a {
+                        font-size: 0.7rem;
+                        color: #a0a0a0;
+                        display: block;
+                        padding: 0.2rem 0.9rem;
+                    }
+                }
+                li.active a {
+                    color: #eaeaea;
+                    background: #a0a0a0;
+                }
+                li:last-child {
+                    border-right: 1px solid #a0a0a0;
+                }
+            }
+        }
+        .website-other {
+            text-align: left;
+            position: absolute;
+            bottom: 1rem;
+            padding-left: 0.5rem;
+            .website-online {
+                font-size: 0.7rem;
+                a {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:600px) {
+    .user-info-container {
+        position: relative;
+        width: 100%;
+        background-color: #E8E8E8;
+        height: auto;
+        float: none;
+        padding-bottom: 1.5rem;
+        font-family: lucida grande, lucida sans unicode, lucida, helvetica, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+        z-index: 996;
+        .mobile-menu-btn {
+            display: block !important;
+        }
+        .user-face a {
+            position: relative;
+            top: 3.5rem;
+            img {
+                vertical-align: middle;
+                width: 30%;
+            }
+        }
+        .footer-info-container {
+            padding-top: 17%;
+            .website-menu {
+                display: none !important;
+            }
+            .website-other {
+                display: none;
+            }
+            .website-menu-mobile {
+                display: block !important;
+            }
+        }
+    }
+}

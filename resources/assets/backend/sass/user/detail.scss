@@ -1,0 +1,31 @@
+.user-detail-container {
+    .user-detail-box {
+        margin-bottom: 20px;
+    }
+    .face {
+        .avator-img {
+            max-width: 80%;
+        }
+        .data-box {
+            height: 100%;
+            .user-name {
+                color: #2d8cf0;
+                margin-bottom: 10px;
+                .user-status {
+                    color: #ed3f14;
+                    font-weight: normal;
+                    font-size: 14px;
+                }
+            }
+            .user-detail-data {
+                p {
+                    color: #80848f;
+                    font-weight: normal;
+                }
+            }
+        }
+    }
+    .online-history {
+        .online-chart {}
+    }
+}
