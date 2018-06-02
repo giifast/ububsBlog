@@ -40,6 +40,14 @@ button {
     outline: none;
 }
 
+.ub-blue {
+    color: blue;
+}
+
+.ub-red {
+    color: red;
+}
+
 #canvas-container {
     position: fixed;
     width: 100%;
@@ -72,7 +80,7 @@ button {
     width: 80%;
     margin-left: 20%;
     .content-container {
-        padding: 1.5rem;
+        padding: 0.5rem 1.5rem;
     }
 }
 

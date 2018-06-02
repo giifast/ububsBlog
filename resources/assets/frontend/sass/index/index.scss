@@ -1,48 +1,30 @@
 .article-container {
-    .article-box {
-        background: #fff;
-        box-shadow: 1px 1px 10px #B7B7B7;
-        border-radius: 0.1rem;
-        margin-bottom: 1rem;
-        box-sizing: border-box;
-        padding-right: 2rem;
+	background: #fff;
+	padding: 1rem;
+    .article-year {
+    	color: #111;
+    	margin-bottom: 1.5rem;
+    	font-size: 2rem;
     }
-    .article-title {
-        font-weight: normal;
-        font-size: 1.3rem;
-        line-height: 2rem;
-        border-left: 0.2rem solid #FF7F24;
-        padding: 1.2rem 1rem 0.5rem 2rem;
-        a {
-            color: #696969;
-            font-size: 1.3rem;
-        }
-        a:hover {
-            color: #94635c;
-        }
-        .created-time {
-            float: right;
-            font-size: 0.8rem;
-        }
+    .article-list {
+    	margin-bottom: 1.5rem;
+    	.article-detail {
+    		margin-bottom: 0.5rem;
+    		.article-title {
+    			color: #444;
+    			font-size: 0.9em;
+    		}
+    		.article-create-time {
+    			color: #aaa;
+    			font-family: "Courier New", monospace;
+    			float: right;
+    			font-size: 0.9rem;
+    		}
+    	}
     }
-    .article-info {
-        font-size: 0.6rem;
-        margin-bottom: 0.5rem;
-        padding-left: 2rem;
-        a {
-            font-size: 0.6rem;
-        }
-    }
-    .article-content {
-        line-height: 1.5rem;
-        font-size: 0.8rem;
-        color: #1a1a1a;
-        padding-left: 2rem;
-    }
-    .show-more {
-        padding: 2rem;
-        a {
-            color: #08c;
-        }
+    .load-more {
+    	a {
+    		color: #296bcc;
+    	}
     }
 }

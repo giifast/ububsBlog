@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Repositories\Backend;
-
+use Ububs\Core\Component\Db\Db;
 class AdminPermissionRepository extends CommonRepository
 {
 	/**

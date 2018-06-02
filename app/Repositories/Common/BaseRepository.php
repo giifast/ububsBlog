@@ -18,7 +18,7 @@ class BaseRepository
 
     /**
      * 解析 pagination 分页参数
-     * @param  array $pagination 分页信息
+     * @param  json $pagination 分页信息
      * $pagination = [
      * 		'currentPage' => 3, 第几页
      * 		'pageSize' => 10, 每页条数
@@ -27,9 +27,11 @@ class BaseRepository
      */
     public function parsePages($pagination)
     {
-        $pagination = json_decode($pagination, true);
+        if($pagination) {
+            $pagination = json_decode($pagination, true);
+        }
     	$page = isset($pagination['currentPage']) ? intval($pagination['currentPage']) : 1;
-    	$limit = isset($pagination['pageSize']) ? intval($pagination['pageSize']) : intval(Config::get('app.page_size', 10));
+    	$limit = isset($pagination['pageSize']) ? intval($pagination['pageSize']) : intval(config('app.page_size', 10));
     	$result['start'] = ($page - 1) * $limit;
     	$result['limit'] = $limit;
     	return $result;

@@ -7,8 +7,6 @@ export default {
     mounted() {
     },
     methods: {
-        toggleCollapse(type) {
-            this.$emit('toggleCollapse', type);
-        }
+        
     }
 }

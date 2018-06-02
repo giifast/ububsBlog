@@ -1,13 +1,18 @@
 <?php
-$this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Auth'], function () {
-    $this->addRoutes('GET', '/', 'AuthController@backend');
-    $this->addRoutes('POST', '/login', 'AuthController@backendLogin');
-    $this->addRoutes('POST', '/logout', 'AuthController@backendLogout');
+$this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
+    $this->addRoutes('GET', '/home', 'AuthController@frontend');
+    $this->addRoutes('GET', '/login', 'AuthController@frontendLogin');
+    $this->addRoutes('GET', '/logout', 'AuthController@frontendLogout');
+    $this->addRoutes('GET', '/backend', 'AuthController@backend');
+    $this->addRoutes('POST', '/backend/login', 'AuthController@backendLogin');
+    $this->addRoutes('POST', '/backend/logout', 'AuthController@backendLogout');
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
-    $this->addRoutes('GET', '/', 'IndexController@index');
-    $this->addRoutes('GET', '/test', 'IndexController@test');
+    // $this->addRoutes('GET', '/', 'IndexController@index');
+    $this->addRoutes('GET', '/articles', 'ArticleController@lists');
+    $this->addRoutes('GET', '/articles/all', 'ArticleController@articlesAll');
+    $this->addRoutes('GET', '/article/{id}', 'ArticleController@articleDetail');
 });
 
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend'], function () {

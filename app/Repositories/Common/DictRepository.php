@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Common;
 
-use FwSwoole\DB\DB;
+use Ububs\Core\Component\Db\Db;
 
 class DictRepository extends BaseRepository
 {
@@ -14,7 +14,7 @@ class DictRepository extends BaseRepository
     public function options($codeArr)
     {
         $result = [];
-        $lists = DB::table('dict')->selects(['code', 'text', 'value'])->whereIn(['code' => $codeArr])->where(['status' => 1])->get();
+        $lists = Db::table('dict')->selects(['code', 'text', 'value'])->whereIn('code', $codeArr)->where(['status' => 1])->get();
         if (!empty($lists)) {
             foreach ($lists as $key => $item) {
                 $result[$item['code']][] = $item;

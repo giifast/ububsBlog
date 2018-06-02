@@ -9,7 +9,7 @@
             <div class="website-sign">Do more and say less</div>
             <div class="website-menu">
                 <p><a href="#">主页</a></p>
-                <p><a href="javascript:;" @click.stop="toggleCollapse('pc')">技术博文</a></p>
+                <p><a href="javascript:;">技术博文</a></p>
                 <p><a href="#">相册</a></p>
                 <p><a href="#">留言板</a></p>
                 <p class="footer-menu"><a href="#">后台体验</a> <a href="#">关于我</a></p>

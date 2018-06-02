@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Backend;
 
-use FwSwoole\DB\DB;
+use Ububs\Core\Component\Db\Db;
 
 class AdminRepository extends CommonRepository
 {

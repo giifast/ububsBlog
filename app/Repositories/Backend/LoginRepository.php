@@ -2,7 +2,7 @@
 namespace App\Repositories\Backend;
 
 use Ububs\Core\Component\Auth\Auth;
-
+use Ububs\Core\Component\Db\Db;
 class LoginRepository extends CommonRepository
 {
 

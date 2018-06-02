@@ -10,7 +10,7 @@ class AuthController extends BaseController
 
     public function backend()
     {
-        $this->display('backend');
+        $this->display('backend.backend');
     }
 
     public function backendLogin()
@@ -28,7 +28,7 @@ class AuthController extends BaseController
 
     public function frontend()
     {
-        $this->display('frontend');
+        $this->display('frontend.frontend');
     }
 
 }

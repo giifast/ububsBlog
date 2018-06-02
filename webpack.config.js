@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'eval-source-map',
     // 入口文件
     entry: {
-        // "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
+        "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
         "backend/app": __dirname + "/resources/assets/backend/js/app.js",
     },
     output: {

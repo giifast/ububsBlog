@@ -1,9 +1,9 @@
 <?php
 namespace App\Repositories\Backend;
 
-use FwSwoole\Component\Auth\Auth;
+use Ububs\Core\Component\Auth\Auth;
 use FwSwoole\Core\Request;
-use FwSwoole\DB\DB;
+use Ububs\Core\Component\Db\Db;
 
 class LogRepository extends CommonRepository
 {

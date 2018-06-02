@@ -3,14 +3,12 @@
         <div id="canvas-container"></div>
         <div id="screen-mask" v-show="this.$store.state.screenMaskVisit"></div>
         <div id="main-container">
-            <websiteUserInfo v-on:toggleCollapse="toggleCollapse"></websiteUserInfo>
+            <websiteUserInfo></websiteUserInfo>
             <div class="website-content-container">
                 <div class="content-container">
                 	<router-view></router-view>
-                    <websiteFooter></websiteFooter>
                 </div>
             </div>
-            <websiteBounced ref="websiteBouncedRef"></websiteBounced>
         </div>
     </div>
 </template>
