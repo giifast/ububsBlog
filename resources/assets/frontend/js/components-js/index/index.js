@@ -1,7 +1,11 @@
 export default {
     data() {
         return {
-        	lists: []
+            pagination: {
+                currentPage: 1,
+                pageSize: 20,
+            },
+        	data: []
         };
     },
     mounted() {
@@ -9,18 +13,21 @@ export default {
     },
     methods: {
     	initIndex() {
-    		let _this = this;
-            axios.get('/articles').then((response) => {
+    		this.lists();
+    	},
+        lists() {
+            let _this = this;
+            let paramsData = {
+                'pagination': _this.pagination
+            };
+            axios.get('/articles', {params: paramsData}).then((response) => {
                 let { data, message } = response.data;
-                _this.lists = data.lists;
-                // for (let i = Object.keys(data.lists).length - 1; i >= 0; i--) {
-                // 	if (!result[data.lists[i]['create_time']]) {
-                // 		result[data.lists[i]['create_time']] = [];
-                // 	}
-                // 	result[data.lists[i]['create_time']].push(data.lists[i]);
-                // }console.log(result);
-                // _this.lists = result;
+                _this.data.push(data.lists);
             })
-    	}
+        },
+        loadMore() {
+            this.pagination.currentPage++;
+            this.lists();
+        }
     }
 }

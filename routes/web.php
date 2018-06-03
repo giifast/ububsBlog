@@ -8,11 +8,13 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
     $this->addRoutes('POST', '/backend/logout', 'AuthController@backendLogout');
 });
 
+$this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
+    $this->addRoutes('POST', '/upload/{type}', 'FileController@upload');
+});
+
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
-    // $this->addRoutes('GET', '/', 'IndexController@index');
     $this->addRoutes('GET', '/articles', 'ArticleController@lists');
-    $this->addRoutes('GET', '/articles/all', 'ArticleController@articlesAll');
-    $this->addRoutes('GET', '/article/{id}', 'ArticleController@articleDetail');
+    $this->addRoutes('GET', '/article/{id}', 'ArticleController@show');
 });
 
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend'], function () {
@@ -50,8 +52,4 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     $this->addRoutes('POST', '/article', 'ArticleController@store');
     $this->addRoutes('DELETE', '/article/{ids}', 'ArticleController@delete');
     $this->addRoutes('DELETE', '/article/recycle/{ids}', 'ArticleController@recycle');
-});
-
-$this->addRoute('GET', '/frontend', function () {
-    echo 'success';
 });

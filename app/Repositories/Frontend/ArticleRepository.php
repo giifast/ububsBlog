@@ -24,14 +24,10 @@ class ArticleRepository extends CommonRepository
     {
         $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
         $pagination      = $this->parsePages($pagination);
-        $lists = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'create_time', 'status'])->orderBy('create_time', 'desc')->limit($pagination['start'], $pagination['limit'])->get();
-        $tempResult = [];
-        foreach ($lists as $key => $item) {
-            $key = date('Y', $item['create_time']);
-            $item['create_time'] = date('d M Y', $item['create_time']);
-            $tempResult[$key . ' '][] = $item;
+        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'create_time', 'status'])->orderBy('id', 'desc')->limit($pagination['start'], $pagination['limit'])->get();
+        foreach ($result['lists'] as $key => $item) {
+            $result['lists'][$key]['create_time'] = date('d M Y', $item['create_time']);
         }
-        $result['lists'] = $tempResult;
         return $result;
     }
 

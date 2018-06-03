@@ -8,11 +8,11 @@
             <h1 class="website-title">linlm</h1>
             <div class="website-sign">Do more and say less</div>
             <div class="website-menu">
-                <p><a href="#">主页</a></p>
-                <p><a href="javascript:;">技术博文</a></p>
-                <p><a href="#">相册</a></p>
-                <p><a href="#">留言板</a></p>
-                <p class="footer-menu"><a href="#">后台体验</a> <a href="#">关于我</a></p>
+                <p><router-link to="/">主页</router-link></p>
+                <p><router-link to="/article">技术博文</router-link></p>
+                <p><router-link to="/photo">相册</router-link></p>
+                <p><router-link to="/leave">留言</router-link></p>
+                <p class="footer-menu"><router-link to="/backend">后台体验</router-link> <router-link to="/about">关于</router-link></p>
             </div>
             <div class="website-fastmenu">
                 <p>

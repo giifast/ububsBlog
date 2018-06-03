@@ -64,15 +64,15 @@ class FileRepository extends BaseRepository
             return ['code' => ['file', $this->codeMessage[$file['error']]]];
         }
         $imageSuffix   = explode('.', $file["name"])[1];
-        $saveImageName = generateRandomSha1() . '.' . $imageSuffix;
-        $reallySaveDir       = FWSWOOLE_ROOT . $relativeSaveDir;
+        $saveImageName = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $imageSuffix;
+        $reallySaveDir       = APP_ROOT . $relativeSaveDir;
         if (!is_dir($reallySaveDir)) {
-            Dir::make($reallySaveDir);
+            dir_make($reallySaveDir);
         }
         $reallySaveFile   = $reallySaveDir . $saveImageName;
         $relativeSaveFile = $relativeSaveDir . $saveImageName;
         while (file_exists($reallySaveFile)) {
-            $saveImageName = generateRandomSha1() . '.' . $imageSuffix;
+            $saveImageName = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $imageSuffix;
             $reallySaveFile      = $reallySaveDir . $saveImageName;
             $relativeSaveFile    = $relativeSaveDir . $saveImageName;
         }

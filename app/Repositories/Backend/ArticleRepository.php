@@ -82,7 +82,7 @@ class ArticleRepository extends CommonRepository
             'title'            => $input['title'] ?? '',
             'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
             'author'           => $input['author'] ?? '',
-            'creator'          => Auth::guard('admin')->id(),
+            'creator'          => 1,
             'create_time'      => (isset($input['create_time']) && $input['create_time']) ? strtotime($input['create_time']) : time(),
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',

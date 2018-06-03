@@ -1,0 +1,18 @@
+.article-detail-container {
+	background: #fff;
+	padding: 1rem;
+	.article-title {
+		font-size: 1.4rem;
+		color: #222;
+		margin: 1rem 0;
+	}
+	.article-content {
+		.v-note-wrapper .v-note-panel.shadow {
+			box-shadow: none;
+		}
+		.v-show-content {
+			padding: 0 !important;
+			background: #fff !important;
+		}
+	}
+}
