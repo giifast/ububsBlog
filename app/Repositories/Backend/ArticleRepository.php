@@ -82,7 +82,7 @@ class ArticleRepository extends CommonRepository
             'title'            => $input['title'] ?? '',
             'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
             'author'           => $input['author'] ?? '',
-            'creator'          => 1,
+            'creator'          => Auth::guard('admin')->id(),
             'create_time'      => (isset($input['create_time']) && $input['create_time']) ? strtotime($input['create_time']) : time(),
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
@@ -129,9 +129,7 @@ class ArticleRepository extends CommonRepository
                     $deleteIdArr[] = $id;
                 }
             }
-            Db::table('article')->whereIn([
-                'id' => $deleteIdArr,
-            ])->update([
+            Db::table('article')->whereIn('id', $deleteIdArr)->update([
                 'delete_time' => time(),
             ]);
         }
@@ -172,8 +170,7 @@ class ArticleRepository extends CommonRepository
      */
     public function update($id, $input)
     {
-        $isExist = Db::table('article')->where(['id' => $id])->isExist();
-        if (!$isExist) {
+        if (!Db::table('article')->where(['id' => $id])->exist()) {
             return ['code' => ['article', '3001']];
         }
         $saveData = [

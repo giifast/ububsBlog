@@ -1,0 +1,30 @@
+.article-container {
+	background: #fff;
+	padding: 1rem;
+    .article-year {
+    	color: #111;
+    	margin-bottom: 1.5rem;
+    	font-size: 2rem;
+    }
+    .article-list {
+    	margin-bottom: 1.5rem;
+    	.article-detail {
+    		margin-bottom: 0.5rem;
+    		.article-title {
+    			color: #444;
+    			font-size: 0.9em;
+    		}
+    		.article-create-time {
+    			color: #aaa;
+    			font-family: "Courier New", monospace;
+    			float: right;
+    			font-size: 0.9rem;
+    		}
+    	}
+    }
+    .load-more {
+    	a {
+    		color: #296bcc;
+    	}
+    }
+}

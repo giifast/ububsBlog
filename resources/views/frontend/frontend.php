@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?=webpackLoad('frontend/app.css');?>">
 </head>
 <body>
-    <div id="app">
+    <div id="app" style="height: 100%;">
         <router-view></router-view>
     </div>
     <script src="<?=webpackLoad('frontend/app.js');?>"></script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 100%;">
         <div id="canvas-container"></div>
         <div id="screen-mask" v-show="this.$store.state.screenMaskVisit"></div>
         <div id="main-container">
