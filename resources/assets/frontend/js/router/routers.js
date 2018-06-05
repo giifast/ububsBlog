@@ -1,5 +1,6 @@
 const Main = resolve => require(['../components/common/main.vue'], resolve);
 const NotFound = resolve => require(['../components/common/404.vue'], resolve);
+const About = resolve => require(['../components/common/about.vue'], resolve);
 
 const Index = resolve => require(['../components/index/index.vue'], resolve);
 
@@ -11,6 +12,7 @@ export default [{
     component: Main,
     children: [
         { path: 'index', component: Index, name: '博客首页' },
+        { path: 'about', component: About, name: '关于' },
         { path: '404', component: NotFound, name: '404' },
     ]
 }, {

@@ -15,7 +15,7 @@ export default {
                     'type': '='
                 },
                 status: {
-                    'value': 10,
+                    'value': -10,
                     'type': '='
                 },
             },

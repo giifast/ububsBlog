@@ -17,7 +17,8 @@
                 </li>
             </template>
         </ul>
-        <p class="load-more"><a href="javascript:;" @click="loadMore">更多...</a></p>
+        <p class="load-more" v-if="hasMore"><a href="javascript:;" @click="loadMore">更多...</a></p>
+        <p class="load-more" v-if="!hasMore"><a href="javascript:;">没有更多了...</a></p>
     </div>
 </template>
 <style rel="stylesheet/sass" lang="sass">

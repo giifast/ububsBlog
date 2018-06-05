@@ -1,0 +1,20 @@
+.article-from-container {
+    .mavon-edit-box {
+        min-height: 800px;
+        .markdown-body {
+            min-height: 800px;
+        }
+    }
+    .ivu-card {
+        margin-bottom: 20px;
+    }
+    .ivu-date-picker {
+        display: block;
+    }
+    .ub-clear-thumbnail {
+        font-size: 12px;
+    }
+    .ub-thumbnail {
+        width: 100%;
+    }
+}

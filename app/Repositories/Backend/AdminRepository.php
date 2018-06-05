@@ -28,9 +28,7 @@ class AdminRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result['list'] = DB::table('admin')->selects(['admin.id', 'username', 'mail', 'last_login_ip', 'last_login_time', 'admin.status', 'name'])->leftJoin('role', function($query) {
-            $query->on(['role.id' => 'admin.role_id']);
-        })->where(['admin.id' => $id])->first();
+        $result['list'] = DB::table('admin')->selects(['admin.id', 'username', 'mail', 'last_login_ip', 'last_login_time', 'admin.status', 'name'])->where(['admin.id' => $id])->first();
         return $result;
     }
 

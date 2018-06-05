@@ -1,0 +1,11 @@
+.about-container {
+	background: #fff;
+	padding: 1rem;
+	.v-note-wrapper .v-note-panel.shadow {
+		box-shadow: none;
+	}
+	.v-show-content {
+		padding: 0 !important;
+		background: #fff !important;
+	}
+}

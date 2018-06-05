@@ -15,8 +15,8 @@ export default {
                     'type': '='
                 },
                 status: {
-                    'value': '',
-                    'type': '='
+                    'value': -10,
+                    'type': '!='
                 },
             },
             options: {},

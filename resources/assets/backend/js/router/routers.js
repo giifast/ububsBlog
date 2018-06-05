@@ -3,6 +3,10 @@ const Home = resolve => require(['../components/common/home.vue'], resolve);
 const NotFound = resolve => require(['../components/common/404.vue'], resolve);
 const Login = resolve => require(['../components/common/login.vue'], resolve);
 
+const WebsiteSetting = resolve => require(['../components/website/setting.vue'], resolve);
+const WebsiteMonitoring = resolve => require(['../components/website/monitoring.vue'], resolve);
+const WebsiteDump = resolve => require(['../components/website/dump.vue'], resolve);
+
 const AdminLists = resolve => require(['../components/admin/lists.vue'], resolve);
 const AdminDetail = resolve => require(['../components/admin/detail.vue'], resolve);
 const AdminForm = resolve => require(['../components/admin/form.vue'], resolve);
@@ -47,9 +51,9 @@ export default [{
     meta: {id: 300},
     icon: 'settings',
     children: [
-        {path: 'lists', component: AdminLists, name: '网站设置', icon: 'ios-list-outline', meta: {id: 301} },
-        {path: 'lists', component: AdminLists, name: '网站监测', icon: 'ios-list-outline', meta: {id: 302} },
-        {path: 'permission', component: Home, name: '数据备份', icon: 'ios-navigate', meta: {id: 303} },
+        {path: 'setting', component: WebsiteSetting, name: '网站设置', icon: 'ios-list-outline', meta: {id: 301} },
+        {path: 'monitoring', component: WebsiteMonitoring, name: '网站监测', icon: 'ios-list-outline', meta: {id: 302} },
+        {path: 'dump', component: WebsiteDump, name: '数据备份', icon: 'ios-navigate', meta: {id: 303} },
     ]
 }, {
     path: '/admin',

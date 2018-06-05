@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use Ububs\Core\Component\Db\Db;
-use App\Repositories\Frontend\ArticleRepository;
+use App\Repositories\Frontend\IndexRepository;
 
 class IndexController extends CommonController
 {
@@ -11,17 +11,9 @@ class IndexController extends CommonController
         
     }
 
-    public function articles()
+    public function about()
     {
-        $input  = Request::get();
-        $result = ArticleRepository::getInstance()->lists($input);
+        $result = IndexRepository::getInstance()->about();
         return $this->response($result);
-    }
-
-    public function articleDetail($id)
-    {
-        $list = Db::table('article')->where('id', $id)->first();
-        $this->assign('list', $list);
-        $this->display();
     }
 }

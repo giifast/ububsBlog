@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Common;
 
 use Ububs\Core\Http\AbstractInterface\Controller;
 use Ububs\Core\Http\Interaction\Response;
+use Ububs\Core\Http\Interaction\Request;
 
 class BaseController extends Controller
 {
@@ -37,5 +38,28 @@ class BaseController extends Controller
             $message = config('code.' . $codeMessage[0])[$codeMessage[1]];
         }
         return $message;
+    }
+
+    public function request($type = 'all')
+    {
+        $result = [];
+        switch (strtoupper($type)) {
+            case 'GET':
+                $result = Request::get();
+                break;
+
+            case 'POST':
+                $result = Request::post();
+                break;
+
+            case 'ALL':
+                $result = Request::input($type);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return $result;
     }
 }

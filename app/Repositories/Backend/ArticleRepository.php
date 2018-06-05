@@ -12,6 +12,9 @@ class ArticleRepository extends CommonRepository
     const RECOMMEND_STATUS = 50;
     // 已下架
     const NOT_SHOW_STATUS = 0;
+    // 回收站
+    const RECYCLE_STATUS = -10;
+
     // dict导航菜单value
     const CATEGORY_VALUE = 10;
 
@@ -131,6 +134,7 @@ class ArticleRepository extends CommonRepository
             }
             Db::table('article')->whereIn('id', $deleteIdArr)->update([
                 'delete_time' => time(),
+                'status' => self::RECYCLE_STATUS
             ]);
         }
         return [

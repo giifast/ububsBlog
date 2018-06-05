@@ -5,7 +5,8 @@ export default {
                 currentPage: 1,
                 pageSize: 20,
             },
-        	data: []
+        	data: [],
+            hasMore: true
         };
     },
     mounted() {
@@ -22,6 +23,9 @@ export default {
             };
             axios.get('/articles', {params: paramsData}).then((response) => {
                 let { data, message } = response.data;
+                if (Object.keys(data.lists).length === 0) {
+                    _this.hasMore = false;
+                }
                 _this.data.push(data.lists);
             })
         },

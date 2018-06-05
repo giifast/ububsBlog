@@ -15,9 +15,14 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     $this->addRoutes('GET', '/articles', 'ArticleController@lists');
     $this->addRoutes('GET', '/article/{id}', 'ArticleController@show');
+    $this->addRoutes('GET', '/about', 'IndexController@about');
 });
 
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend'], function () {
+    // 网站管理模块 
+    $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
+    $this->addRoutes('PUT', '/website/setting', 'WebsiteController@saveSetting');
+
 	// 管理员模块
     $this->addRoutes('GET', '/admin', 'AdminController@index');
     $this->addRoutes('GET', '/admin/detail/{id}', 'AdminController@detail');
