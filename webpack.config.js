@@ -3,7 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 module.exports = {
-    devtool: 'eval-source-map',
+    // devtool: 'eval-source-map',
+    // 开发环境
+    devtool: 'cheap-module-eval-source-map',
+    // 生产环境cheap-module-source-map
     // 入口文件
     entry: {
         "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",

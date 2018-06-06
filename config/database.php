@@ -3,7 +3,7 @@ return [
     'type'         => 'pdo',
     'host'         => '127.0.0.1',
     'port'         => '3306',
-    'databaseName' => 'test',
+    'databaseName' => 'ububs',
     'user'         => 'root',
     'password'     => '123456',
     'charset'      => 'utf8',
