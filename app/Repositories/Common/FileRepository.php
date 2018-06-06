@@ -1,18 +1,11 @@
 <?php
 namespace App\Repositories\Common;
 
-use FwSwoole\Core\Tool\Dir;
-
 class FileRepository extends BaseRepository
 {
 
-    const TYPE_IMAGE         = 'IMAGE';
-    // 用户头像
-    const TYPE_USER_FACE     = 'USER_FACE';
-    // 文章内容图片
-    const TYPE_ARTICLE_IMAGE = 'ARTICLE_IMAGE';
-    // 文章缩略图
-    const TYPE_ARTICLE_THUMBNAIL = 'ARTICLE_THUMBNAIL';
+    const IMAGE_TYPE = 'image';
+    const FILE_TYPE  = 'file';
 
     // 错误提示信息
     private $codeMessage = [
@@ -26,29 +19,27 @@ class FileRepository extends BaseRepository
 
     // 上传文件对应路径
     private $uploadFileDirConfig = [
-        'USER_FACE' => '/public/images/face/',
-        'ARTICLE_IMAGE' => '/public/images/articleContent/',
-        'ARTICLE_THUMBNAIL' => '/public/images/articleThumbnail/',
+        'user-face'         => '/public/images/face/',
+        'article-content'   => '/public/images/articleContent/',
+        'article-thumbnail' => '/public/images/articleThumbnail/',
+        'website-about' => '/public/images/websiteAbout/',
+        'website-thumbnail' => '/public/images/websiteThumbnail/',
     ];
 
-    public function upload($type, $file)
+    public function upload($type, $module, $file)
     {
-        $type = strtoupper($type);
-        switch ($type) {
-            case self::TYPE_IMAGE:
-                # code...
+        $savePath = '/public/common/';
+        if (isset($this->uploadFileDirConfig[strtolower($module)])) {
+            $savePath = $this->uploadFileDirConfig[strtolower($module)];
+        }
+        $uploadDatas = isset($file['image']) ? $file['image'] : $file['file'];
+        switch (strtolower($type)) {
+            case self::IMAGE_TYPE:
+                $result = $this->uploadImage($uploadDatas, $savePath);
                 break;
 
-            case self::TYPE_ARTICLE_IMAGE:
-                $result = $this->uploadImage($file['image'], $this->uploadFileDirConfig[$type]);
-                break;
-
-            case self::TYPE_ARTICLE_THUMBNAIL:
-                $result = $this->uploadImage($file['file'], $this->uploadFileDirConfig[$type]);
-                break;
-
-            case self::TYPE_USER_FACE:
-                # code...
+            case self::FILE_TYPE:
+                $result = $this->uploadFile($uploadDatas, $savePath);
                 break;
 
             default:
@@ -58,28 +49,28 @@ class FileRepository extends BaseRepository
         return $result;
     }
 
-    public function uploadImage($file, $relativeSaveDir)
+    public function uploadImage($file, $dir)
     {
         if (count($file) === 1 && $file['error'] > 0) {
             return ['code' => ['file', $this->codeMessage[$file['error']]]];
         }
-        $imageSuffix   = explode('.', $file["name"])[1];
-        $saveImageName = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $imageSuffix;
-        $reallySaveDir       = APP_ROOT . $relativeSaveDir;
+        $ImgSuffix     = explode('.', $file["name"])[1];
+        $sImg          = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $ImgSuffix;
+        $reallySaveDir = APP_ROOT . $dir;
         if (!is_dir($reallySaveDir)) {
             dir_make($reallySaveDir);
         }
-        $reallySaveFile   = $reallySaveDir . $saveImageName;
-        $relativeSaveFile = $relativeSaveDir . $saveImageName;
+        $reallySaveFile = $reallySaveDir . $sImg;
+        $sDir           = $dir . $sImg;
         while (file_exists($reallySaveFile)) {
-            $saveImageName = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $imageSuffix;
-            $reallySaveFile      = $reallySaveDir . $saveImageName;
-            $relativeSaveFile    = $relativeSaveDir . $saveImageName;
+            $sImg           = sha1(date('YmdHis') . uniqid() . rand()) . '.' . $ImgSuffix;
+            $reallySaveFile = $reallySaveDir . $sImg;
+            $sDir           = $dir . $sImg;
         }
         move_uploaded_file($file["tmp_name"], $reallySaveFile);
         return $result = [
             'message' => ['file', '1001'],
-            'url'     => $relativeSaveFile,
+            'url'     => $sDir,
         ];
     }
 }

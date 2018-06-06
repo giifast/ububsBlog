@@ -7,14 +7,14 @@
             </FormItem>
             <FormItem label="网站关键字">
                 <div>
-                    <Tag v-for="(item, index) in formData.keywords" :key="index" :name="index" closable @on-close="deleteKeyword">{{item}}</Tag>
+                    <Tag v-for="(item, index) in formData.description" :key="index" :name="index" closable @on-close="deleteDescription">{{item}}</Tag>
                 </div>
-                <Input v-model="keyword" placeholder="输入网站关键字，空格添加" clearable style="width: 200px" @keyup.enter.native="addKeyword"></Input>
+                <Input v-model="description" placeholder="输入网站关键字，空格添加" clearable style="width: 200px" @keyup.enter.native="addDescription"></Input>
             </FormItem>
 
-            <FormItem label="关于" prop="content">
+            <FormItem label="关于" prop="about">
                 <div class="mavon-edit-box">
-                    <MavonEditor v-model="formData.content" ref="maEdit" @imgAdd="$imgAdd"></MavonEditor>
+                    <MavonEditor v-model="formData.about" ref="maEdit" @imgAdd="$imgAdd"></MavonEditor>
                 </div>
             </FormItem>
             </Col>
@@ -62,12 +62,12 @@
                     <h3><Icon type="share"></Icon>&nbsp;&nbsp;保存</h3>
                 </div>
                 <div>
-                    <FormItem label="网站状态" prop="status">
+<!--                     <FormItem label="网站状态" prop="status">
                         <i-switch size="large" v-model="formData.status" @on-change="changeStatus">
                             <span slot="open">开启</span>
                             <span slot="close">关闭</span>
                         </i-switch>
-                    </FormItem>
+                    </FormItem> -->
                     <FormItem>
                         <Button type="primary" :loading="loadingSave" @click="save('form')">保存</Button>
                     </FormItem>

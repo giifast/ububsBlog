@@ -1,6 +1,8 @@
 <?php
 namespace App\Repositories\Frontend;
 
+use Ububs\Core\Component\Db\Db;
+
 class IndexRepository extends CommonRepository
 {
 	/**
@@ -9,7 +11,7 @@ class IndexRepository extends CommonRepository
 	 */
 	public function about()
 	{
-		$result['list'] = [];
+		$result['list'] = Db::table('website_config')->find(1);
 		return $result;
 	}
 }

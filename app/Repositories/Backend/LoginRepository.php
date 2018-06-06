@@ -8,18 +8,18 @@ class LoginRepository extends CommonRepository
 
     /**
      * 登录
-     * @param  Array $data [username, password]
+     * @param  Array $data [account, password]
      * @return Array
      */
     public function login($input)
     {
-        $username = $input['account'] ?? '';
+        $account = $input['account'] ?? '';
         $password = $input['password'] ?? '';
         $remember = $input['remember'] ?? false;
-        if (!$username || !$password) {
+        if (!$account || !$password) {
             return ['code' => ['login', '0001']];
         }
-        $result = Auth::guard('admin')->attempt(['account' => $username, 'password' => $password], $remember);
+        $result = Auth::guard('admin')->attempt(['account' => $account, 'password' => $password], $remember);
         if (empty($result)) {
             return ['code' => ['login', '0002']];
         }

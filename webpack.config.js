@@ -2,11 +2,14 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     // devtool: 'eval-source-map',
     // 开发环境
-    devtool: 'cheap-module-eval-source-map',
-    // 生产环境cheap-module-source-map
+    // devtool: 'cheap-module-eval-source-map',
+    // 生产环境
+    devtool: 'cheap-module-source-map',
     // 入口文件
     entry: {
         "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
@@ -47,6 +50,7 @@ module.exports = {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
+                    // loader: 'style!css!postcss!sass?sourceMap'
                     use: ["css-loader", "sass-loader"]
                 })
                 // loader: ExtractTextPlugin.extract("style", "css!sass")
@@ -98,6 +102,17 @@ module.exports = {
             root: __dirname,
             verbose: true,
             dry: false
-        })
+        }),
+        // 插件将会把文件导出
+        new CopyWebpackPlugin([{
+            from: 'node_modules/mavon-editor/dist/highlightjs',
+            to: __dirname + "/public/common/dist/highlightjs"
+        }, {
+            from: 'node_modules/mavon-editor/dist/markdown',
+            to: __dirname + "/public/common/dist/markdown",
+        }, {
+            from: 'node_modules/mavon-editor/dist/katex',
+            to: __dirname + "/public/common/dist/katex"
+        }])
     ],
 }

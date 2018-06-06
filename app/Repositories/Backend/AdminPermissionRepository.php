@@ -38,14 +38,14 @@ class AdminPermissionRepository extends CommonRepository
     public function insert($input)
     {
     	$insertData = [];
-		if (!isset($input['username']) || $input['username'] === '') {
+		if (!isset($input['account']) || $input['account'] === '') {
 			return ['code' => ['adminPermission', '1002']];
 		}
 		// 管理员名不得重复
-		if (DB::table('adminPermission')->where(['username' => $username])->isExist()) {
+		if (DB::table('adminPermission')->where(['account' => $account])->isExist()) {
 			return ['code' => ['adminPermission', '1005']];
 		}
-		$insertData['username'] = $input['username'];
+		$insertData['account'] = $input['account'];
     	if (!isset($input['password'])) {
     		return ['code' => ['adminPermission', '1004']];
     	}

@@ -17,7 +17,7 @@ export default {
                 accept: 'image/*',
                 format: ['jpg','jpeg','png'],
                 defaultFile: [],
-                action: "/upload/article_thumbnail"
+                action: "/upload/image/article-thumbnail"
             },
             options: {},
             rules: {
@@ -99,7 +99,7 @@ export default {
             //     $vm.$img2Url(pos, url);
             // });
             axios({
-                url: '/upload/article_image',
+                url: '/upload/image/article-chumbnail',
                 method: 'post',
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },

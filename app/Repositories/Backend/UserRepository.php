@@ -16,7 +16,7 @@ class UserRepository extends CommonRepository
         $search          = isset($input['search']) ? $input['search'] : [];
         $pagination      = $this->parsePages($pagination);
         $whereParams     = $this->parseWheres($search);
-        $result['lists'] = DB::table('user')->selects(['id', 'username', 'mail', 'gender', 'last_login_time', 'last_login_ip', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
+        $result['lists'] = DB::table('user')->selects(['id', 'account', 'mail', 'gender', 'last_login_time', 'last_login_ip', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
         $result['total'] = DB::table('user')->where($whereParams)->count();
         return $result;
     }
@@ -28,7 +28,7 @@ class UserRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result = DB::table('user')->selects(['id', 'username', 'mail', 'gender', 'status'])->where(['id' => $id])->first();
+        $result = DB::table('user')->selects(['id', 'account', 'mail', 'gender', 'status'])->where(['id' => $id])->first();
         return $result;
     }
 
@@ -41,20 +41,20 @@ class UserRepository extends CommonRepository
     {
         $input['password'] = $input['password'] ?? '';
         $saveData = [
-            'username' => $input['username'] ?? '',
+            'account' => $input['account'] ?? '',
             'password' => generatePassword($input['password']),
             'mail'     => $input['mail'] ?? '',
             'gender'   => $input['gender'] ?? 0,
             'status'   => isset($input['status']) ? intval($input['status']) : 0,
         ];
-        if ($saveData['username'] === '') {
+        if ($saveData['account'] === '') {
             return ['code' => ['user', '1002']];
         }
         // 用户名不得重复
-        if (DB::table('user')->where(['username' => $saveData['username']])->isExist()) {
+        if (DB::table('user')->where(['account' => $saveData['account']])->isExist()) {
             return ['code' => ['user', '1005']];
         }
-        if ($input['username'] !== '') {
+        if ($input['account'] !== '') {
             // 邮箱地址不得重复
             if (DB::table('user')->where(['mail' => $saveData['mail']])->isExist()) {
                 return ['code' => ['user', '1006']];
@@ -76,15 +76,15 @@ class UserRepository extends CommonRepository
     public function update($id, $input)
     {
         $editData = [];
-        if (isset($input['username'])) {
-            if ($input['username'] === '') {
+        if (isset($input['account'])) {
+            if ($input['account'] === '') {
                 return ['code' => ['user', '3001']];
             }
             // 用户名不得重复
-            if (DB::table('user')->where(['username' => $input['username']])->whereNot(['id' => $id])->isExist()) {
+            if (DB::table('user')->where(['account' => $input['account']])->whereNot(['id' => $id])->isExist()) {
                 return ['code' => ['user', '3002']];
             }
-            $editData['username'] = $input['username'];
+            $editData['account'] = $input['account'];
         }
         if (isset($input['password'])) {
             $editData['password'] = generatePassword($input['password']);

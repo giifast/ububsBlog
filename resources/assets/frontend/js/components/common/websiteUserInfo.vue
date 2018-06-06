@@ -1,7 +1,6 @@
 <template>
     <div class="user-info-container">
         <div class="header-info-container">
-            <a class="mobile-menu-btn" href="javascript:;" @click.stop="toggleCollapse('mobile')">菜单</a>
             <p class="user-face"><a class="user-link" href="#"><img src="/resources/images/face.jpg" alt=""></a></p>
         </div>
         <div class="footer-info-container">
@@ -19,6 +18,7 @@
                     <li class="active"><router-link to="/">主页</router-link></li>
                     <li><router-link to="/article/index">技术博文</router-link></li>
                     <li><router-link to="/leave">留言</router-link></li>
+                    <li><router-link to="/about">关于</router-link></li>
                 </ul>
             </div>
         </div>

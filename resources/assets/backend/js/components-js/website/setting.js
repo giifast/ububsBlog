@@ -6,13 +6,11 @@ export default {
     },
     data() {
         return {
-            keyword: '',
+            description: '',
             formData: {
                 title: '',
                 thumbnail: '',
-                tags: [],
-                status: false,
-                keywords: []
+                description: []
             },
             uploadConfig: {
                 type: 'drag',
@@ -20,7 +18,7 @@ export default {
                 accept: 'image/*',
                 format: ['jpg','jpeg','png'],
                 defaultFile: [],
-                action: "/upload/article_thumbnail"
+                action: "/upload/image/website-thumbnail"
             },
             rules: {
                 title: [
@@ -45,7 +43,8 @@ export default {
             let _this = this;
             axios.get('/backend/website/setting').then((response) => {
                 let { data } = response.data;
-                // _this.formData = data.list;
+                data.list['description'] = data.list['description'].split(',');
+                _this.formData = data.list;
             });
         },
         save: function(name) {
@@ -74,7 +73,7 @@ export default {
             //     $vm.$img2Url(pos, url);
             // });
             axios({
-                url: '/upload/article_image',
+                url: '/upload/image/website-about',
                 method: 'post',
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
@@ -109,17 +108,17 @@ export default {
         changeStatus(status) {
             this.$Message.info('开关状态：' + status);
         },
-        addKeyword () {
-            if (this.keyword === '') {
+        addDescription () {
+            if (this.description === '') {
                 this.$Message.error('关键字不得为空');
                 return false;
             }
-            this.formData.keywords.push(this.keyword);
-            this.keyword = '';
+            this.formData.description.push(this.description);
+            this.description = '';
         },
-        deleteKeyword (event, name) {
-            const index = this.formData.keywords.indexOf(name);
-            this.formData.keywords.splice(index, 1);
+        deleteDescription (event, name) {
+            const index = this.formData.description.indexOf(name);
+            this.formData.description.splice(index, 1);
         }
     }
 }

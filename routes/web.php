@@ -9,7 +9,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
-    $this->addRoutes('POST', '/upload/{type}', 'FileController@upload');
+    $this->addRoutes('POST', '/upload/{type}/{module}', 'FileController@upload');
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {

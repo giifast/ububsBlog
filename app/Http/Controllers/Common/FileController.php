@@ -6,10 +6,10 @@ use App\Repositories\Common\FileRepository;
 
 class FileController extends BaseController
 {
-    public function upload($type)
+    public function upload($type, $module)
     {
         $file = Request::file();
-        $result = FileRepository::getInstance()->upload($type, $file);
+        $result = FileRepository::getInstance()->upload($type, $module, $file);
         return $this->response($result);
     }
 }
