@@ -22,14 +22,14 @@ class ArticleRepository extends CommonRepository
     public function lists($input)
     {
         $pagination = isset($input['pagination']) ? $input['pagination'] : [];
-        $dbInstance = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'create_time', 'status'])->orderBy('id', 'desc');
+        $dbInstance = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'creatd_at', 'status'])->orderBy('id', 'desc');
         if (!empty($pagination)) {
             $pagination = $this->parsePages($pagination);
             $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);
         }
         $result['lists'] = $dbInstance->get();
         foreach ($result['lists'] as $key => $item) {
-            $result['lists'][$key]['create_time'] = date('d M Y', $item['create_time']);
+            $result['lists'][$key]['creatd_at'] = date('d M Y', $item['creatd_at']);
         }
         return $result;
     }
@@ -40,7 +40,7 @@ class ArticleRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'create_time', 'reprinted', 'status'])->where('id', $id)->first();
+        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'creatd_at', 'reprinted', 'status'])->where('id', $id)->first();
         // 获取标签
         if (empty($result)) {
             return ['code' => ['article', '4001']];

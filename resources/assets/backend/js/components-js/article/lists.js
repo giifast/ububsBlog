@@ -53,7 +53,7 @@ export default {
                 key: 'author'
             }, {
                 title: '创建时间',
-                key: 'create_time',
+                key: 'created_at',
                 render: (h, params) => {
                     return Vue.parseTime(params.row.create_time);
                 }

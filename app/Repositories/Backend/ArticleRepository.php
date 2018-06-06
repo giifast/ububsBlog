@@ -29,7 +29,7 @@ class ArticleRepository extends CommonRepository
         $search          = isset($input['search']) ? $input['search'] : [];
         $pagination      = $this->parsePages($pagination);
         $whereParams     = $this->parseWheres($search);
-        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'create_time', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
+        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
         $result['total'] = Db::table('article')->where($whereParams)->count();
         return $result;
     }
@@ -42,7 +42,7 @@ class ArticleRepository extends CommonRepository
     {
         $uid                     = Auth::id();
         $result['tags']          = Db::table('tag')->selects(['id', 'name'])->get();
-        $result['categoryMenus'] = Db::table('category_menu')->where(['category' => self::CATEGORY_VALUE])->get();
+        $result['categoryMenus'] = Db::table('category_menu')->get();
         return $result;
     }
 
@@ -53,16 +53,16 @@ class ArticleRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'create_time', 'reprinted', 'status'])->where('id', $id)->first();
+        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'created_at', 'reprinted', 'status'])->where('id', $id)->first();
         // 获取标签
         if (empty($result)) {
             return ['code' => ['article', '4001']];
         }
-        $result['user'] = Db::table('admin')->selects(['id', 'username'])->where('id', $result['creator'])->first();
+        $result['user'] = Db::table('admin')->selects(['id', 'account'])->where('id', $result['creator'])->first();
 
         // 文章关联tag标签
         $result['tags']  = [];
-        $articleTagLists = Db::table('article_tags')->selects(['tag_id'])->where('article_id', $id)->get();
+        $articleTagLists = Db::table('article_tag')->selects(['tag_id'])->where('article_id', $id)->get();
         if (empty($articleTagLists)) {
             return ['list' => $result];
         }
@@ -86,10 +86,10 @@ class ArticleRepository extends CommonRepository
             'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
             'author'           => $input['author'] ?? '',
             'creator'          => Auth::guard('admin')->id(),
-            'create_time'      => (isset($input['create_time']) && $input['create_time']) ? strtotime($input['create_time']) : time(),
+            'created_at'      => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
-            'reprinted'        => $input['reprinted'] ?? '',
+            'reprinted'        => 0,
             'status'           => $input['status'] ?? 0,
         ];
         // 草稿无需校验
@@ -112,7 +112,7 @@ class ArticleRepository extends CommonRepository
                     'tag_id'     => $tag,
                 ];
             }
-            Db::table('article_tags')->insert($tagSaveData);
+            Db::table('article_tag')->insert($tagSaveData);
         }
         return ['message' => ['common', '1001']];
     }
@@ -203,13 +203,13 @@ class ArticleRepository extends CommonRepository
             $newTags = $input['tags'];
         }
 
-        $articleTagLists = Db::table('article_tags')->selects(['tag_id'])->where(['article_id' => $id])->get();
+        $articleTagLists = Db::table('article_tag')->selects(['tag_id'])->where(['article_id' => $id])->get();
         if (!empty($articleTagLists)) {
             $oldTagIds = array_column($articleTagLists, 'tag_id');
         }
         // 比较两次tag是否有不同，相同不做处理，不同直接删除所有标签，重新生成
         if (!empty(array_diff($newTags, $oldTagIds))) {
-            Db::table('article_tags')->where(['article_id' => $id])->delete();
+            Db::table('article_tag')->where(['article_id' => $id])->delete();
             $tagSaveData = [];
             foreach ($newTags as $tag) {
                 $tagSaveData[] = [
@@ -217,7 +217,7 @@ class ArticleRepository extends CommonRepository
                     'tag_id'     => $tag,
                 ];
             }
-            Db::table('article_tags')->insertMulti($tagSaveData);
+            Db::table('article_tag')->insertMulti($tagSaveData);
         }
 
         return ['message' => ['common', '3001']];

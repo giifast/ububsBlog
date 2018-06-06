@@ -19,7 +19,7 @@ class LoginRepository extends CommonRepository
         if (!$username || !$password) {
             return ['code' => ['login', '0001']];
         }
-        $result = Auth::guard('admin')->attempt(['username' => $username, 'password' => $password], $remember);
+        $result = Auth::guard('admin')->attempt(['account' => $username, 'password' => $password], $remember);
         if (empty($result)) {
             return ['code' => ['login', '0002']];
         }

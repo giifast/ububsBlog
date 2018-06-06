@@ -2,11 +2,11 @@
 return [
     'guards' => [
         'user'   => [
-            'account' => 'username',
+            'account' => 'account',
             'password' => 'password',
         ],
         'admin' => [
-            'account' => 'username',
+            'account' => 'account',
             'password' => 'password',
         ],
     ],

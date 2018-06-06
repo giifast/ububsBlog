@@ -16,7 +16,7 @@ class AdminRepository extends CommonRepository
         $search          = isset($input['search']) ? $input['search'] : [];
         $pagination      = $this->parsePages($pagination);
         $whereParams     = $this->parseWheres($search);
-        $result['lists'] = DB::table('admin')->selects(['id', 'username', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
+        $result['lists'] = DB::table('admin')->selects(['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
         $result['total'] = DB::table('admin')->where($whereParams)->count();
         return $result;
     }
@@ -28,7 +28,7 @@ class AdminRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result['list'] = DB::table('admin')->selects(['admin.id', 'username', 'mail', 'last_login_ip', 'last_login_time', 'admin.status', 'name'])->where(['admin.id' => $id])->first();
+        $result['list'] = DB::table('admin')->selects(['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where(['id' => $id])->first();
         return $result;
     }
 

@@ -18,7 +18,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     $this->addRoutes('GET', '/about', 'IndexController@about');
 });
 
-$this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend'], function () {
+$this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth.admin'], function () {
     // 网站管理模块 
     $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
     $this->addRoutes('PUT', '/website/setting', 'WebsiteController@saveSetting');
