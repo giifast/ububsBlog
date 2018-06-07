@@ -22,7 +22,7 @@ class FileRepository extends BaseRepository
         'user-face'         => '/public/images/face/',
         'article-content'   => '/public/images/articleContent/',
         'article-thumbnail' => '/public/images/articleThumbnail/',
-        'website-about' => '/public/images/websiteAbout/',
+        'website-about'     => '/public/images/websiteAbout/',
         'website-thumbnail' => '/public/images/websiteThumbnail/',
     ];
 

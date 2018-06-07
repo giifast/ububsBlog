@@ -24,6 +24,13 @@ export default {
                 _this.$Message.success(message);
                 _this.$router.push({ path: '/login' });
             });
+        },
+        dumpDatabase() {
+            let _this = this;
+            axios.post('/backend/website/dump/all').then((response) => {
+                let { message } = response.data;
+                _this.$Message.success(message);
+            });
         }
     }
 }

@@ -70,6 +70,19 @@ class ArticleController extends CommonController
         ]);
     }
 
+    // 移出回收站
+    public function recover($ids)
+    {
+        $result = ArticleRepository::getInstance()->recover($ids);
+        return $this->response($result, [
+            'type' => 'log',
+            'data' => [
+                'type'   => 'update',
+                'params' => ['id' => $ids],
+            ],
+        ]);
+    }
+
     // 删除
     public function delete($ids)
     {

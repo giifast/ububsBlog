@@ -19,9 +19,11 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
 });
 
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth.admin'], function () {
+
     // 网站管理模块 
     $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
     $this->addRoutes('PUT', '/website/setting', 'WebsiteController@saveSetting');
+    $this->addRoutes('POST', '/website/dump/{type}', 'WebsiteController@dumpDatabase');
 
 	// 管理员模块
     $this->addRoutes('GET', '/admin', 'AdminController@index');
@@ -56,5 +58,6 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     $this->addRoutes('PUT', '/article/{id}', 'ArticleController@update');
     $this->addRoutes('POST', '/article', 'ArticleController@store');
     $this->addRoutes('DELETE', '/article/{ids}', 'ArticleController@delete');
-    $this->addRoutes('DELETE', '/article/recycle/{ids}', 'ArticleController@recycle');
+    $this->addRoutes('POST', '/article/recycle/{ids}', 'ArticleController@recycle');
+    $this->addRoutes('POST', '/article/recover/{ids}', 'ArticleController@recover');
 });

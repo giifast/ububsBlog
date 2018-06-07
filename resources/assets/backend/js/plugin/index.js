@@ -21,9 +21,18 @@ const plugins = {
                 if (search[key].value === '' || search[key].value === [] || search[key].value === {}) {
                     continue;
                 }
-                result[key] = [search[key].type, search[key].value];
+                let searchV = search[key].value;
+                let vConditionArr = ['in', 'not in', 'between', 'not between'];
+                if (vConditionArr.indexOf(search[key].type) > -1 && !Vue.isArray(searchV)) {
+                    searchV = [search[key].value];
+                }
+                result[key] = [search[key].type, searchV];
             }
             return JSON.stringify(result);
+        }
+
+        Vue.isArray = function(value) {
+            return Object.prototype.toString.call(value)=='[object Array]';
         }
         // 重置 search 条件
         Vue.resetSearch = function(search) {

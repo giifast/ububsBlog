@@ -6,17 +6,15 @@ use Ububs\Core\Component\Db\Db;
 
 class ArticleRepository extends CommonRepository
 {
-    // 草稿标识
-    const DRAFT_STATUS = 40;
-    // 推荐标识
-    const RECOMMEND_STATUS = 50;
+
     // 已下架
     const NOT_SHOW_STATUS = 0;
-    // 回收站
-    const RECYCLE_STATUS = -10;
-
-    // dict导航菜单value
-    const CATEGORY_VALUE = 10;
+    // 正常
+    const COMMON_STATUS = 10;
+    // 草稿标识
+    const DRAFT_STATUS = 20;
+    // 回收站标识
+    const RECYCLE_STATUS = 30;
 
     /**
      * 获取列表
@@ -28,9 +26,9 @@ class ArticleRepository extends CommonRepository
         $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
         $search          = isset($input['search']) ? $input['search'] : [];
         $pagination      = $this->parsePages($pagination);
-        $whereParams     = $this->parseWheres($search);
-        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
-        $result['total'] = Db::table('article')->where($whereParams)->count();
+        $wheres          = $this->parseWheres($search);
+        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where($wheres)->limit($pagination['start'], $pagination['limit'])->get();
+        $result['total'] = Db::table('article')->where($wheres)->count();
         return $result;
     }
 
@@ -86,10 +84,10 @@ class ArticleRepository extends CommonRepository
             'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
             'author'           => $input['author'] ?? '',
             'creator'          => Auth::guard('admin')->id(),
-            'created_at'      => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
+            'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
-            'reprinted'        => 0,
+            'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
             'status'           => $input['status'] ?? 0,
         ];
         // 草稿无需校验
@@ -133,8 +131,33 @@ class ArticleRepository extends CommonRepository
                 }
             }
             Db::table('article')->whereIn('id', $deleteIdArr)->update([
-                'delete_time' => time(),
-                'status' => self::RECYCLE_STATUS
+                'deleted_at' => time(),
+                'status'     => self::RECYCLE_STATUS,
+            ]);
+        }
+        return [
+            'message' => ['common', '5001'],
+        ];
+    }
+
+    /**
+     * 移出回收站一条或多条数据
+     * @param  string $ids 待处理的数据id
+     * @return array
+     */
+    public function recover($ids)
+    {
+        $idArr = explode(',', $ids);
+        if (!empty($idArr)) {
+            $runIds = [];
+            foreach ($idArr as $id) {
+                if ($id && !in_array($id, $runIds)) {
+                    $runIds[] = $id;
+                }
+            }
+            Db::table('article')->whereIn('id', $runIds)->update([
+                'deleted_at' => 0,
+                'status'     => self::DRAFT_STATUS,
             ]);
         }
         return [
@@ -151,15 +174,13 @@ class ArticleRepository extends CommonRepository
     {
         $idArr = explode(',', $ids);
         if (!empty($idArr)) {
-            $deleteIdArr = [];
+            $runIds = [];
             foreach ($idArr as $id) {
-                if ($id && !in_array($id, $deleteIdArr)) {
-                    $deleteIdArr[] = $id;
+                if ($id && !in_array($id, $runIds)) {
+                    $runIds[] = $id;
                 }
             }
-            Db::table('article')->whereIn([
-                'id' => $deleteIdArr,
-            ])->delete();
+            Db::table('article')->whereIn('id', $runIds)->delete();
         }
         return [
             'message' => ['common', '2001'],
@@ -183,7 +204,7 @@ class ArticleRepository extends CommonRepository
             'author'           => $input['author'] ?? '',
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
-            'reprinted'        => $input['reprinted'] ?? '',
+            'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
             'status'           => $input['status'] ?? 0,
         ];
         // 草稿无需校验

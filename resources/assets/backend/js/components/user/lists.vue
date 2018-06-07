@@ -3,7 +3,7 @@
         <Row class="table-header">
             <Col span="18">
                 <div class="search-box">
-                    <Input v-model="search.username.value" placeholder="请输入搜索帐号" style="width: 150px"></Input>
+                    <Input v-model="search.account.value" placeholder="请输入搜索帐号" style="width: 150px"></Input>
                     <Input v-model="search.mail.value" placeholder="请输入搜索邮箱地址" style="width: 150px"></Input>
                     <Select v-model="search.status.value" placeholder="请选择用户状态" style="width:150px">
                         <Option v-for="item in options.status" :value="item.value" :key="item.value">
@@ -32,8 +32,8 @@
         <!-- 弹出层 -->
         <Modal v-model="modal.show" :title="modal.title" :mask-closable="false" :loading="loading" @on-ok="save('form')" @on-cancel="cancel('form')">
             <Form ref="form" :model="fromData" :rules="rules" :label-width="80">
-                <FormItem label="用户名" prop="username">
-                    <Input v-model="fromData.username" placeholder="请输入用户名"></Input>
+                <FormItem label="用户名" prop="account">
+                    <Input v-model="fromData.account" placeholder="请输入用户名"></Input>
                 </FormItem>
                 <FormItem label="邮箱" prop="mail">
                     <Input v-model="fromData.mail" placeholder="请输入邮箱地址"></Input>

@@ -8,8 +8,8 @@
                 <Row>
                     <Col :sm="24" :md="12">
                     <Form ref="form" :model="formData" :rules="rules" :label-width="80">
-                        <FormItem label="用户名" prop="username">
-                            <Input v-model="formData.username" placeholder="请输入用户名"></Input>
+                        <FormItem label="用户名" prop="account">
+                            <Input v-model="formData.account" placeholder="请输入用户名"></Input>
                         </FormItem>
                         <FormItem label="邮箱" prop="mail">
                             <Input v-model="formData.mail" placeholder="请输入邮箱地址"></Input>

@@ -12,7 +12,7 @@
                     <Col span="16">
                     <Row class-name="data-box" type="flex" align="middle">
                         <div>
-                            <h2 class="user-name">{{userData.username}}<strong class="user-status">（{{userData.status | filterOptions(options.status, 'value', 'text')}}）</strong></h2>
+                            <h2 class="user-name">{{userData.account}}<strong class="user-status">（{{userData.status | filterOptions(options.status, 'value', 'text')}}）</strong></h2>
                             <div class="user-detail-data">
                                 <Row>
                                     <Col span="8" style="padding: 0">

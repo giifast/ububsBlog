@@ -36,11 +36,9 @@ class Dict extends Seed
             ['code' => 'audit', 'code_name' => '审核结果', 'value' => 20, 'text_en' => 'pass', 'text' => '通过'],
             // 文章状态
             ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 0, 'text_en' => 'not_show', 'text' => '下架'],
-            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 10, 'text_en' => 'recycle', 'text' => '回收站'],
-            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 20, 'text_en' => 'audit_loading', 'text' => '审核中'],
-            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 30, 'text_en' => 'show', 'text' => '正常'],
-            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 40, 'text_en' => 'draft', 'text' => '草稿'],
-            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 50, 'text_en' => 'recommend', 'text' => '推荐'],
+            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 30, 'text_en' => 'recycle', 'text' => '回收站'],
+            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 10, 'text_en' => 'show', 'text' => '正常'],
+            ['code' => 'article_status', 'code_name' => '文章状态', 'value' => 20, 'text_en' => 'draft', 'text' => '草稿'],
             // 视频状态
             ['code' => 'video_status', 'code_name' => '视频状态', 'value' => 0, 'text_en' => 'not_show', 'text' => '未显示'],
             ['code' => 'video_status', 'code_name' => '视频状态', 'value' => 10, 'text_en' => 'freezing', 'text' => '冻结'],

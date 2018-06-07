@@ -7,9 +7,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     // devtool: 'eval-source-map',
     // 开发环境
-    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     // 生产环境
-    devtool: 'cheap-module-source-map',
+    // devtool: 'cheap-module-source-map',
     // 入口文件
     entry: {
         "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",

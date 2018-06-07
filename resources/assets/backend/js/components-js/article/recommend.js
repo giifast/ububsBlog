@@ -45,9 +45,12 @@ export default {
                 key: 'author'
             }, {
                 title: '创建时间',
-                key: 'create_time',
+                key: 'created_at',
                 render: (h, params) => {
-                    return Vue.parseTime(params.row.create_time);
+                    let time = Vue.parseTime(params.row.created_at, '{y}-{m}-{d}');
+                    return h('div', [
+                        h('span', {}, time),
+                    ]);
                 }
             }, {
                 title: '状态',

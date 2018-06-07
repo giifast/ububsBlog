@@ -3,7 +3,7 @@
         <Row class="table-header">
             <Col span="18">
                 <div class="search-box">
-                    <Input v-model="search.username.value" placeholder="请输入搜索帐号" style="width: 150px"></Input>
+                    <Input v-model="search.account.value" placeholder="请输入搜索帐号" style="width: 150px"></Input>
                     <Input v-model="search.mail.value" placeholder="请输入搜索邮箱地址" style="width: 150px"></Input>
                     <Select v-model="search.status.value" placeholder="请选择管理员状态" style="width:150px">
                         <Option v-for="item in options.status" :value="item.value" :key="item.value">

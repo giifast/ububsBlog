@@ -15,7 +15,7 @@
                 </div>
             </FormItem>
             <FormItem label="创建人">
-                <div><span>{{detailData.username}}</span></div>
+                <div><span>{{detailData.account}}</span></div>
             </FormItem>
             <FormItem label="文章标签">
                 <div>

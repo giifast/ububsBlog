@@ -67,8 +67,11 @@
                     <FormItem label="作者" prop="author">
                         <Input v-model="formData.author" placeholder="请输入文章作者"></Input>
                     </FormItem>
-                    <FormItem label="转载说明" prop="reprinted">
-                        <Input v-model="formData.reprinted" type="textarea" placeholder="请输入转载说明"></Input>
+                    <FormItem label="是否转载" prop="reprinted">
+                        <i-switch size="large" v-model="formData.reprinted" @on-change="changeReprinted">
+                            <span slot="open">是</span>
+                            <span slot="close">否</span>
+                        </i-switch>
                     </FormItem>
                 </div>
             </Card>
@@ -77,8 +80,8 @@
                     <h3><Icon type="share"></Icon>&nbsp;&nbsp;发布</h3>
                 </div>
                 <div>
-                    <FormItem label="发表时间" prop="create_time">
-                        <DatePicker :disabled="articleId ? true : false" v-model="formData.create_time" type="date" placeholder="默认文章创建时间"></DatePicker>
+                    <FormItem label="发表时间" prop="created_at">
+                        <DatePicker :disabled="articleId ? true : false" v-model="formData.created_at" type="date" placeholder="默认文章创建时间"></DatePicker>
                     </FormItem>
                     <FormItem label="状态" prop="status">
                         <Select v-model="formData.status">

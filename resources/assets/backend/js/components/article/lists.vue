@@ -8,13 +8,12 @@
                     <Select v-model="search.category_menu_id.value" style="width: 150px;">
                         <Option v-for="item in options.categoryMenus" :value="item.id" :key="item.id">{{ item.name }}</Option>
                     </Select>
-                    <Select v-model="search.status.value" placeholder="请选择文章状态" style="width:150px">
+<!--                     <Select v-model="search.status.value" placeholder="请选择文章状态" style="width:150px">
                         <Option v-for="item in options.article_status" :value="item.value" :key="item.value">
                             {{ item.text }}
                         </Option>
-                    </Select>
+                    </Select> -->
                     <Button type="primary" icon="ios-search" @click="lists()">搜索</Button>
-                    <Button type="ghost" @click="reset()">重置</Button>
                 </div>
             </Col>
             <Col span="6">

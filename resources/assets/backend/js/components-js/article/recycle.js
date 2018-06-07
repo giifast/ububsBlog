@@ -15,7 +15,7 @@ export default {
                     'type': '='
                 },
                 status: {
-                    'value': -10,
+                    'value': 30,
                     'type': '='
                 },
             },
@@ -38,30 +38,34 @@ export default {
                             break;
                         }
                     }
-                    return result;
+                    return h('div', [
+                        h('span', {
+                            color: '#000'
+                        }, result),
+                    ]);
                 }
             }, {
                 title: '作者',
                 key: 'author'
             }, {
-                title: '创建时间',
-                key: 'create_time',
+                title: '删除时间',
+                key: 'deleted_at',
                 render: (h, params) => {
-                    return Vue.parseTime(params.row.create_time);
+                    let time = Vue.parseTime(params.row.deleted_at, '{y}-{m}-{d}');
+                    return h('div', [
+                        h('span', {}, time),
+                    ]);
                 }
             }, {
                 title: '状态',
                 key: 'status',
                 width: 80,
                 render: (h, params) => {
-                    let result = '';
-                    for (let i in this.options.article_status) {
-                        if (this.options.article_status[i]['value'] == params.row.status) {
-                            result = this.options.article_status[i]['text'];
-                            break;
-                        }
-                    }
-                    return result;
+                    return h('div', [
+                        h('span', {
+                            color: '#000'
+                        }, '回收站'),
+                    ]);
                 }
             }, {
                 title: '操作',
@@ -93,10 +97,10 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.$router.push({ path: '/article/edit/' + params.row.id });
+                                    this.recover(params.row.id);
                                 }
                             }
-                        }, '编辑'),
+                        }, '恢复'),
                         h('Button', {
                             props: {
                                 type: 'error',
@@ -104,7 +108,7 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.delete(params.index)
+                                    this.delete(params.row.id)
                                 }
                             }
                         }, '删除')
@@ -150,13 +154,13 @@ export default {
                 _this.pagination.total = data.total;
             });
         },
-        delete(index) {
+        recover(id) {
             let _this = this;
             _this.$Modal.confirm({
-                title: '删除操作',
-                content: '<p>确定要将这篇文章彻底删除吗？</p>',
+                title: '恢复操作',
+                content: '<p>确定要将这篇文章移出回收站吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/article/' + _this.data[index].id).then(response => {
+                    axios.post('/backend/article/recover/' + id).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();
@@ -164,9 +168,19 @@ export default {
                 }
             });
         },
-        reset() {
-            Vue.resetSearch(this.search);
-            this.lists();
+        delete(id) {
+            let _this = this;
+            _this.$Modal.confirm({
+                title: '删除操作',
+                content: '<p>确定要将这篇文章彻底删除吗？</p>',
+                onOk: () => {
+                    axios.delete('/backend/article/' + id).then(response => {
+                        let { message } = response.data;
+                        _this.$Message.info(message);
+                        _this.lists();
+                    });
+                }
+            });
         },
         selectChange(selection) {
             let selectIds = [];

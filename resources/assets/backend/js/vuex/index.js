@@ -17,7 +17,7 @@ const store = new Vuex.Store({
         // 管理员登录信息
         'adminData': {
             id: '',
-            username: '',
+            account: '',
             email: '',
             permission_text: ''
         },

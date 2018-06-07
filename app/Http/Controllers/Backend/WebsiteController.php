@@ -24,9 +24,10 @@ class WebsiteController extends CommonController
         return $this->response($result);
     }
 
-    public function test()
+    public function dumpDatabase($name)
     {
-        
+        $result = WebsiteRepository::getInstance()->dumpDatabase($name);
+        return $this->response($result);
     }
 }
 

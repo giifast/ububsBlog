@@ -15,18 +15,16 @@ export default {
                     'type': '='
                 },
                 status: {
-                    'value': -10,
-                    'type': '!='
+                    'value': [10, 20],
+                    'type': 'in',
                 },
             },
             options: {},
             statusColorConfig: {
-                '0': '#ed3f14',
-                '10': '#ed3f14',
-                '20': '#ff9900',
-                '30': '#495060',
-                '40': '#2d8cf0',
-                '50': '#19be6b'
+                '0': '#FF7F00',
+                '10': '#698B22',
+                '20': '#2d8cf0',
+                '30': '#ed3f14',
             },
             columns: [{
                 type: 'selection',
@@ -46,7 +44,9 @@ export default {
                             break;
                         }
                     }
-                    return result;
+                    return h('div', [
+                        h('span', {}, result),
+                    ]);
                 }
             }, {
                 title: '作者',
@@ -55,7 +55,10 @@ export default {
                 title: '创建时间',
                 key: 'created_at',
                 render: (h, params) => {
-                    return Vue.parseTime(params.row.create_time);
+                    let time = Vue.parseTime(params.row.created_at, '{y}-{m}-{d}');
+                    return h('div', [
+                        h('span', {}, time),
+                    ]);
                 }
             }, {
                 title: '状态',
@@ -118,7 +121,7 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.delete(params.index)
+                                    this.delete(params.row.id)
                                 }
                             }
                         }, '删除')
@@ -164,23 +167,19 @@ export default {
                 _this.pagination.total = data.total;
             });
         },
-        delete(index) {
+        delete(id) {
             let _this = this;
             _this.$Modal.confirm({
                 title: '删除操作',
                 content: '<p>确定要将这篇文章加入回收站吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/article/recycle/' + _this.data[index].id).then(response => {
+                    axios.post('/backend/article/recycle/' + id).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();
                     });
                 }
             });
-        },
-        reset() {
-            Vue.resetSearch(this.search);
-            this.lists();
         },
         selectChange(selection) {
             let selectIds = [];
@@ -199,7 +198,7 @@ export default {
                 title: '删除操作',
                 content: '<p>确定要将这些文章加入回收站吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/article/recycle/' + _this.selectIds).then(response => {
+                    axios.post('/backend/article/recycle/' + _this.selectIds).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();

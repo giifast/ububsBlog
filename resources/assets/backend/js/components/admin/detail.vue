@@ -14,7 +14,7 @@
                             <Col span="16">
                             <Row class-name="data-box" type="flex" align="middle">
                                 <div>
-                                    <h2 class="user-name">{{adminData.username}}<strong class="user-role">（{{adminData.name | defaultValue('-')}}）</strong></h2>
+                                    <h2 class="user-name">{{adminData.account}}<strong class="user-role">（{{adminData.name | defaultValue('-')}}）</strong></h2>
                                     <div class="user-detail-data">
                                         <Row>
                                             <Col span="8" style="padding: 0">

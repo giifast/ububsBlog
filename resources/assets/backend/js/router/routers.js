@@ -88,7 +88,7 @@ export default [{
     icon: 'edit',
     children: [
         { path: 'lists', component: ArticleLists, name: '文章列表', icon: 'ios-list-outline' },
-        { path: 'recommend', component: ArticleRecommend, name: '推荐列表', icon: 'ios-list-outline' },
+        // { path: 'recommend', component: ArticleRecommend, name: '推荐列表', icon: 'ios-list-outline' },
         { path: 'disabled', component: ArticleDisabled, name: '已下架', icon: 'ios-list-outline' },
         { path: 'new', component: ArticleForm, name: '新建', icon: 'ios-list-outline', meta: { hidden: true } },
         { path: 'detail/:id', component: ArticleDetail, name: '详情', icon: 'ios-list-outline', meta: { hidden: true } },

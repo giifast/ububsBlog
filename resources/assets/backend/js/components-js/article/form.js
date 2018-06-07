@@ -8,7 +8,6 @@ export default {
         return {
             articleId: this.$route.params.id,
             formData: {
-                thumbnail: '',
                 tags: []
             },
             uploadConfig: {
@@ -53,7 +52,8 @@ export default {
             let _this = this;
             axios.get('/backend/article/' + id).then((response) => {
                 let { data } = response.data;
-                data.list['create_time'] = Vue.parseTime(data.list['create_time']);
+                data.list['created_at'] = Vue.parseTime(data.list['created_at'], '{y}-{m}-{d}');
+                data.list.reprinted = !!Number(data.list.reprinted);
                 _this.formData = data.list;
             }).catch((response) => {
 
@@ -99,7 +99,7 @@ export default {
             //     $vm.$img2Url(pos, url);
             // });
             axios({
-                url: '/upload/image/article-chumbnail',
+                url: '/upload/image/article-thumbnail',
                 method: 'post',
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
@@ -130,6 +130,9 @@ export default {
         },
         uploadExceedSize(file, fileList) {
             this.$Message.error('文件大小超出' + this.uploadConfig.maxSize + 'KB，请重新上传');
+        },
+        changeReprinted(status) {
+            // this.formData.reprinted = !false;
         }
     }
 }

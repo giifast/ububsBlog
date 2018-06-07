@@ -38,30 +38,32 @@ export default {
                             break;
                         }
                     }
-                    return result;
+                    return h('div', [
+                        h('span', {}, result),
+                    ]);
                 }
             }, {
                 title: '作者',
                 key: 'author'
             }, {
                 title: '创建时间',
-                key: 'create_time',
+                key: 'created_at',
                 render: (h, params) => {
-                    return Vue.parseTime(params.row.create_time);
+                    let time = Vue.parseTime(params.row.created_at, '{y}-{m}-{d}');
+                    return h('div', [
+                        h('span', {}, time),
+                    ]);
                 }
             }, {
                 title: '状态',
                 key: 'status',
                 width: 80,
                 render: (h, params) => {
-                    let result = '';
-                    for (let i in this.options.article_status) {
-                        if (this.options.article_status[i]['value'] == params.row.status) {
-                            result = this.options.article_status[i]['text'];
-                            break;
-                        }
-                    }
-                    return result;
+                    return h('div', [
+                        h('span', {
+                            color: '#000'
+                        }, '已下架'),
+                    ]);
                 }
             }, {
                 title: '操作',
@@ -156,17 +158,13 @@ export default {
                 title: '删除操作',
                 content: '<p>确定要将这篇文章加入回收站吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/article/recycle/' + _this.data[index].id).then(response => {
+                    axios.post('/backend/article/recycle/' + _this.data[index].id).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();
                     });
                 }
             });
-        },
-        reset() {
-            Vue.resetSearch(this.search);
-            this.lists();
         },
         selectChange(selection) {
             let selectIds = [];
@@ -185,7 +183,7 @@ export default {
                 title: '删除操作',
                 content: '<p>确定要将这些文章加入回收站吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/article/recycle/' + _this.selectIds).then(response => {
+                    axios.post('/backend/article/recycle/' + _this.selectIds).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();

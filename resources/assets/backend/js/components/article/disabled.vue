@@ -9,7 +9,6 @@
                         <Option v-for="item in options.categoryMenus" :value="item.id" :key="item.id">{{ item.name }}</Option>
                     </Select>
                     <Button type="primary" icon="ios-search" @click="lists()">搜索</Button>
-                    <Button type="ghost" @click="reset()">重置</Button>
                 </div>
             </Col>
             <Col span="6">
