@@ -2,7 +2,7 @@ export default {
     data() {
         return {
             search: {
-                username: {
+                account: {
                     'value': '',
                     'type': 'like'
                 },
@@ -30,7 +30,7 @@ export default {
                     align: 'center'
                 }, {
                     title: '帐号',
-                    key: 'username',
+                    key: 'account',
                 },
                 {
                     title: '邮箱',
@@ -200,6 +200,10 @@ export default {
         },
         pageSizeChange: function(pageSize) {
             this.pagination.pageSize = pageSize;
+            this.lists();
+        },
+        reset() {
+            Vue.resetSearch(this.search);
             this.lists();
         }
     }

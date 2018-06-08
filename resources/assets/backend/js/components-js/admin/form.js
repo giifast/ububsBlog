@@ -9,26 +9,26 @@ export default {
             }
         };
         return {
+            id: this.$route.params.id,
             pwText: '',
             options: {
                 status: [{
                     'text': '禁用',
-                    'value': 0
+                    'value': '0'
                 }, {
                     'text': '正常',
-                    'value': 1
+                    'value': '1'
                 }],
                 roles: []
             },
             formData: {
-                username: '',
+                account: '',
                 password: '',
                 status: '',
-                gender: '',
                 mail: ''
             },
             rules: {
-                username: [
+                account: [
                     { required: true, message: '用户名不得为空', trigger: 'blur' }
                 ],
                 mail: [
@@ -44,39 +44,40 @@ export default {
             ],
         }
     },
+    mounted() {
+        this.initForm();
+    },
     methods: {
-        handleView(name) {
-            this.imgName = name;
-            this.visible = true;
-        },
-        handleRemove(file) {
-            const fileList = this.$refs.upload.fileList;
-            this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-        },
-        handleSuccess(res, file) {
-            file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-            file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-        },
-        handleFormatError(file) {
-            this.$Notice.warning({
-                title: 'The file format is incorrect',
-                desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-            });
-        },
-        handleMaxSize(file) {
-            this.$Notice.warning({
-                title: 'Exceeding file size limit',
-                desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-            });
-        },
-        handleBeforeUpload() {
-            const check = this.uploadList.length < 5;
-            if (!check) {
-                this.$Notice.warning({
-                    title: 'Up to five pictures can be uploaded.'
+        initForm() {
+            let _this = this;
+            if (_this.id) {
+                axios.get('/backend/admin/' + _this.id).then((response) => {
+                    let { data } = response.data;
+                    _this.formData = data.list;
                 });
             }
-            return check;
+        },
+        submitBase(name) {
+            let _this = this;
+            _this.$refs[name].validate((valid) => {
+                if (valid) {
+                    let saveData = {
+                        'account': _this.formData.account,
+                        'mail': _this.formData.mail,
+                        'status': _this.formData.status
+                    };
+                    if (_this.formData.password || !_this.id) {
+                        saveData.password = _this.formData.password;
+                    }
+                    let method = !_this.id ? 'post' : 'put';
+                    let url = !_this.id ? '/backend/admin' : '/backend/admin/' + _this.id;
+                    axios[method](url, saveData).then((response) => {
+                        let { message } = response.data;
+                        _this.$Message.success(message);
+                        _this.$router.push('/admin/lists');
+                    });
+                }
+            })
         }
     }
 }

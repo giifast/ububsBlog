@@ -32,8 +32,10 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
 
 	// 管理员模块
     $this->addRoutes('GET', '/admin', 'AdminController@index');
-    $this->addRoutes('GET', '/admin/detail/{id}', 'AdminController@detail');
     $this->addRoutes('GET', '/admin/lists', 'AdminController@lists');
+    $this->addRoutes('POST', '/admin', 'AdminController@store');
+    $this->addRoutes('PUT', '/admin/{id}', 'AdminController@update');
+    $this->addRoutes('GET', '/admin/{id}', 'AdminController@show');
     $this->addRoutes('DELETE', '/admin/{ids}', 'AdminController@delete');
 
     // 角色模块

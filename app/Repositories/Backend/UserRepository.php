@@ -40,27 +40,27 @@ class UserRepository extends CommonRepository
     public function store($input)
     {
         $input['password'] = $input['password'] ?? '';
-        $saveData = [
+        $data = [
             'account' => $input['account'] ?? '',
             'password' => generatePassword($input['password']),
             'mail'     => $input['mail'] ?? '',
             'gender'   => $input['gender'] ?? 0,
             'status'   => isset($input['status']) ? intval($input['status']) : 0,
         ];
-        if ($saveData['account'] === '') {
+        if ($data['account'] === '') {
             return ['code' => ['user', '1002']];
         }
         // 用户名不得重复
-        if (DB::table('user')->where(['account' => $saveData['account']])->isExist()) {
+        if (DB::table('user')->where(['account' => $data['account']])->isExist()) {
             return ['code' => ['user', '1005']];
         }
         if ($input['account'] !== '') {
             // 邮箱地址不得重复
-            if (DB::table('user')->where(['mail' => $saveData['mail']])->isExist()) {
+            if (DB::table('user')->where(['mail' => $data['mail']])->isExist()) {
                 return ['code' => ['user', '1006']];
             }
         }
-        $result = DB::table('user')->create($saveData);
+        $result = DB::table('user')->create($data);
         if (!$result) {
             return ['code' => ['common', '1002']];
         }

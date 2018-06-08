@@ -10,7 +10,7 @@ export default {
         };
         return {
             search: {
-                username: {
+                account: {
                     'value': '',
                     'type': 'like'
                 },
@@ -39,7 +39,7 @@ export default {
                     align: 'center'
                 }, {
                     title: '帐号',
-                    key: 'username',
+                    key: 'account',
                 },
                 {
                     title: '邮箱',
@@ -150,14 +150,14 @@ export default {
                 title: ''
             },
             fromData: {
-                username: '',
+                account: '',
                 password: '',
                 status: '',
                 gender: '',
                 mail: ''
             },
             rules: {
-                username: [
+                account: [
                     { required: true, message: '用户名不得为空', trigger: 'blur' }
                 ],
                 mail: [
@@ -270,7 +270,7 @@ export default {
             _this.$refs[name].validate((valid) => {
                 if (valid) {
                     let saveData = {
-                        'username': _this.fromData.username,
+                        'account': _this.fromData.account,
                         'mail': _this.fromData.mail,
                         'gender': _this.fromData.gender,
                         'status': _this.fromData.status,

@@ -37,26 +37,14 @@ class UserController extends CommonController
     {
         $input  = Request::post();
         $result = UserRepository::getInstance()->store($input);
-        return $this->response($result, [
-            'type' => 'log',
-            'data' => [
-                'type'   => 'store',
-                'params' => $input,
-            ],
-        ]);
+        return $this->response($result);
     }
 
     // 删除
     public function delete($ids)
     {
         $result = UserRepository::getInstance()->delete($ids);
-        return $this->response($result, [
-            'type' => 'log',
-            'data' => [
-                'type'   => 'delete',
-                'params' => ['id' => $ids],
-            ],
-        ]);
+        return $this->response($result);
     }
 
     // 编辑
@@ -64,13 +52,7 @@ class UserController extends CommonController
     {
         $input  = Request::post();
         $result = UserRepository::getInstance()->update($id, $input);
-        return $this->response($result, [
-            'type' => 'log',
-            'data' => [
-                'type'   => 'update',
-                'params' => $input,
-            ],
-        ]);
+        return $this->response($result);
     }
 
     // 详情页面

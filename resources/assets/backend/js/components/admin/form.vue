@@ -33,7 +33,7 @@
                             </Select>
                         </FormItem>
                         <FormItem>
-                            <Button type="primary">提交</Button>
+                            <Button type="primary" @click="submitBase('form')">提交</Button>
                         </FormItem>
                     </Form>
                     </Col>

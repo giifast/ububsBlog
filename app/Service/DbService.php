@@ -46,7 +46,7 @@ class DbService extends BaseService
             $seSql = "SELECT * FROM {$table}";
             $row   = Db::query($seSql);
             if (empty($row)) {
-                break;
+                continue;
             }
             foreach ($row as $fie => $zd) {
                 $sqlStr = "INSERT INTO `" . $table . "` VALUES (";

@@ -23,7 +23,7 @@ class RoleRepository extends CommonRepository
             foreach ($result['lists'] as $key => $list) {
                 $roleIdArr[] = $list['id'];
             }
-            $adminLists = DB::table('admin')->selects(['role_id'])->whereIn(['role_id' => $roleIdArr])->get();
+            $adminLists = DB::table('admin')->selects(['role_id'])->whereIn('role_id', $roleIdArr)->get();
             if (!empty($adminLists)) {
                 foreach ($adminLists as $key => $list) {
                     if (!isset($roleAdminArr[$list['role_id']])) {
@@ -57,7 +57,6 @@ class RoleRepository extends CommonRepository
 
     }
 
-
     /**
      * 删除一条或多条数据
      * @param  string $ids 待删除的数据id
@@ -80,5 +79,13 @@ class RoleRepository extends CommonRepository
         return [
             'message' => ['common', '2001'],
         ];
+    }
+
+    public function options()
+    {
+        return Db::table('role')->selects(['id', 'name', 'menu_ids'])->where([
+            'type' => 1,
+            'status' => 1
+        ])->get();
     }
 }
