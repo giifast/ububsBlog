@@ -73,4 +73,53 @@ class FileRepository extends BaseRepository
             'url'     => $sDir,
         ];
     }
+
+    /**
+     * 获取下载的路径，带有密钥
+     * @param  string $module 模块名
+     * @param  int $id     导出资源id
+     * @return string         路径
+     */
+    public function getKey($module, $id)
+    {
+        /**
+         * 密钥组成
+         * $encrypt = [
+         *   'create_time' => '',
+         *   'module' => 'website-dump',
+         *   'id' => 1
+         * ];
+         */
+        $encrypt = time() . '|' . $module . '|' . $id;
+        $configs        = isset(config('download')[$module]) ? config('download')[$module] : [];
+        $enTime         = isset($configs['valid_time']) ? $configs['valid_time'] : 0;
+        // 浏览器url不可包含的特殊字符要过滤
+        $result['data'] = str_replace('+', '_', encryptionWithTime($encrypt, '', $enTime));
+        return $result;
+    }
+
+    /**
+     * 下载文件
+     * @param  string $key 密钥
+     * @return resource
+     */
+    public function download($input)
+    {
+        $key = isset($input['key']) ? str_replace('_', '+', $input['key']) : '';
+        if (!$key) {
+            return ['code' => ['file', '1002']];
+        }
+        $encrypt = encryptionWithTime($key, 'decrypt');
+        if (!$encrypt) {
+            return ['code' => ['file', '1002']];
+        }
+        list($time, $module, $id) = explode('|', $encrypt);
+        $configs       = isset(config('download')[$module]) ? config('download')[$module] : [];
+        $class         = isset($configs['class']) ? $configs['class'] : '';
+        if (!$class || !$id) {
+            return ['code' => ['file', '1002']];
+        }
+        $method = isset($configs['method']) ? $configs['method'] : 'download';
+        return $class::getInstance()->$method($id);
+    }
 }

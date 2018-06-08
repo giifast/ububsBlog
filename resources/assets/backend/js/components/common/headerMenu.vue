@@ -31,7 +31,7 @@
                 </div>
                 <div class="menu-container">
                     <Tooltip content="备份整个数据库" placement="bottom">
-                        <a href="#" @click="dumpDatabase">
+                        <a href="javascript:;" @click="dumpDatabase">
                             <Icon type="ios-cloud-download" size="26"></Icon>
                         </a>
                     </Tooltip>

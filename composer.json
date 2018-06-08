@@ -6,6 +6,9 @@
         "psr-4": {
             "App\\": "app/",
             "Databases\\": "databases/"
-        }
+        },
+        "files" : [
+        	"app/Helpers/functions.php"
+        ]
     }
 }

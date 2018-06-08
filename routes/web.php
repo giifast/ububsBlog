@@ -10,6 +10,8 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
     $this->addRoutes('POST', '/upload/{type}/{module}', 'FileController@upload');
+    $this->addRoutes('GET', '/download', 'FileController@download');
+    $this->addRoutes('GET', '/download/key/{module}/{id}', 'FileController@getKey');
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
@@ -23,6 +25,9 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     // 网站管理模块 
     $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
     $this->addRoutes('PUT', '/website/setting', 'WebsiteController@saveSetting');
+    $this->addRoutes('GET', '/website/dump', 'WebsiteController@dumpIndex');
+    $this->addRoutes('GET', '/website/dump/lists', 'WebsiteController@dumpLists');
+    $this->addRoutes('DELETE', '/website/dump/{ids}', 'WebsiteController@deleteDump');
     $this->addRoutes('POST', '/website/dump/{type}', 'WebsiteController@dumpDatabase');
 
 	// 管理员模块

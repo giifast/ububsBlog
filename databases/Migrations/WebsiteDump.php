@@ -15,6 +15,7 @@ class WebsiteDump extends Migration
                 $table->engine = 'InnoDB';
                 $table->increments('id');
                 $table->integer('admin_id')->default(0)->comment('操作管理员');
+                $table->string('title', 50)->default('')->comment('文件名');
                 $table->string('path', 255)->default('')->comment('文件路径');
                 $table->integer('created_at')->default(0)->comment('导出时间');
             });

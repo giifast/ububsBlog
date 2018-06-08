@@ -9,7 +9,7 @@ class DbService extends BaseService
     public function dumpDatabase($name)
     {
         $tables = [];
-        if (!$name) {
+        if (!$name || $name == 'all') {
             $tablesQuery = Db::query("show tables");
             if (empty($tablesQuery)) {
                 return true;

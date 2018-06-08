@@ -31,6 +31,15 @@ const plugins = {
             return JSON.stringify(result);
         }
 
+        Vue.deepCopy = function(source) {
+            var result;
+            (source instanceof Array) ? (result = []) : (result = {});
+            for (var key in source) {
+                result[key] = (typeof source[key]==='object') ? Vue.deepCopy(source[key]) : source[key];
+            }    
+            return result;  
+        }
+
         Vue.isArray = function(value) {
             return Object.prototype.toString.call(value)=='[object Array]';
         }
@@ -42,13 +51,17 @@ const plugins = {
         }
         /**
          * 时间格式解析
-         * @param  {string} time    时间戳
+         * @param  {string} time    时间戳 或 CTS 时间
          * @param  {string} cFormat 过滤格式
          * @return {string}
          */
         Vue.parseTime = function(time, cFormat) {
             const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
-            let date = new Date(time * 1000);
+            let timePat = /^\+?[1-9][0-9]*$/;
+            if (timePat.test(time)) {
+                time = time * 1000;
+            }
+            let date = new Date(time);
             const formatObj = {
                 y: date.getFullYear(),
                 m: date.getMonth() + 1,
@@ -67,6 +80,22 @@ const plugins = {
                 return value || 0;
             });
             return time_str;
+        }
+        /**
+         * 将时间转换成时间戳
+         * @param  {string} time 时间
+         * @param  {bool} flag 是否去除毫秒
+         * @return {int}      时间戳
+         */
+        Vue.parseTimeStamp = function(time, $flag = true) {
+            if (!time) {
+                return time;
+            }
+            let timeStamp = (new Date(time)).valueOf();
+            if ($flag) {
+                timeStamp /= 1000;
+            }
+            return timeStamp;
         }
     }
 };

@@ -5,6 +5,7 @@ use App\Service\DbService;
 use Ububs\Core\Component\Auth\Auth;
 use Ububs\Core\Component\Db\Db;
 use Ububs\Core\Swoole\Task\TaskManager;
+use Ububs\Core\Http\Interaction\Response;
 
 class WebsiteRepository extends CommonRepository
 {
@@ -39,12 +40,14 @@ class WebsiteRepository extends CommonRepository
     public function dumpDatabase($name)
     {
         $input = [
+            'title'    => $name . date('YmdHis'),
             'name'     => $name,
             'admin_id' => Auth::guard('admin')->id(),
         ];
         $result = TaskManager::getInstance()->task($input, function (\swoole_server $serv, $task_id, $data) {
             $path = DbService::getInstance()->dumpDatabase($data['name']);
             Db::table('website_dump')->create([
+                'title'      => $data['title'],
                 'admin_id'   => $data['admin_id'],
                 'path'       => $path,
                 'created_at' => time(),
@@ -54,5 +57,52 @@ class WebsiteRepository extends CommonRepository
             return ['code' => ['common', '3002']];
         }
         return ['message' => ['website', '0001']];
+    }
+
+    /**
+     * 获取列表
+     * @param  array $input
+     * @return array
+     */
+    public function dumpLists($input)
+    {
+        $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
+        $search          = isset($input['search']) ? $input['search'] : [];
+        $pagination      = $this->parsePages($pagination);
+        $wheres          = $this->parseWheres($search);
+        $result['lists'] = Db::table('website_dump')->selects(['id', 'title', 'path', 'admin_id', 'created_at'])->where($wheres)->limit($pagination['start'], $pagination['limit'])->get();
+        $result['total'] = Db::table('website_dump')->where($wheres)->count();
+        return $result;
+    }
+
+    public function dumpDownload($id)
+    {
+        $data = Db::table('website_dump')->selects(['title', 'path'])->find($id);
+        if (empty($data)) {
+            return ['code' => ['file', '1002']];
+        }
+        return Response::download(APP_ROOT . $data['path'], $data['title'] . '.sql');
+    }
+
+    /**
+     * 删除一条或多条数据
+     * @param  string $ids 待处理的数据id
+     * @return array
+     */
+    public function deleteDump($ids)
+    {
+        $idArr = explode(',', $ids);
+        if (!empty($idArr)) {
+            $runIds = [];
+            foreach ($idArr as $id) {
+                if ($id && !in_array($id, $runIds)) {
+                    $runIds[] = $id;
+                }
+            }
+            Db::table('website_dump')->whereIn('id', $runIds)->delete();
+        }
+        return [
+            'message' => ['common', '2001'],
+        ];
     }
 }

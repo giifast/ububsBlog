@@ -29,6 +29,26 @@ class WebsiteController extends CommonController
         $result = WebsiteRepository::getInstance()->dumpDatabase($name);
         return $this->response($result);
     }
+
+    public function dumpIndex()
+    {
+        $input = $this->request('get');
+        $result = WebsiteRepository::getInstance()->dumpLists($input);
+        return $this->response($result);
+    }
+
+    public function dumpLists()
+    {
+        $input = $this->request('get');
+        $result = WebsiteRepository::getInstance()->dumpLists($input);
+        return $this->response($result);
+    }
+
+    public function deleteDump($ids)
+    {
+        $result = WebsiteRepository::getInstance()->deleteDump($ids);
+        return $this->response($result);
+    }
 }
 
 

@@ -57,8 +57,14 @@ class BaseRepository
             }
             if (count($item) === 2) {
                 list($condition, $value) = $item;
-                if (strtoupper($condition) === 'LIKE') {
+                if (strtolower($condition) === 'like') {
                     $value = '%' . $value . '%';
+                }
+                if (in_array(strtolower($condition), ['between', 'not between'])) {
+                    list($start, $end) = $value;
+                    if ($start === '' || $end === '') {
+                        continue;
+                    }
                 }
                 $result[$field] = [$condition, $value];
             }
