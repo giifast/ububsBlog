@@ -15,9 +15,13 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
+    $this->addRoutes('GET', '/about', 'IndexController@about');
+
     $this->addRoutes('GET', '/articles', 'ArticleController@lists');
     $this->addRoutes('GET', '/article/{id}', 'ArticleController@show');
-    $this->addRoutes('GET', '/about', 'IndexController@about');
+
+    $this->addRoutes('GET', '/leaves', 'LeaveController@lists');
+    $this->addRoutes('POST', '/leave', 'LeaveController@store');
 });
 
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth.admin'], function () {

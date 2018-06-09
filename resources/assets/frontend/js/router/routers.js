@@ -7,6 +7,8 @@ const Index = resolve => require(['../components/index/index.vue'], resolve);
 const articleIndex = resolve => require(['../components/article/index.vue'], resolve);
 const articleDetail = resolve => require(['../components/article/detail.vue'], resolve);
 
+const leaveIndex = resolve => require(['../components/leave/index.vue'], resolve);
+
 export default [{
     path: '/',
     component: Main,
@@ -21,5 +23,11 @@ export default [{
     children: [
         { path: 'index', component: articleIndex, name: '文章列表' },
         { path: 'detail/:id', component: articleDetail, name: '文章详情' },
+    ]
+}, {
+    path: '/leave',
+    component: Main,
+    children: [
+        { path: 'index', component: leaveIndex, name: '留言列表' },
     ]
 }];

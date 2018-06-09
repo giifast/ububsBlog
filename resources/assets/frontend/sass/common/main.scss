@@ -48,6 +48,51 @@ button {
     color: red;
 }
 
+.ub-input {
+    outline: none;
+    display: inline-block;
+    height: 30px;
+    line-height: 1.5;
+    padding: 2px 3px;
+    font-size: 12px;
+    border: 1px solid #dddee1;
+    border-radius: 4px;
+    color: #495060;
+    background-color: #fff;
+    background-image: none;
+    position: relative;
+    cursor: text;
+}
+
+.ub-h2 {
+    padding-bottom: .3em;
+    font-size: 1.2em;
+    border-bottom: 1px solid #eaecef;
+    margin-bottom: 10px;
+}
+
+.ub-btn {
+    color: #fff;
+    background-color: #2d8cf0;
+    border-color: #2d8cf0;
+    user-select: none;
+    padding: 6px 15px;
+    font-size: 12px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
 #canvas-container {
     position: fixed;
     width: 100%;

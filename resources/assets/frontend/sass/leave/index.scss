@@ -1,0 +1,36 @@
+.leave-container {
+	background: #fff;
+	padding: 1rem;
+    .leave-textarea {
+        height: 150px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        resize: none;
+        outline: none;
+        color: #666;
+    }
+    .leave-submit {
+        text-align: right;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .leave-lists {
+        .leave-li {
+            font-size: 13px;
+            margin-bottom: 5px;
+            .ub-user {
+                font-size: 13px;
+                color: blue;
+            }
+            .ub-content {
+
+            }
+        }
+    }
+    .load-more {
+        a {
+            color: #296bcc;
+        }
+    }
+}

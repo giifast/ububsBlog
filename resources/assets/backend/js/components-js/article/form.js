@@ -55,8 +55,6 @@ export default {
                 data.list['created_at'] = Vue.parseTime(data.list['created_at'], '{y}-{m}-{d}');
                 data.list.reprinted = !!Number(data.list.reprinted);
                 _this.formData = data.list;
-            }).catch((response) => {
-
             });
         },
         save: function(name) {
