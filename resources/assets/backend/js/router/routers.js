@@ -34,11 +34,11 @@ export default [{
     path: '/',
     redirect: '/home',
     component: Main,
-    name: '首页',
+    name: '容器页面',
     icon: 'ios-home',
     noDropdown: true,
     children: [
-        { path: 'home', component: Home, name: '首页', icon: 'ios-list-outline' },
+        { path: 'home', component: Home, name: '后台首页', icon: 'ios-list-outline' },
         { path: 'lists', component: AdminLists, name: '个人中心', icon: 'ios-list-outline' },
         { path: 'permission', component: Home, name: '消息中心', icon: 'ios-navigate' },
         { path: 'permission', component: Home, name: '代办事项', icon: 'ios-navigate' },
@@ -102,7 +102,7 @@ export default [{
     icon: 'compose',
     children: [
         { path: 'lists', component: UserLists, name: '留言列表', icon: 'ios-list-outline' },
-        { path: 'recommend', component: UserLists, name: '回复列表', icon: 'ios-list-outline' },
+        { path: 'recommend', component: UserLists, name: '留言回复', icon: 'ios-list-outline' },
     ]
 }, {
     path: '/leave',
@@ -111,7 +111,7 @@ export default [{
     icon: 'clock',
     children: [
         { path: 'lists', component: UserLists, name: '时间轴列表', icon: 'ios-list-outline' },
-        { path: 'recommend', component: UserLists, name: '回复列表', icon: 'ios-list-outline' },
+        { path: 'recommend', component: UserLists, name: '时间轴动态', icon: 'ios-list-outline' },
     ]
 }, {
     path: '/leave',
@@ -120,6 +120,5 @@ export default [{
     icon: 'clipboard',
     children: [
         { path: 'lists', component: UserLists, name: '操作日志', icon: 'ios-list-outline' },
-        { path: 'recommend', component: UserLists, name: '回复列表', icon: 'ios-list-outline' },
     ]
 }];

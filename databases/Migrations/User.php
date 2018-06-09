@@ -14,7 +14,7 @@ class User extends Migration
             Schema::create($table, function ($table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id');
-                $table->string('username', 30)->default('')->comment('用户名');
+                $table->string('account', 30)->default('')->comment('用户名');
                 $table->char('password', 40)->default('')->comment('密码');
                 $table->string('mail', 30)->default('')->comment('邮箱地址');
                 $table->string('face', 255)->default('')->comment('头像');
@@ -25,7 +25,7 @@ class User extends Migration
                 $table->tinyInteger('status')->default(0)->comment('状态(0|1');
 
                 // 索引
-                $table->index('username', 'index_username');
+                $table->index('account', 'index_account');
                 $table->index('mail', 'index_mail');
             });
         }

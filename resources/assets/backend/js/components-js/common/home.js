@@ -41,7 +41,7 @@ export default {
         },
         getAdminDetail() {
             let _this = this;
-            axios.get('/backend/admin/detail/' + _this.adminId).then((response) => {
+            axios.get('/backend/admin/' + _this.adminId).then((response) => {
                 let { data } = response.data;
                 _this.adminData = data.list;
             });

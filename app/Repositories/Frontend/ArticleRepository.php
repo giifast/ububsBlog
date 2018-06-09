@@ -5,14 +5,14 @@ use Ububs\Core\Component\Db\Db;
 
 class ArticleRepository extends CommonRepository
 {
-    // 草稿标识
-    const DRAFT_STATUS = 40;
-    // 推荐标识
-    const RECOMMEND_STATUS = 50;
     // 已下架
     const NOT_SHOW_STATUS = 0;
-    // dict导航菜单value
-    const CATEGORY_VALUE = 10;
+    // 正常
+    const COMMON_STATUS = 10;
+    // 草稿标识
+    const DRAFT_STATUS = 20;
+    // 回收站标识
+    const RECYCLE_STATUS = 30;
 
     /**
      * 获取列表
@@ -22,7 +22,7 @@ class ArticleRepository extends CommonRepository
     public function lists($input)
     {
         $pagination = isset($input['pagination']) ? $input['pagination'] : [];
-        $dbInstance = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->orderBy('id', 'desc');
+        $dbInstance = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where('status', self::COMMON_STATUS)->orderBy('id', 'desc');
         if (!empty($pagination)) {
             $pagination = $this->parsePages($pagination);
             $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);

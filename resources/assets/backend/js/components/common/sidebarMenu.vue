@@ -1,5 +1,5 @@
 <template>
-    <Sider ref="side" hide-trigger collapsible :collapsed-width="60" v-model="isCollapsed">
+    <Sider ref="side" hide-trigger collapsible :collapsed-width="60" v-model="isCollapsed" style="overflow:auto;">
         <!-- 未缩放 -->
         <template v-if="!showCo">
             <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses" v-show="!showCo">
