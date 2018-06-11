@@ -13,7 +13,7 @@
             <template v-for="lists in data">
                 <li class="article-detail" v-for="list in lists" :key="list.id">
                     <a href="javascript:;" class="article-title" @click="$router.push('/article/detail/' + list.id)">{{list.title}}</a>
-                    <span class="article-create-time">{{list.create_time}}</span>
+                    <span class="article-create-time">{{list.created_at}}</span>
                 </li>
             </template>
         </ul>

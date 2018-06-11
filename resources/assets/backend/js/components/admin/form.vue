@@ -15,7 +15,7 @@
                             <Input v-model="formData.mail" placeholder="请输入邮箱地址"></Input>
                         </FormItem>
                         <FormItem label="所属角色" prop="role_id" width="150">
-                            <Select v-model="formData.role_id" multiple>
+                            <Select v-model="formData.role_id">
                                 <Option v-for="item in options.roles" :value="item.id" :key="item.id">{{ item.name }}</Option>
                             </Select>
                         </FormItem>

@@ -23,8 +23,8 @@ class ArticleRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
-        $search          = isset($input['search']) ? $input['search'] : [];
+        $pagination      = isset($input['pagination']) ? $input['pagination'] : '';
+        $search          = isset($input['search']) ? $input['search'] : '';
         $pagination      = $this->parsePages($pagination);
         $wheres          = $this->parseWheres($search);
         $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where($wheres)->limit($pagination['start'], $pagination['limit'])->get();
@@ -51,25 +51,23 @@ class ArticleRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'created_at', 'reprinted', 'status'])->where('id', $id)->first();
+        $result['list'] = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'created_at', 'reprinted', 'status'])->where('id', $id)->first();
         // 获取标签
-        if (empty($result)) {
+        if (empty($result['list'])) {
             return ['code' => ['article', '4001']];
         }
-        $result['user'] = Db::table('admin')->selects(['id', 'account'])->where('id', $result['creator'])->first();
+        $result['list']['user'] = Db::table('admin')->selects(['id', 'account'])->where('id', $result['list']['creator'])->first();
 
         // 文章关联tag标签
-        $result['tags']  = [];
-        $articleTagLists = Db::table('article_tag')->selects(['tag_id'])->where('article_id', $id)->get();
-        if (empty($articleTagLists)) {
-            return ['list' => $result];
-        }
-        $tagLists = Db::table('tag')->selects(['id'])->whereIn('id', array_column($articleTagLists, 'tag_id'))->get();
+        $tagLists = Db::table('article_tag')->selects(['tag_id'])->where('article_id', $id)->get();
         if (empty($tagLists)) {
-            return ['list' => $result];
+            return $result;
         }
-        $result['tags'] = array_column($tagLists, 'id');
-        return ['list' => $result];
+        $tagLists = Db::table('tag')->selects(['id'])->whereIn('id', array_column($tagLists, 'tag_id'))->get();
+        if (!empty($tagLists)) {
+            $result['list']['tags'] = array_column($tagLists, 'id');
+        }
+        return $result;
     }
 
     /**
@@ -79,38 +77,20 @@ class ArticleRepository extends CommonRepository
      */
     public function store($input)
     {
-        $saveData = [
-            'title'            => $input['title'] ?? '',
-            'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
-            'author'           => $input['author'] ?? '',
-            'creator'          => Auth::guard('admin')->id(),
-            'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
-            'category_menu_id' => $input['category_menu_id'] ?? 0,
-            'thumbnail'        => $input['thumbnail'] ?? '',
-            'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
-            'status'           => $input['status'] ?? 0,
-        ];
-        // 草稿无需校验
-        if (!isset($input['draft'])) {
-            $validateResult = $this->validate($saveData);
-            if ($validateResult !== true) {
-                return $validateResult;
-            }
-        } else {
-            // 标识草稿
-            $saveData['status'] = self::DRAFT_STATUS;
+        if (!$data = $this->validate($input)) {
+            return ['code' => ['common', '1003']];
         }
-        $resultId = Db::table('article')->create($saveData);
+        $id = Db::table('article')->create($data);
         // 文章标签
         if (isset($input['tags']) && !empty($input['tags'])) {
-            $tagSaveData = [];
+            $tagData = [];
             foreach ($input['tags'] as $tag) {
-                $tagSaveData[] = [
-                    'article_id' => $resultId,
+                $tagData[] = [
+                    'article_id' => $id,
                     'tag_id'     => $tag,
                 ];
             }
-            Db::table('article_tag')->insert($tagSaveData);
+            Db::table('article_tag')->insert($tagData);
         }
         return ['message' => ['common', '1001']];
     }
@@ -198,59 +178,65 @@ class ArticleRepository extends CommonRepository
         if (!Db::table('article')->where(['id' => $id])->exist()) {
             return ['code' => ['article', '3001']];
         }
-        $saveData = [
-            'title'            => $input['title'] ?? '',
-            'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
-            'author'           => $input['author'] ?? '',
-            'category_menu_id' => $input['category_menu_id'] ?? 0,
-            'thumbnail'        => $input['thumbnail'] ?? '',
-            'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
-            'status'           => $input['status'] ?? 0,
-        ];
-        // 草稿无需校验
-        if (!isset($input['draft'])) {
-            $validateResult = $this->validate($saveData);
-            if ($validateResult !== true) {
-                return $validateResult;
-            }
-        } else {
-            // 标识草稿
-            $saveData['status'] = self::DRAFT_STATUS;
-        }
-        Db::table('article')->where(['id' => $id])->update($saveData);
-        // 文章标签
-        $newTags = $oldTagIds = [];
-        if (isset($input['tags']) && !empty($input['tags'])) {
-            $newTags = $input['tags'];
+        if (!$data = $this->validate($input)) {
+            return ['code' => ['common', '1003']];
         }
 
-        $articleTagLists = Db::table('article_tag')->selects(['tag_id'])->where(['article_id' => $id])->get();
-        if (!empty($articleTagLists)) {
-            $oldTagIds = array_column($articleTagLists, 'tag_id');
+        Db::table('article')->where(['id' => $id])->update($data);
+        // 文章标签
+        $tags = $oTags = [];
+        if (isset($input['tags']) && !empty($input['tags'])) {
+            $tags = $input['tags'];
+        }
+
+        $tagLists = Db::table('article_tag')->selects(['tag_id'])->where(['article_id' => $id])->get();
+        if (!empty($tagLists)) {
+            $oTags = array_column($tagLists, 'tag_id');
         }
         // 比较两次tag是否有不同，相同不做处理，不同直接删除所有标签，重新生成
-        if (!empty(array_diff($newTags, $oldTagIds))) {
+        if (!empty(array_diff($tags, $oTags))) {
             Db::table('article_tag')->where(['article_id' => $id])->delete();
-            $tagSaveData = [];
-            foreach ($newTags as $tag) {
-                $tagSaveData[] = [
+            $tagData = [];
+            foreach ($tags as $tag) {
+                $tagData[] = [
                     'article_id' => $id,
                     'tag_id'     => $tag,
                 ];
             }
-            Db::table('article_tag')->insertMulti($tagSaveData);
+            Db::table('article_tag')->insert($tagData);
         }
 
         return ['message' => ['common', '3001']];
     }
 
     /**
-     * 增删改查验证
-     * @param  array $data 凭据
+     * 验证
+     * @param  array $input 数据
      * @return boolean | array
      */
-    public function validate($data)
+    private function validate($input)
     {
-        return true;
+        $data = [
+            'title'            => $input['title'] ?? '',
+            'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
+            'author'           => $input['author'] ?? '',
+            'creator'          => Auth::guard('admin')->id(),
+            'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
+            'category_menu_id' => $input['category_menu_id'] ?? 0,
+            'thumbnail'        => $input['thumbnail'] ?? '',
+            'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
+            'status'           => $input['status'] ?? 0
+        ];
+        // 草稿无需校验
+        if (isset($input['draft']) && $input['draft']) {
+            $data['status'] = self::DRAFT_STATUS;
+            return $data;
+        }
+
+        if (!$data['title'] || !$data['content'] || !$data['category_menu_id']) {
+            return false;
+        }
+
+        return $data;
     }
 }

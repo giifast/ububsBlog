@@ -25,6 +25,7 @@ export default {
                 account: '',
                 password: '',
                 status: '',
+                role_id: '',
                 mail: ''
             },
             rules: {
@@ -50,28 +51,25 @@ export default {
     methods: {
         initForm() {
             let _this = this;
-            if (_this.id) {
-                axios.get('/backend/admin/' + _this.id).then((response) => {
-                    let { data } = response.data;
-                    _this.formData = data.list;
-                });
-            }
+            axios.get('/backend/role/lists').then((response) => {
+                let { data } = response.data;
+                _this.options.roles = data.lists;
+                if (_this.id) {
+                    axios.get('/backend/admin/' + _this.id).then((response) => {
+                        let { data } = response.data;
+                        _this.formData = data.list;
+                    });
+                }
+            });
+            
         },
         submitBase(name) {
             let _this = this;
             _this.$refs[name].validate((valid) => {
                 if (valid) {
-                    let saveData = {
-                        'account': _this.formData.account,
-                        'mail': _this.formData.mail,
-                        'status': _this.formData.status
-                    };
-                    if (_this.formData.password || !_this.id) {
-                        saveData.password = _this.formData.password;
-                    }
                     let method = !_this.id ? 'post' : 'put';
                     let url = !_this.id ? '/backend/admin' : '/backend/admin/' + _this.id;
-                    axios[method](url, saveData).then((response) => {
+                    axios[method](url, _this.formData).then((response) => {
                         let { message } = response.data;
                         _this.$Message.success(message);
                         _this.$router.push('/admin/lists');

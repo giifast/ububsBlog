@@ -43,10 +43,13 @@ class BaseRepository
      * @param  array $additionWheres 需合并的查询条件
      * @return array
      */
-    public function parseWheres($wheres, $additionWheres = [])
+    public function parseWheres($wheres, $addWheres = [])
     {
+        if (!is_array($wheres)) {
+            $wheres = json_decode($wheres, true);
+        }
         $result = [];
-        $wheres = array_merge(json_decode($wheres, true), $additionWheres);
+        $wheres = array_merge($wheres, $addWheres);
         if (empty($wheres)) {
             return $result;
         }

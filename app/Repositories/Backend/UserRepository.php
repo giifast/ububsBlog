@@ -39,26 +39,8 @@ class UserRepository extends CommonRepository
      */
     public function store($input)
     {
-        $input['password'] = $input['password'] ?? '';
-        $data = [
-            'account' => $input['account'] ?? '',
-            'password' => generatePassword($input['password']),
-            'mail'     => $input['mail'] ?? '',
-            'gender'   => $input['gender'] ?? 0,
-            'status'   => isset($input['status']) ? intval($input['status']) : 0,
-        ];
-        if ($data['account'] === '') {
-            return ['code' => ['user', '1002']];
-        }
-        // 用户名不得重复
-        if (DB::table('user')->where(['account' => $data['account']])->isExist()) {
-            return ['code' => ['user', '1005']];
-        }
-        if ($input['account'] !== '') {
-            // 邮箱地址不得重复
-            if (DB::table('user')->where(['mail' => $data['mail']])->isExist()) {
-                return ['code' => ['user', '1006']];
-            }
+        if (!$data = $this->validate($input)) {
+            return ['code' => ['common', '1003']];
         }
         $result = DB::table('user')->create($data);
         if (!$result) {
@@ -75,37 +57,10 @@ class UserRepository extends CommonRepository
      */
     public function update($id, $input)
     {
-        $editData = [];
-        if (isset($input['account'])) {
-            if ($input['account'] === '') {
-                return ['code' => ['user', '3001']];
-            }
-            // 用户名不得重复
-            if (DB::table('user')->where(['account' => $input['account']])->whereNot(['id' => $id])->isExist()) {
-                return ['code' => ['user', '3002']];
-            }
-            $editData['account'] = $input['account'];
+        if (!$data = $this->validate($input, $id)) {
+            return ['code' => ['common', '1003']];
         }
-        if (isset($input['password'])) {
-            $editData['password'] = generatePassword($input['password']);
-        }
-        if (isset($input['mail'])) {
-            // 邮箱地址不得重复
-            if (DB::table('user')->where(['mail' => $input['mail']])->whereNot(['id' => $id])->isExist()) {
-                return ['code' => ['user', '3004']];
-            }
-            $editData['mail'] = $input['mail'];
-        }
-        if (isset($input['status'])) {
-            $editData['status'] = intval($input['status']);
-        }
-        if (isset($input['gender'])) {
-            $editData['gender'] = intval($input['gender']);
-        }
-        if (empty($editData)) {
-            return ['code' => ['user', '3006']];
-        }
-        $result = DB::table('user')->where(['id' => $id])->update($editData);
+        $result = DB::table('user')->where(['id' => $id])->update($data);
         if (!$result) {
             return ['code' => ['common', '3002']];
         }
@@ -127,9 +82,7 @@ class UserRepository extends CommonRepository
                     $deleteIdArr[] = $id;
                 }
             }
-            DB::table('user')->whereIn([
-                'id' => $deleteIdArr,
-            ])->delete();
+            DB::table('user')->whereIn('id', $deleteIdArr)->delete();
         }
         return [
             'message' => ['common', '2001'],
@@ -159,5 +112,37 @@ class UserRepository extends CommonRepository
     {
         $result['list'] = [];
         return $result;
+    }
+
+    private function validate($input, $id = null)
+    {
+        $data = [
+            'account' => $input['account'] ?? '',
+            'password' => isset($input['password']) ? generatePassword($input['password']) : '',
+            'mail'     => $input['mail'] ?? '',
+            'gender'   => $input['gender'] ?? 0,
+            'status'   => isset($input['status']) ? intval($input['status']) : 0,
+        ];
+        if (!$data['account']) {
+            return false;
+        }
+        $query = DB::table('user')->where(['account' => $data['account']]);
+        // 表示更新
+        if ($id) {
+            $query = $query->whereNot('id', $id);
+        }
+        if ($query->exist()) {
+            return false;
+        }
+
+        $query = DB::table('user')->where(['mail' => $data['mail']]);
+        // 表示更新
+        if ($id) {
+            $query = $query->whereNot('id', $id);
+        }
+        if ($query->exist()) {
+            return false;
+        }
+        return $data;
     }
 }

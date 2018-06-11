@@ -66,15 +66,13 @@ class RoleRepository extends CommonRepository
     {
         $idArr = explode(',', $ids);
         if (!empty($idArr)) {
-            $deleteIdArr = [];
+            $dIds = [];
             foreach ($idArr as $id) {
-                if ($id && !in_array($id, $deleteIdArr)) {
-                    $deleteIdArr[] = $id;
+                if ($id && !in_array($id, $dIds)) {
+                    $dIds[] = $id;
                 }
             }
-            DB::table('role')->whereIn([
-                'id' => $deleteIdArr,
-            ])->delete();
+            DB::table('role')->whereIn('id', $dIds)->delete();
         }
         return [
             'message' => ['common', '2001'],

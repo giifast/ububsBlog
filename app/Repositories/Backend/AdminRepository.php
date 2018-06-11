@@ -28,7 +28,7 @@ class AdminRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result['list'] = Db::table('admin')->selects(['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where(['id' => $id])->first();
+        $result['list'] = Db::table('admin')->selects(['id', 'account', 'role_id', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where(['id' => $id])->first();
         if (empty($result['list'])) {
             return ['code' => 'common', '5003'];
         }
@@ -114,6 +114,7 @@ class AdminRepository extends CommonRepository
         $result = [
             'account' => $account,
             'status'  => $input['status'] ? intval($input['status']) : 0,
+            'role_id'  => $input['role_id'] ? intval($input['role_id']) : 0,
             'mail'    => $input['mail'] ?? '',
         ];
         if ($password) {
