@@ -14,7 +14,7 @@ class ApiService extends BaseService
         if ($ipinfo->code == '1') {
             return '';
         }
-        $city = $ipinfo->data->region . $ipinfo->data->city;
+        $city = $ipinfo->data->region . '-' . $ipinfo->data->city;
         return $city;
     }
 
