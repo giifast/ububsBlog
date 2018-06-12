@@ -71,4 +71,8 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     $this->addRoutes('DELETE', '/article/{ids}', 'ArticleController@delete');
     $this->addRoutes('POST', '/article/recycle/{ids}', 'ArticleController@recycle');
     $this->addRoutes('POST', '/article/recover/{ids}', 'ArticleController@recover');
+
+    // 留言模块
+    $this->addRoutes('GET', '/leave', 'LeaveController@lists');
+    $this->addRoutes('GET', '/leave/lists', 'LeaveController@lists');
 });

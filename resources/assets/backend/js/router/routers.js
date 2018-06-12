@@ -25,6 +25,8 @@ const ArticleForm = resolve => require(['../components/article/form.vue'], resol
 const ArticleDisabled = resolve => require(['../components/article/disabled.vue'], resolve);
 const ArticleRecycle = resolve => require(['../components/article/recycle.vue'], resolve);
 
+const LeaveLists = resolve => require(['../components/leave/lists.vue'], resolve);
+
 export default [{
     path: '/login',
     component: Login,
@@ -101,8 +103,8 @@ export default [{
     name: '留言管理',
     icon: 'compose',
     children: [
-        { path: 'lists', component: UserLists, name: '留言列表', icon: 'ios-list-outline' },
-        { path: 'recommend', component: UserLists, name: '留言回复', icon: 'ios-list-outline' },
+        { path: 'lists', component: LeaveLists, name: '留言列表', icon: 'ios-list-outline' },
+        { path: 'response', component: UserLists, name: '留言回复', icon: 'ios-list-outline' },
     ]
 }, {
     path: '/leave',

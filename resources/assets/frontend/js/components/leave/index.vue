@@ -4,7 +4,7 @@
 			<!-- <MavonEditor v-model="formData.content" :ishljs = "true" :subfield="false" :toolbars="toolbars" style="min-height: 200px"></MavonEditor> -->
 			<textarea class="leave-textarea" v-model="formData.content" placeholder="请输入留言内容"></textarea>
 			<div class="leave-submit">
-				<input type="text" placeholder="请输入您的邮箱地址" class="ub-input" v-model="formData.mail">
+				<input type="text" placeholder="请输入您的邮箱地址" class="ub-input leave-mail-input" v-model="formData.mail">
 				<button class="ub-btn" @click="save">提交</button>
 			</div>
 		</div>
@@ -13,7 +13,7 @@
 			<ul class="leave-ul">
 				<template v-for="lists in data">
 					<li class="leave-li" v-for="list in lists" :key="list.id">
-						<a href="javascript:;" class="ub-user">{{list.address}}(<span>{{list.created_at}}</span>)：</a>
+						<a href="javascript:;" class="ub-user">{{list.address | defaultValue('未知地区')}} 网友(<span>{{list.created_at}}</span>)：</a>
 						<span class="ub-content">{{list.content}}</span>
 					</li>
 				</template>

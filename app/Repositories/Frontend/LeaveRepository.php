@@ -2,6 +2,7 @@
 namespace App\Repositories\Frontend;
 
 use Ububs\Core\Component\Db\Db;
+use App\Service\ApiService;
 
 class LeaveRepository extends CommonRepository
 {
@@ -16,7 +17,7 @@ class LeaveRepository extends CommonRepository
     public function lists($input)
     {
         $pagination = isset($input['pagination']) ? $input['pagination'] : [];
-        $dbInstance = Db::table('leave_message')->selects(['id', 'mail', 'content', 'address', 'ip_address', 'created_at'])->where('status', self::COMMON_STATUS)->orderBy('id', 'asc');
+        $dbInstance = Db::table('leave_message')->selects(['id', 'mail', 'content', 'address', 'ip_address', 'created_at'])->orderBy('id', 'desc');
         if (!empty($pagination)) {
             $pagination = $this->parsePages($pagination);
             $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);
@@ -64,7 +65,11 @@ class LeaveRepository extends CommonRepository
         if (!$result) {
             return ['code' => ['leave', '4001']];
         }
-        return ['message' => ['leave', '1001']];
+        $data['created_at'] = date('d M Y', $data['created_at']);
+        return [
+            'data' => $data,
+            'message' => ['leave', '1001']
+        ];
     }
 
     private function validate($input)
@@ -74,11 +79,12 @@ class LeaveRepository extends CommonRepository
         if (!$content || !$mail) {
             return false;
         }
+        $ip = getRealIp();
         return [
             'mail'       => $mail,
             'content'    => $content,
-            'ip_address' => getRealIp(),
-            'address'    => '福建大田',
+            'ip_address' => $ip,
+            'address'    => ApiService::getAddressByIp($ip),
             'created_at' => time(),
         ];
     }
