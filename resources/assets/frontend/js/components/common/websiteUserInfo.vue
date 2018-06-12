@@ -7,7 +7,7 @@
             <h1 class="website-title">linlm</h1>
             <div class="website-sign">Do more and say less</div>
             <div class="website-menu">
-                <p><router-link to="/">主页</router-link></p>
+                <p><router-link to="/index">主页</router-link></p>
                 <p><router-link to="/article/index">技术博文</router-link></p>
                 <p><router-link to="/leave/index">留言</router-link></p>
                 <p><a href="https://github.com/linlianmin" target="_blank">github地址</a></p>
@@ -15,10 +15,10 @@
             </div>
             <div class="website-menu-mobile">
                 <ul>
-                    <li class="active"><router-link to="/">主页</router-link></li>
-                    <li><router-link to="/article/index">技术博文</router-link></li>
-                    <li><router-link to="/leave/index">留言</router-link></li>
-                    <li><router-link to="/about">关于</router-link></li>
+                    <li :class="$route.path === '/index' ? 'active' : ''"><router-link to="/index">主页</router-link></li>
+                    <li :class="$route.path === '/article/index' ? 'active' : ''"><router-link to="/article/index">技术博文</router-link></li>
+                    <li :class="$route.path === '/leave/index' ? 'active' : ''"><router-link to="/leave/index">留言</router-link></li>
+                    <li :class="$route.path === '/about' ? 'active' : ''"><router-link to="/about">关于</router-link></li>
                 </ul>
             </div>
         </div>
