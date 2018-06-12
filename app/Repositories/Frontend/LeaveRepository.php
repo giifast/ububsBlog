@@ -1,8 +1,8 @@
 <?php
 namespace App\Repositories\Frontend;
 
-use Ububs\Core\Component\Db\Db;
 use App\Service\ApiService;
+use Ububs\Core\Component\Db\Db;
 
 class LeaveRepository extends CommonRepository
 {
@@ -67,22 +67,22 @@ class LeaveRepository extends CommonRepository
         }
         $data['created_at'] = date('d M Y', $data['created_at']);
         return [
-            'data' => $data,
-            'message' => ['leave', '1001']
+            'data'    => $data,
+            'message' => ['leave', '1001'],
         ];
     }
 
     private function validate($input)
     {
-        $content = $input['content'] ?? '';
-        $mail    = $input['mail'] ?? '';
-        if (!$content || !$mail) {
+        $content = isset($input['content']) ? $input['content'] : '';
+        $mail    = isset($input['mail']) ? $input['mail'] : '';
+        if (!$content) {
             return false;
         }
         $ip = getRealIp();
         return [
-            'mail'       => $mail,
-            'content'    => $content,
+            'mail'       => addslashes($mail),
+            'content'    => addslashes($content),
             'ip_address' => $ip,
             'address'    => ApiService::getAddressByIp($ip),
             'created_at' => time(),
