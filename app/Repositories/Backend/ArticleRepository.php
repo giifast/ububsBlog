@@ -218,7 +218,7 @@ class ArticleRepository extends CommonRepository
     {
         $data = [
             'title'            => $input['title'] ?? '',
-            'content'          => isset($input['content']) ? htmlspecialchars($input['content']) : '',
+            'content'          => isset($input['content']) ? $input['content'] : '',
             'author'           => $input['author'] ?? '',
             'creator'          => Auth::guard('admin')->id(),
             'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
