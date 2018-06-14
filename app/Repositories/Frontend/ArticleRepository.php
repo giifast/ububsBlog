@@ -40,24 +40,29 @@ class ArticleRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result = Db::table('article')->selects(['title', 'content', 'category_menu_id', 'author', 'creator', 'thumbnail', 'created_at', 'reprinted', 'status'])->where('id', $id)->first();
-        // 获取标签
-        if (empty($result)) {
-            return ['code' => ['article', '4001']];
+        $result['list'] = [];
+        $list = Db::table('article')->selects(['title', 'content', 'created_at'])->where([
+            'id' => $id,
+            'status' => self::COMMON_STATUS
+        ])->first();
+        if (empty($list)) {
+            return $result;
         }
-        $result['user'] = Db::table('admin')->selects(['id', 'account'])->where('id', $result['creator'])->first();
+        $result['list'] = $list;
+        // 获取上一篇
+        $result['prev'] = $this->getPrev($id);
+        // 获取下一篇
+        $result['next'] = $this->getNext($id);
+        return $result;
+    }
 
-        // 文章关联tag标签
-        $result['tags']  = [];
-        $articleTagLists = Db::table('article_tag')->selects(['tag_id'])->where('article_id', $id)->get();
-        if (empty($articleTagLists)) {
-            return ['list' => $result];
-        }
-        $tagLists = Db::table('tag')->selects(['id'])->whereIn('id', array_column($articleTagLists, 'tag_id'))->get();
-        if (empty($tagLists)) {
-            return ['list' => $result];
-        }
-        $result['tags'] = array_column($tagLists, 'id');
-        return ['list' => $result];
+    private function getPrev($id)
+    {
+        return Db::table('article')->selects(['id', 'title'])->where('id', '<', $id)->where('status', self::COMMON_STATUS)->orderBy('id', 'desc')->first();
+    }
+
+    private function getNext($id)
+    {
+        return Db::table('article')->selects(['id', 'title'])->where('id', '>', $id)->where('status', self::COMMON_STATUS)->orderBy('id', 'asc')->first();
     }
 }

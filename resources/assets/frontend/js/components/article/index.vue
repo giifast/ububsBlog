@@ -2,7 +2,7 @@
     <div class="article-container">
         <ul class="article-list">
             <li class="article-detail" v-for="list in data" :key="list.id">
-                <a href="javascript:;" class="article-title" @click="$router.push('/article/detail/' + list.id)">{{list.title}}</a>
+                <router-link :to="{name: 'articleDetail', params: {id : list.id}}" class="article-title">{{list.title}}</router-link>
                 <span class="article-create-time">{{list.created_at}}</span>
             </li>
         </ul>

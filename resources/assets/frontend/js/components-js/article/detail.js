@@ -8,11 +8,19 @@ export default {
         return {
             preview: 'preview',
             id: this.$route.params.id,
-            list: {}
+            list: {},
+            prev: {},
+            next: {},
         };
     },
-    mounted() {
+    created() {
         this.initDetail();
+    },
+    watch: {
+        '$route' (to, from) {  
+            this.id = to.params.id;
+            this.initDetail();
+        }  
     },
     methods: {
         initDetail: function() {
@@ -21,6 +29,8 @@ export default {
                 let { data } = response.data;
                 data.list['create_time'] = Vue.parseTime(data.list['create_time']);
                 _this.list = data.list;
+                _this.prev = data.prev ? data.prev : {};
+                _this.next = data.next ? data.next : {};
             });
         }
     }

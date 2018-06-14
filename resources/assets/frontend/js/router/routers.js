@@ -22,7 +22,7 @@ export default [{
     component: Main,
     children: [
         { path: 'index', component: articleIndex, name: '文章列表' },
-        { path: 'detail/:id', component: articleDetail, name: '文章详情' },
+        { path: 'detail/:id', component: articleDetail, name: 'articleDetail' },
     ]
 }, {
     path: '/leave',

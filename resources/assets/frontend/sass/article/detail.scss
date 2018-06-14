@@ -14,5 +14,17 @@
 			padding: 0 !important;
 			background: #fff !important;
 		}
+		.article-footer {
+			padding: 10px 0;
+			p {
+				font-size: 12px;
+				a {
+					font-size: 12px;
+				}
+				a:hover {
+					text-decoration: underline;
+				}
+			}
+		}
 	}
 }
