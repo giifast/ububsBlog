@@ -75,4 +75,6 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     // 留言模块
     $this->addRoutes('GET', '/leave', 'LeaveController@lists');
     $this->addRoutes('GET', '/leave/lists', 'LeaveController@lists');
+    $this->addRoutes('PUT', '/leave/{id}', 'LeaveController@update');
+    $this->addRoutes('DELETE', '/leave/{ids}', 'LeaveController@delete');
 });

@@ -7,7 +7,7 @@ use Ububs\Core\Component\Db\Db;
 class LeaveRepository extends CommonRepository
 {
     // 正常
-    const COMMON_STATUS = 10;
+    const COMMON_STATUS = 1;
 
     /**
      * 获取列表
@@ -17,7 +17,7 @@ class LeaveRepository extends CommonRepository
     public function lists($input)
     {
         $pagination = isset($input['pagination']) ? $input['pagination'] : [];
-        $dbInstance = Db::table('leave_message')->selects(['id', 'mail', 'content', 'address', 'ip_address', 'created_at'])->orderBy('id', 'desc');
+        $dbInstance = Db::table('leave_message')->selects(['id', 'mail', 'content', 'address', 'ip_address', 'created_at'])->where('status', self::COMMON_STATUS)->orderBy('id', 'desc');
         if (!empty($pagination)) {
             $pagination = $this->parsePages($pagination);
             $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);

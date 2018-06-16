@@ -47,7 +47,7 @@ export default {
                     title: '留言时间',
                     key: 'created_at',
                     render: (h, params) => {
-                        return Vue.parseTime(params.row.created_at);
+                        return h('span', {}, Vue.parseTime(params.row.created_at));
                     }
                 },
                 {
@@ -55,11 +55,17 @@ export default {
                     key: 'status',
                     width: 80,
                     render: (h, params) => {
-                        return h('span', {
-                            style: {
-                                color: params.row.status == '1' ? '#19be6b' : '#ed3f14'
-                            },
-                        }, params.row.status == '1' ? '显示' : '隐藏');
+                        return h('i-switch', {  
+                          props: {  
+                              value: !!parseInt(params.row.status),   
+                              disabled: false     
+                              },
+                              on: {
+                                'on-change': () => { 
+                                    this.changeStatus(params.row.id, parseInt(params.row.status));
+                                }
+                              }
+                        })
                     }
                 },
                 {
@@ -100,18 +106,7 @@ export default {
                                         });
                                     }
                                 }
-                            }, '回复'),
-                            h('Button', {
-                                props: {
-                                    type: 'error',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.delete(params.index)
-                                    }
-                                }
-                            }, '显示')
+                            }, '回复')
                         ]);
                     }
                 }
@@ -165,7 +160,7 @@ export default {
                 title: '删除操作',
                 content: '<p>确定要删除这个用户吗？</p>',
                 onOk: () => {
-                    axios.delete('/backend/user/' + _this.data[index].id).then(response => {
+                    axios.delete('/backend/leave/' + _this.data[index].id).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();
@@ -194,7 +189,7 @@ export default {
                 title: '删除操作',
                 content: '<p>确定要删除这些留言？</p>',
                 onOk: () => {
-                    axios.delete('/backend/user/' + _this.selectIds).then(response => {
+                    axios.delete('/backend/leave/' + _this.selectIds).then(response => {
                         let { message } = response.data;
                         _this.$Message.info(message);
                         _this.lists();
@@ -214,6 +209,13 @@ export default {
         },
         cancel: function(name) {
             this.$refs[name].resetFields();
+        },
+        changeStatus: function(id, status) {
+            let _this = this;
+            axios.put('/backend/leave/' + id, {'status': !status}).then(response => {
+                let { message } = response.data;
+                _this.$Message.info(message);
+            })
         }
     }
 }
