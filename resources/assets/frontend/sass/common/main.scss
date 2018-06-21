@@ -106,6 +106,15 @@ button {
     height: 100%;
 }
 
+.website-number {
+    text-align: center;
+    padding: 5px 0;
+    p {
+        color: #777;
+        font-size: 13px;
+    }
+}
+
 #screen-mask {
     z-index: 997;
     position: fixed;

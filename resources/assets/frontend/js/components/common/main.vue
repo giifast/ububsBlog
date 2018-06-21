@@ -8,6 +8,9 @@
                 <div class="content-container">
                 	<router-view></router-view>
                 </div>
+                <div class="website-number">
+                    <p>闽ICP备16033573号-1</p>
+                </div>
             </div>
         </div>
     </div>

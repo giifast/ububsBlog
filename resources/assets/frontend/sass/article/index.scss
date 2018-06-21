@@ -10,19 +10,20 @@
     .article-list {
     	margin-bottom: 1.5rem;
     	.article-detail {
-    		margin-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
             list-style: none;
-    		.article-title {
-    			color: #444;
-    			font-size: 0.9em;
-    		}
-    		.article-create-time {
-    			color: #aaa;
-    			font-family: "Courier New", monospace;
-    			float: right;
-    			font-size: 0.9rem;
-    		}
-    	}
+            .article-title {
+                color: #444;
+                font-size: 0.9em;
+            }
+            .article-create-time {
+                color: #aaa;
+                font-family: "Courier New", monospace;
+                font-size: 0.9rem;
+                float: right;
+                line-height: 180%;
+            }
+        }
     }
     .load-more {
     	a {
