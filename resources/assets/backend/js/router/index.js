@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routers.js';
 import store from '../vuex';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 Vue.use(VueRouter);
 
@@ -25,6 +27,7 @@ function isLogin() {
 
 //vue-router拦截器
 router.beforeEach((to, from, next) => {
+    NProgress.start();
     if (to.path === '/login') {
         localStorage.removeItem('ububsAdminData');
         localStorage.removeItem('__FWSWOOLE_TOKEN__');
@@ -42,6 +45,7 @@ router.beforeEach((to, from, next) => {
     next();
 });
 router.afterEach((to, from, next) => {
+    NProgress.done();
     if (to.path === '/login') {
         return true;
     }

@@ -19,7 +19,7 @@ class Leave extends Migration
                 $table->string('address', 30)->default('')->comment('地址');
                 $table->string('ip_address', 30)->default('')->comment('ip地址');
                 $table->integer('created_at', 10)->unsigned()->default(0)->comment('创建时间');
-                $table->tinyInteger('status')->default(0)->comment('状态,0|1');
+                $table->tinyInteger('status')->default(1)->comment('状态,0|1');
             });
         }
     }
