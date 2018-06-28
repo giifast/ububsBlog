@@ -108,10 +108,32 @@ button {
 
 .website-number {
     text-align: center;
+    padding: 0.5rem 1.5rem;
     padding: 5px 0;
     p {
         color: #777;
         font-size: 13px;
+    }
+}
+
+.website-link {
+    padding: 0.5rem 1.5rem;
+    p {
+        span {
+            color: #777;
+            font-size: 13px;
+        }
+        ul {
+            display: inline-block;
+            li {
+                display: inline-block;
+                margin-right: 4px;
+                a {
+                    color: #777;
+                    font-size: 13px;
+                }
+            }
+        }
     }
 }
 
@@ -142,6 +164,9 @@ button {
         margin-left: 0px;
         .content-container {
             padding: 0px !important;
+        }
+        .website-link {
+            display: none;
         }
     }
 }

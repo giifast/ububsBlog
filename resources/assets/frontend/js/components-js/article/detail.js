@@ -27,6 +27,10 @@ export default {
             let _this = this;
             axios.get('/article/' + this.id).then((response) => {
                 let { data } = response.data;
+                if (!data.list || Object.keys(data.list).length === 0) {
+                    _this.$router.push({ path: '/404' });
+                    return false;
+                }
                 data.list['create_time'] = Vue.parseTime(data.list['create_time']);
                 _this.list = data.list;
                 _this.prev = data.prev ? data.prev : {};
