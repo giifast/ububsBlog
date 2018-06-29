@@ -4,6 +4,7 @@ const NotFound = resolve => require(['../components/common/404.vue'], resolve);
 const Login = resolve => require(['../components/common/login.vue'], resolve);
 
 const WebsiteSetting = resolve => require(['../components/website/setting.vue'], resolve);
+const WebsiteLink = resolve => require(['../components/website/link.vue'], resolve);
 const WebsiteMonitoring = resolve => require(['../components/website/monitoring.vue'], resolve);
 const WebsiteDump = resolve => require(['../components/website/dump.vue'], resolve);
 
@@ -54,8 +55,9 @@ export default [{
     icon: 'settings',
     children: [
         {path: 'setting', component: WebsiteSetting, name: '网站设置', icon: 'ios-list-outline', meta: {id: 301} },
-        {path: 'monitoring', component: WebsiteMonitoring, name: '网站监测', icon: 'ios-list-outline', meta: {id: 302} },
-        {path: 'dump', component: WebsiteDump, name: '数据备份', icon: 'ios-navigate', meta: {id: 303} },
+        {path: 'link', component: WebsiteLink, name: '友情链接', icon: 'ios-list-outline', meta: {id: 302} },
+        {path: 'monitoring', component: WebsiteMonitoring, name: '网站监测', icon: 'ios-list-outline', meta: {id: 303} },
+        {path: 'dump', component: WebsiteDump, name: '数据备份', icon: 'ios-navigate', meta: {id: 304} },
     ]
 }, {
     path: '/admin',

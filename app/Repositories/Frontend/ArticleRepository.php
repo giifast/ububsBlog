@@ -28,9 +28,6 @@ class ArticleRepository extends CommonRepository
             $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);
         }
         $result['lists'] = $dbInstance->get();
-        foreach ($result['lists'] as $key => $item) {
-            $result['lists'][$key]['created_at'] = date('d M Y', $item['created_at']);
-        }
         return $result;
     }
     /**
