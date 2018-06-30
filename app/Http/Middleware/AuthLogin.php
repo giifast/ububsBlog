@@ -7,7 +7,7 @@ class AuthLogin
 {
     public function handle()
     {
-        if (!Auth::guard('admin')->check()) {
+        if (!Auth::getInstance('admin')->checkLogin()) {
             return redirect('/backend');
         }
         return true;

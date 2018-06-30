@@ -6,11 +6,12 @@ import router from '../router';
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-// let token = document.head.querySelector('meta[name="Authrization"]');
-let token = localStorage.getItem('__FWSWOOLE_TOKEN__');
-if (token) {
-    window.axios.defaults.headers.common['X-Authrization'] = token;
+let token = localStorage.getItem('__UBUBS_TOKEN__');
+if (!token) {
+    let authToken = document.head.querySelector('meta[name="Authrization"]');
+    token = authToken.content;
 }
+window.axios.defaults.headers.common['X-Authrization'] = token;
 
 //axios拦截器
 axios.interceptors.request.use((config) => {
@@ -35,7 +36,7 @@ axios.interceptors.response.use((response) => {
         // return new Promise(() => {});
     }
     if (data != undefined && data.token != undefined) {
-        localStorage.setItem('__FWSWOOLE_TOKEN__', data.token);
+        localStorage.setItem('__UBUBS_TOKEN__', data.token);
         window.axios.defaults.headers.common['X-Authrization'] = data.token;
     }
 

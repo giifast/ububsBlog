@@ -19,7 +19,7 @@ const router = new VueRouter({
 });
 
 function isLogin() {
-    if (!localStorage.hasOwnProperty('ububsAdminData') || !localStorage.hasOwnProperty('__FWSWOOLE_TOKEN__')) {
+    if (!localStorage.hasOwnProperty('ububsAdminData') || !localStorage.hasOwnProperty('__UBUBS_TOKEN__')) {
         return false;
     }
     return true;
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
     NProgress.start();
     if (to.path === '/login') {
         localStorage.removeItem('ububsAdminData');
-        localStorage.removeItem('__FWSWOOLE_TOKEN__');
+        localStorage.removeItem('__UBUBS_TOKEN__');
         store.commit('clearFastMenus');
         next();
         return false;

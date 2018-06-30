@@ -19,7 +19,7 @@ class LoginRepository extends CommonRepository
         if (!$account || !$password) {
             return ['code' => ['login', '0001']];
         }
-        $result = Auth::guard('admin')->attempt(['account' => $account, 'password' => $password], $remember);
+        $result = Auth::getInstance('admin')->attempt(['account' => $account, 'password' => $password], $remember);
         if (empty($result)) {
             return ['code' => ['login', '0002']];
         }
@@ -36,8 +36,8 @@ class LoginRepository extends CommonRepository
      */
     public function logout()
     {
-        if (Auth::guard('admin')->check()) {
-            Auth::guard('admin')->logout();
+        if (Auth::getInstance('admin')->checkLogin()) {
+            Auth::getInstance('admin')->logout();
         }
         return ['message' => ['login', '0004']];
     }

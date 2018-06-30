@@ -25,7 +25,7 @@ class LogRepository extends CommonRepository
         $params     = isset($data['params']) ? json_encode($data['params']) : '';
         $message    = isset($data['message']) ? json_encode($data['message']) : ($result['message'] ? $result['message'] : '');
         $createData = [
-            'admin_id'      => Auth::guard()->id(),
+            'admin_id'      => Auth::getInstance('admin')->id(),
             'action'        => Request::getPathInfo(),
             'type'          => self::$recordTypeMessage[$type],
             'request_method' => Request::getMethod(),

@@ -42,7 +42,7 @@ class WebsiteRepository extends CommonRepository
         $input = [
             'title'    => $name . date('YmdHis'),
             'name'     => $name,
-            'admin_id' => Auth::guard('admin')->id(),
+            'admin_id' => Auth::getInstance('admin')->id(),
         ];
         $result = TaskManager::getInstance()->task($input, function (\swoole_server $serv, $task_id, $data) {
             $path = DbService::getInstance()->dumpDatabase($data['name']);

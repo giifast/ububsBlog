@@ -220,7 +220,7 @@ class ArticleRepository extends CommonRepository
             'title'            => $input['title'] ?? '',
             'content'          => isset($input['content']) ? $input['content'] : '',
             'author'           => $input['author'] ?? '',
-            'creator'          => Auth::guard('admin')->id(),
+            'creator'          => Auth::getInstance('admin')->id(),
             'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
