@@ -64,16 +64,16 @@ class UserController extends CommonController
     }
 
     // 浏览记录
-    public function readHistory($id)
+    public function readHistory()
     {
-        $result = UserRepository::getInstance()->readHistory($id);
+        $result = UserRepository::getInstance()->readHistory();
         return $this->response($result);
     }
 
     // 动态记录
-    public function activeHistory($id)
+    public function activeHistory()
     {
-        $result = UserRepository::getInstance()->activeHistory($id);
+        $result = UserRepository::getInstance()->activeHistory();
         return $this->response($result);
     }
 

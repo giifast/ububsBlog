@@ -5,6 +5,10 @@ use Ububs\Core\Component\Db\Db;
 
 class LeaveRepository extends CommonRepository
 {
+
+    public $table = 'leave_message';
+    public $fields = ['id', 'content', 'mail', 'ip_address', 'address', 'created_at', 'status'];
+
     /**
      * 获取列表
      * @param  array $input
@@ -12,12 +16,9 @@ class LeaveRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
-        $search          = isset($input['search']) ? $input['search'] : [];
-        $pagination      = $this->parsePages($pagination);
-        $whereParams     = $this->parseWheres($search);
-        $result['lists'] = DB::table('leave_message')->selects(['id', 'content', 'mail', 'ip_address', 'address', 'created_at', 'status'])->where($whereParams)->orderBy('id', 'desc')->limit($pagination['start'], $pagination['limit'])->get();
-        $result['total'] = DB::table('leave_message')->where($whereParams)->count();
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $result['lists']               = $this->getDB()->selects($fields)->where($wheres)->orderBy('id', 'desc')->pagination($pages)->get();
+        $result['total']               = $this->getDB()->where($wheres)->count();
         return $result;
     }
 

@@ -5,6 +5,10 @@ use Ububs\Core\Component\Db\Db;
 
 class UserRepository extends CommonRepository
 {
+
+    public $table  = 'user';
+    public $fields = ['id', 'account', 'mail', 'gender', 'last_login_time', 'last_login_ip', 'status'];
+
     /**
      * 获取列表
      * @param  array $input
@@ -12,12 +16,9 @@ class UserRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
-        $search          = isset($input['search']) ? $input['search'] : [];
-        $pagination      = $this->parsePages($pagination);
-        $whereParams     = $this->parseWheres($search);
-        $result['lists'] = DB::table('user')->selects(['id', 'account', 'mail', 'gender', 'last_login_time', 'last_login_ip', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
-        $result['total'] = DB::table('user')->where($whereParams)->count();
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $result['lists']               = $this->getDB()->selects($fields)->where($wheres)->pagination($pages)->get();
+        $result['total']               = $this->getDB()->where($wheres)->count();
         return $result;
     }
 
@@ -94,14 +95,14 @@ class UserRepository extends CommonRepository
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function readHistory($id)
+    public function readHistory()
     {
         $result['list'] = [];
         return $result;
     }
 
     // 动态记录
-    public function activeHistory($id)
+    public function activeHistory()
     {
         $result['list'] = [];
         return $result;
@@ -117,7 +118,7 @@ class UserRepository extends CommonRepository
     private function validate($input, $id = null)
     {
         $data = [
-            'account' => $input['account'] ?? '',
+            'account'  => $input['account'] ?? '',
             'password' => isset($input['password']) ? generatePassword($input['password']) : '',
             'mail'     => $input['mail'] ?? '',
             'gender'   => $input['gender'] ?? 0,

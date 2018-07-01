@@ -27,11 +27,14 @@ axios.interceptors.response.use((response) => {
         router.push({ path: '/login' });
         return false;
     }
-    let { status, data, message } = response.data;
+    let { status, data, message, code } = response.data;
     // 重定向
     if (!status) {
         // 返回失败直接处理
         new Vue().$Message.error(message);
+        if (code && code == 401) {
+            router.push({ path: '/login' });
+        }
         return Promise.reject(response);
         // return new Promise(() => {});
     }

@@ -1,18 +1,13 @@
 <?php
 namespace App\Repositories\Frontend;
 
-use Ububs\Core\Component\Db\Db;
-
 class ArticleRepository extends CommonRepository
 {
-    // 已下架
-    const NOT_SHOW_STATUS = 0;
     // 正常
     const COMMON_STATUS = 10;
-    // 草稿标识
-    const DRAFT_STATUS = 20;
-    // 回收站标识
-    const RECYCLE_STATUS = 30;
+
+    public $table  = 'article';
+    public $fields = ['id', 'title', 'created_at'];
 
     /**
      * 获取列表
@@ -21,13 +16,13 @@ class ArticleRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination = isset($input['pagination']) ? $input['pagination'] : [];
-        $dbInstance = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where('status', self::COMMON_STATUS)->orderBy('id', 'desc');
-        if (!empty($pagination)) {
-            $pagination = $this->parsePages($pagination);
-            $dbInstance = $dbInstance->limit($pagination['start'], $pagination['limit']);
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $query                         = $this->getDB()->selects($fields)->where($wheres)->where('status', self::COMMON_STATUS)->orderBy('id', 'desc');
+        if (isset($input['pagination'])) {
+            $query->pagination($pages);
         }
-        $result['lists'] = $dbInstance->get();
+        $result['lists'] = $query->get();
+        $result['total'] = $this->getDB()->where($wheres)->count();
         return $result;
     }
     /**
@@ -38,28 +33,39 @@ class ArticleRepository extends CommonRepository
     public function show($id)
     {
         $result['list'] = [];
-        $list = Db::table('article')->selects(['title', 'content', 'created_at'])->where([
-            'id' => $id,
-            'status' => self::COMMON_STATUS
+        $list           = $this->getDB()->selects($this->fields)->where([
+            'id'     => $id,
+            'status' => self::COMMON_STATUS,
         ])->first();
         if (empty($list)) {
             return $result;
         }
-        $result['list'] = $list;
-        // 获取上一篇
-        $result['prev'] = $this->getPrev($id);
-        // 获取下一篇
-        $result['next'] = $this->getNext($id);
+        $result['list']                        = $list;
+        list($result['prev'], $result['next']) = [$this->getPrev($id), $this->getNext($id)];
         return $result;
     }
 
     private function getPrev($id)
     {
-        return Db::table('article')->selects(['id', 'title'])->where('id', '<', $id)->where('status', self::COMMON_STATUS)->orderBy('id', 'desc')->first();
+        $minId = $this->getDB()->where('status', self::COMMON_STATUS)->min('id');
+        do {
+            $result = $this->getDB()->selects($this->fields)->where([
+                'id'     => --$id,
+                'status' => self::COMMON_STATUS,
+            ])->first();
+        } while (empty($result) && $id > $minId);
+        return $result;
     }
 
     private function getNext($id)
     {
-        return Db::table('article')->selects(['id', 'title'])->where('id', '>', $id)->where('status', self::COMMON_STATUS)->orderBy('id', 'asc')->first();
+        $maxId = $this->getDB()->where('status', self::COMMON_STATUS)->max('id');
+        do {
+            $result = $this->getDB()->selects($this->fields)->where([
+                'id'     => ++$id,
+                'status' => self::COMMON_STATUS,
+            ])->first();
+        } while (empty($result) && $id < $maxId);
+        return $result;
     }
 }

@@ -57,7 +57,6 @@ class AdminController extends CommonController
     public function show($id)
     {
         $result          = AdminRepository::getInstance()->show($id);
-        $result['roles'] = RoleRepository::getInstance()->options();
         return $this->response($result);
     }
 }

@@ -14,7 +14,7 @@
                             <Col span="16">
                             <Row class-name="data-box" type="flex" align="middle">
                                 <div>
-                                    <h2 class="user-name">{{adminData.account}}<strong class="user-role">（{{adminData.name}}）</strong></h2>
+                                    <h2 class="user-name">{{adminData.account}}<strong class="user-role">（{{adminData.roleName}}）</strong></h2>
                                     <div class="user-detail-data">
                                         <Row>
                                             <Col span="8" style="padding: 0">
@@ -34,7 +34,7 @@
                         <Col span="8">
                         <p class="notwrap">上次登录时间：</p>
                         </Col>
-                        <Col span="16" class="padding-left-8">{{adminData.last_login_time | defaultValue('未登录')}} <a href="#" v-if="adminData.last_login_time">(查询历史)</a></Col>
+                        <Col span="16" class="padding-left-8">{{adminData.last_login_time | parseTime}} <a href="#" v-if="adminData.last_login_time">(查询历史)</a></Col>
                     </Row>
                     <Row class="margin-top-8">
                         <Col span="8">

@@ -1,10 +1,12 @@
 <?php
 namespace App\Repositories\Backend;
 
-use Ububs\Core\Component\Db\Db;
-
 class AdminRepository extends CommonRepository
 {
+
+    public $table  = 'admin';
+    public $fields = ['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'];
+
     /**
      * 获取列表
      * @param  array $input
@@ -12,12 +14,9 @@ class AdminRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination      = isset($input['pagination']) ? $input['pagination'] : [];
-        $search          = isset($input['search']) ? $input['search'] : [];
-        $pagination      = $this->parsePages($pagination);
-        $whereParams     = $this->parseWheres($search);
-        $result['lists'] = Db::table('admin')->selects(['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where($whereParams)->limit($pagination['start'], $pagination['limit'])->get();
-        $result['total'] = Db::table('admin')->where($whereParams)->count();
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $result['lists']               = $this->getDB()->selects($fields)->where($wheres)->pagination($pages)->get();
+        $result['total']               = $this->getDB()->where($wheres)->count();
         return $result;
     }
 
@@ -28,10 +27,12 @@ class AdminRepository extends CommonRepository
      */
     public function show($id)
     {
-        $result['list'] = Db::table('admin')->selects(['id', 'account', 'role_id', 'mail', 'last_login_ip', 'last_login_time', 'status'])->where(['id' => $id])->first();
-        if (empty($result['list'])) {
+        $list = $this->getDB()->selects($this->fields)->where(['id' => $id])->first();
+        if (empty($list)) {
             return ['code' => 'common', '5003'];
         }
+        $list['roleName'] = $this->getDB('role')->where('id', $list['role_id'])->value('name');
+        $result['list']   = $list;
         return $result;
     }
 
@@ -50,7 +51,7 @@ class AdminRepository extends CommonRepository
                     $runIds[] = $id;
                 }
             }
-            Db::table('admin')->whereIn('id', $runIds)->delete();
+            $this->getDB()->whereIn('id', $runIds)->delete();
         }
         return [
             'message' => ['common', '2001'],
@@ -67,7 +68,7 @@ class AdminRepository extends CommonRepository
         if (!$data = $this->validate($input)) {
             return ['code' => ['common', '1003']];
         }
-        $result = Db::table('admin')->create($data);
+        $result = $this->getDB()->create($data);
         if (!$result) {
             return ['code' => ['common', '1002']];
         }
@@ -82,13 +83,13 @@ class AdminRepository extends CommonRepository
      */
     public function update($id, $input)
     {
-        if (!$exist = Db::table('admin')->where('id', $id)->exist()) {
+        if (!$exist = $this->getDB()->where('id', $id)->exist()) {
             return ['code' => ['common', '5003']];
         }
         if (!$data = $this->validate($input, 'update')) {
             return ['code' => ['common', '1003']];
         }
-        $result = Db::table('admin')->where('id', $id)->update($data);
+        $result = $this->getDB()->where('id', $id)->update($data);
         if (!$result) {
             return ['code' => ['common', '3002']];
         }
@@ -114,7 +115,7 @@ class AdminRepository extends CommonRepository
         $result = [
             'account' => $account,
             'status'  => $input['status'] ? intval($input['status']) : 0,
-            'role_id'  => $input['role_id'] ? intval($input['role_id']) : 0,
+            'role_id' => $input['role_id'] ? intval($input['role_id']) : 0,
             'mail'    => $input['mail'] ?? '',
         ];
         if ($password) {

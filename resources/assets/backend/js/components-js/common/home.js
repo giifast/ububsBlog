@@ -34,12 +34,12 @@ export default {
     },
     methods: {
         initDetail() {
-            this.getAdminDetail();
+            this.getAdminInfo();
             this.getReadHistory();
             this.getActiveHistory();
             this.getOnlineHistory();
         },
-        getAdminDetail() {
+        getAdminInfo() {
             let _this = this;
             axios.get('/backend/admin/' + _this.adminId).then((response) => {
                 let { data } = response.data;
@@ -48,25 +48,25 @@ export default {
         },
         getReadHistory() {
             let _this = this;
-            axios.get('/backend/user/read/' + _this.adminId).then((response) => {
+            axios.get('/backend/user/read').then((response) => {
                 let { data } = response.data;
                 _this.readData = data.list;
             });
         },
         getActiveHistory() {
             let _this = this;
-            axios.get('/backend/user/active/' + _this.adminId).then((response) => {
+            axios.get('/backend/user/active').then((response) => {
                 let { data } = response.data;
                 _this.activeData = data.list;
             });
         },
-        getOnlineHistory() {
-            let _this = this;
-            axios.get('/backend/user/online/' + _this.adminId).then((response) => {
-                let { data } = response.data;
-                _this.onlineData = data.list;
-            });
-        },
+        // getOnlineHistory() {
+        //     let _this = this;
+        //     axios.get('/backend/user/online').then((response) => {
+        //         let { data } = response.data;
+        //         _this.onlineData = data.list;
+        //     });
+        // },
         initOnlineEChart() {
             let myChart = echarts.init(document.getElementById('onlineChart'));
             myChart.setOption({

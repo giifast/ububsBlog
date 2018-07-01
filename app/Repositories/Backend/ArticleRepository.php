@@ -6,7 +6,6 @@ use Ububs\Core\Component\Db\Db;
 
 class ArticleRepository extends CommonRepository
 {
-
     // 已下架
     const NOT_SHOW_STATUS = 0;
     // 正常
@@ -16,6 +15,9 @@ class ArticleRepository extends CommonRepository
     // 回收站标识
     const RECYCLE_STATUS = 30;
 
+    public $table  = 'article';
+    public $fields = ['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'];
+
     /**
      * 获取列表
      * @param  array $input
@@ -23,12 +25,9 @@ class ArticleRepository extends CommonRepository
      */
     public function lists($input)
     {
-        $pagination      = isset($input['pagination']) ? $input['pagination'] : '';
-        $search          = isset($input['search']) ? $input['search'] : '';
-        $pagination      = $this->parsePages($pagination);
-        $wheres          = $this->parseWheres($search);
-        $result['lists'] = Db::table('article')->selects(['id', 'title', 'category_menu_id', 'author', 'created_at', 'status'])->where($wheres)->limit($pagination['start'], $pagination['limit'])->get();
-        $result['total'] = Db::table('article')->where($wheres)->count();
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $result['lists']               = $this->getDB()->selects($fields)->where($wheres)->orderBy('id', 'desc')->pagination($pages)->get();
+        $result['total']               = $this->getDB()->where($wheres)->count();
         return $result;
     }
 
@@ -225,7 +224,7 @@ class ArticleRepository extends CommonRepository
             'category_menu_id' => $input['category_menu_id'] ?? 0,
             'thumbnail'        => $input['thumbnail'] ?? '',
             'reprinted'        => isset($input['reprinted']) ? (int) $input['reprinted'] : 0,
-            'status'           => $input['status'] ?? 0
+            'status'           => $input['status'] ?? 0,
         ];
         // 草稿无需校验
         if (isset($input['draft']) && $input['draft']) {

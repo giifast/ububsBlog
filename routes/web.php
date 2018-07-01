@@ -52,12 +52,12 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     // 用户模块
     $this->addRoutes('GET', '/user', 'UserController@index');
     $this->addRoutes('GET', '/user/lists', 'UserController@lists');
-    $this->addRoutes('GET', '/user/{id}', 'UserController@show');
+    $this->addRoutes('GET', '/user/read', 'UserController@readHistory');
+    $this->addRoutes('GET', '/user/active', 'UserController@activeHistory');
+    $this->addRoutes('GET', '/user/online', 'UserController@onlineHistory');
     $this->addRoutes('GET', '/user/detail/{id}', 'UserController@detail');
-    $this->addRoutes('GET', '/user/read/{id}', 'UserController@readHistory');
-    $this->addRoutes('GET', '/user/active/{id}', 'UserController@activeHistory');
-    $this->addRoutes('GET', '/user/online/{id}', 'UserController@onlineHistory');
     $this->addRoutes('PUT', '/user/{id}', 'UserController@update');
+    $this->addRoutes('GET', '/user/{id}', 'UserController@show');
     $this->addRoutes('POST', '/user', 'UserController@store');
     $this->addRoutes('DELETE', '/user/{ids}', 'UserController@delete');
 

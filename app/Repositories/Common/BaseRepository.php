@@ -2,6 +2,7 @@
 namespace App\Repositories\Common;
 
 use FwSwoole\Core\Tool\Config;
+use Ububs\Core\Component\Db\Db;
 
 class BaseRepository
 {
@@ -16,25 +17,66 @@ class BaseRepository
         return self::$instance[$class];
     }
 
+    public function getDB($table = '')
+    {
+        if ($table === '') {
+            $table = isset($this->table) ? $this->table : '';
+        }
+        if (!$table) {
+            throw new \Exception("Table is empty", 1);
+        }
+        return DB::table($table);
+    }
+
+    /**
+     * 解析前端传递的参数
+     * @param  array $input 参数
+     * @return array
+     */
+    public function parseParams($input)
+    {
+        $fields      = isset($input['fields']) ? $input['fields'] : [];
+        $pagination  = isset($input['pagination']) ? $input['pagination'] : [];
+        $search      = isset($input['search']) ? $input['search'] : [];
+        $fieldsR     = $this->parseFields($fields);
+        $paginationR = $this->parsePages($pagination);
+        $searchR     = $this->parseWheres($search);
+        return [$fieldsR, $paginationR, $searchR];
+    }
+
+    public function parseFields($fields)
+    {
+        if (!empty($fields)) {
+            return $fields;
+        }
+        if (isset($this->fields) && !empty($this->fields)) {
+            return $this->fields;
+        }
+        return '*';
+    }
+
+    private function getTable()
+    {
+        return $this->table;
+    }
+
     /**
      * 解析 pagination 分页参数
      * @param  json $pagination 分页信息
      * $pagination = [
-     * 		'currentPage' => 3, 第几页
-     * 		'pageSize' => 10, 每页条数
+     *         'currentPage' => 3, 第几页
+     *         'pageSize' => 10, 每页条数
      * ];
      * @return array
      */
     public function parsePages($pagination)
     {
-        if($pagination) {
+        if ($pagination) {
             $pagination = json_decode($pagination, true);
         }
-    	$page = isset($pagination['currentPage']) ? intval($pagination['currentPage']) : 1;
-    	$limit = isset($pagination['pageSize']) ? intval($pagination['pageSize']) : intval(config('app.page_size', 10));
-    	$result['start'] = ($page - 1) * $limit;
-    	$result['limit'] = $limit;
-    	return $result;
+        $page  = isset($pagination['currentPage']) ? intval($pagination['currentPage']) : 1;
+        $limit = isset($pagination['pageSize']) ? intval($pagination['pageSize']) : intval(config('app.page_size', 10));
+        return [($page - 1) * $limit, $limit];
     }
 
     /**
@@ -74,4 +116,5 @@ class BaseRepository
         }
         return $result;
     }
+
 }

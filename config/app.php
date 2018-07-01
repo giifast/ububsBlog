@@ -61,6 +61,6 @@ return [
         'username' => '292304400@qq.com',
         'password' => 'plzicovtdtzgbhjg',
         'fromName' => 'Mailer',
-
     ],
+    'token_expire_time' => 7200
 ];
