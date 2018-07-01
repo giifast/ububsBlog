@@ -33,7 +33,7 @@ class ArticleRepository extends CommonRepository
     public function show($id)
     {
         $result['list'] = [];
-        $list           = $this->getDB()->selects($this->fields)->where([
+        $list           = $this->getDB()->selects(['id', 'title', 'created_at', 'content'])->where([
             'id'     => $id,
             'status' => self::COMMON_STATUS,
         ])->first();
