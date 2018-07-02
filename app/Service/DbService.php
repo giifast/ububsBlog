@@ -49,6 +49,9 @@ class DbService extends BaseService
                 continue;
             }
             foreach ($row as $fie => $zd) {
+                foreach ($zd as $index => $insertVal) {
+                    $zd[$index] = addslashes($insertVal);
+                }
                 $sqlStr = "INSERT INTO `" . $table . "` VALUES (";
                 $sqlStr .= "'" . implode("','", $zd) . "', ";
                 //去掉最后一个逗号和空格
