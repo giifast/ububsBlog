@@ -27,6 +27,10 @@ git clone git@github.com:linlianmin/ububsBlog.git
 
 # 安装依赖
 composer install
+npm install
+
+# 编译文件
+npm run build
 
 # 配置数据库参数等
 config/*.php
