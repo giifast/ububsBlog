@@ -13,7 +13,7 @@
 			<ul class="leave-ul">
 				<template v-for="lists in data">
 					<li class="leave-li" v-for="list in lists" :key="list.id">
-						<a href="javascript:;" class="ub-user">{{list.address | defaultValue('未知地区')}} 网友(<span>{{list.created_at}}</span>)：</a>
+						<a href="javascript:;" class="ub-user">{{list.address | defaultValue('未知地区')}} 网友(<span>{{list.created_at | parseTime('{d} {M} {y}')}}</span>)：</a>
 						<span class="ub-content">{{list.content}}</span>
 					</li>
 				</template>
