@@ -26,5 +26,25 @@
 				}
 			}
 		}
+		.comment-lists {
+			margin-top: 3rem;
+	        .comment-li {
+	            font-size: 13px;
+	            margin-bottom: 5px;
+	            list-style: none;
+	            .ub-user {
+	                font-size: 13px;
+	                color: blue;
+	            }
+	            .ub-content {
+
+	            }
+	        }
+	        .load-more {
+	            a {
+	                color: #296bcc;
+	            }
+	        }
+	    }
 	}
 }

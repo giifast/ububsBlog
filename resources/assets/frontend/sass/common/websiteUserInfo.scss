@@ -74,8 +74,11 @@
                 a {
                     font-size: 0.6rem;
                 }
-                a:first-child:after {
+                a:after {
                     content: "/";
+                }
+                a:last-child:after {
+                    content: "";
                 }
             }
         }

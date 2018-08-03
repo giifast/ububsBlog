@@ -11,7 +11,11 @@
                 <p><router-link to="/article/index">技术博文</router-link></p>
                 <p><router-link to="/leave/index">留言</router-link></p>
                 <p><a href="https://github.com/linlianmin" target="_blank">github地址</a></p>
-                <p class="footer-menu"><a href="/backend">后台体验</a> <router-link to="/about">关于</router-link></p>
+                <p class="footer-menu">
+                    <a href="/backend">后台体验</a>
+                    <router-link to="/tools">工具</router-link>
+                    <router-link to="/about">关于</router-link>
+                </p>
             </div>
             <div class="website-menu-mobile">
                 <ul>
