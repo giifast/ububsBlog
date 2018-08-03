@@ -5,6 +5,11 @@
         <div id="main-container">
             <websiteUserInfo></websiteUserInfo>
             <div class="website-content-container">
+                <div class="website-notice" v-if="websiteData.showNotice">
+                    <div class="website-notice-content">
+                        <p>本站已经运营2年了，感谢大家的来访！</p>
+                    </div>
+                </div>
                 <div class="content-container">
                 	<router-view></router-view>
                 </div>

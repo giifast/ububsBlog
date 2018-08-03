@@ -14,4 +14,12 @@ class IndexRepository extends CommonRepository
 		$result['list'] = Db::table('website_config')->find(1);
 		return $result;
 	}
+
+	public function website()
+	{
+		$result['list'] = [
+			'showNotice' => false
+		];
+		return $result;
+	}
 }

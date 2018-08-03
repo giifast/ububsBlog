@@ -7,7 +7,7 @@ class VerifyCsrfToken extends VerifyCsrfTokenMiddleware
 {
 
 	protected $except = [
-        '/home', '/backend', '/download'
+        '/', '/backend', '/download'
     ];
 
 }

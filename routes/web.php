@@ -1,6 +1,6 @@
 <?php
 $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
-    $this->addRoutes('GET', '/home', 'AuthController@frontend');
+    $this->addRoutes('GET', '/', 'AuthController@frontend');
     $this->addRoutes('GET', '/login', 'AuthController@frontendLogin');
     $this->addRoutes('GET', '/logout', 'AuthController@frontendLogout');
     $this->addRoutes('GET', '/backend', 'AuthController@backend');
@@ -15,6 +15,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
 });
 
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
+    $this->addRoutes('GET', '/website', 'IndexController@website');
     $this->addRoutes('GET', '/about', 'IndexController@about');
 
     $this->addRoutes('GET', '/articles', 'ArticleController@lists');

@@ -116,6 +116,19 @@ button {
     }
 }
 
+.website-notice {
+    padding: 0.5rem 1.5rem;
+    .website-notice-content {
+        padding: 1rem;
+        background-color: #CAFF70;
+        p {
+            color: #777;
+            font-size: 13px;
+        }
+    }
+    
+}
+
 .website-link {
     padding: 0.5rem 1.5rem;
     p {

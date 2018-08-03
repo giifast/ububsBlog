@@ -16,4 +16,10 @@ class IndexController extends CommonController
         $result = IndexRepository::getInstance()->about();
         return $this->response($result);
     }
+
+    public function website()
+    {
+    	$result = IndexRepository::getInstance()->website();
+        return $this->response($result);
+    }
 }
