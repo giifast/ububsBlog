@@ -1,3 +1,5 @@
+composer.lock
+yarn.lock
 /node_modules
 /vendor
 /public

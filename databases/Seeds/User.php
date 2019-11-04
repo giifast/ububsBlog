@@ -1,4 +1,5 @@
 <?php
+
 namespace Databases\Seeds;
 
 use Ububs\Core\Component\Db\Db;
@@ -12,7 +13,7 @@ class User extends Seed
         $data = [];
         for ($i = 0; $i < 1000; $i++) {
             $data[] = [
-                'username'        => '林联敏' . $i,
+                'account'        => '林联敏' . $i,
                 'password'        => generatePassword('123123'),
                 'mail'            => 'linlm' . $i . '@gmail.com',
                 'gender'          => 10,

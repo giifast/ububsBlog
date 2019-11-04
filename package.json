@@ -12,6 +12,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.18",
+    "compression-webpack-plugin": "^1.1.12",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1",
     "css-loader": "^0.28.10",
@@ -39,7 +40,8 @@
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "echarts": "^4.0.4",
+    "image-webpack-loader": "*",
     "mavon-editor": "^2.5.2",
-    "image-webpack-loader": "*"
+    "yarn": "^1.19.1"
   }
 }

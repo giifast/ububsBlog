@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/linlianmin/ububs.git",
-                "reference": "d62283ebdb595f197100cc5d9d898d9cb7c42bc1"
+                "reference": "ba18f63c51c9caedf5572ba5a1ba8a1eb4bd597b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/linlianmin/ububs/d62283ebdb595f197100cc5d9d898d9cb7c42bc1.zip",
-                "reference": "d62283ebdb595f197100cc5d9d898d9cb7c42bc1",
+                "url": "https://api.github.com/repos/linlianmin/ububs/zipball/ba18f63c51c9caedf5572ba5a1ba8a1eb4bd597b",
+                "reference": "ba18f63c51c9caedf5572ba5a1ba8a1eb4bd597b",
                 "shasum": ""
             },
             "require": {
@@ -38,7 +38,7 @@
                 }
             ],
             "description": "this is a framework for swoole",
-            "time": "2018-05-26T07:55:12+00:00"
+            "time": "2018-07-02T01:38:21+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -50,7 +50,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/nikic/FastRoute/181d480e08d9476e61381e04a71b34dc0432e812.zip",
+                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/181d480e08d9476e61381e04a71b34dc0432e812",
                 "reference": "181d480e08d9476e61381e04a71b34dc0432e812",
                 "shasum": ""
             },
