@@ -23,7 +23,7 @@
 mysql + php7 + swoole (我自己做了一个docker容器，可供使用，具体在博客里面有介绍)
 
 # 克隆项目
-git clone git@github.com:linlianmin/ububsBlog.git
+git clone git@github.com:codeMingo/ububsBlog.git
 
 # 安装依赖
 composer install
