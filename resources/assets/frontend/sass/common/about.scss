@@ -1,8 +1,8 @@
 .about-container {
 	background: #fff;
 	padding: 1rem;
-	.v-note-wrapper .v-note-panel.shadow {
-		box-shadow: none;
+	.v-note-wrapper {
+		box-shadow: none !important;
 	}
 	.v-show-content {
 		padding: 0 !important;

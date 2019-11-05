@@ -8,9 +8,9 @@ const productionGzipExtensions = ['js', 'css']
 module.exports = {
     // devtool: 'eval-source-map',
     // 开发环境
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
     // 生产环境
-    // devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     // 入口文件
     entry: {
         "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
@@ -88,7 +88,6 @@ module.exports = {
             algorithm: 'gzip',
             test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
             threshold: 10240,
-            // deleteOriginalAssets:true, //删除源文件，不建议
             minRatio: 0.8
         }),
         new webpack.BannerPlugin('版权所有，翻版必究'),

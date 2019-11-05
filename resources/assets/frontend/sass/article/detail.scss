@@ -7,8 +7,8 @@
 		margin: 1rem 0;
 	}
 	.article-content {
-		.v-note-wrapper .v-note-panel.shadow {
-			box-shadow: none;
+		.v-note-wrapper {
+			box-shadow: none !important;
 		}
 		.v-show-content {
 			padding: 0 !important;

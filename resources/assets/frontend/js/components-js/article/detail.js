@@ -11,19 +11,21 @@ export default {
             list: {},
             prev: {},
             next: {},
+            hasMore: false,
+            data: {}
         };
     },
     created() {
         this.initDetail();
     },
     watch: {
-        '$route' (to, from) {  
+        '$route'(to, from) {
             this.id = to.params.id;
             this.initDetail();
-        }  
+        }
     },
     methods: {
-        initDetail: function() {
+        initDetail: function () {
             let _this = this;
             axios.get('/article/' + this.id).then((response) => {
                 let { data } = response.data;

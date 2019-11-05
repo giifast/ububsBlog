@@ -20,7 +20,7 @@ export function parseTime(time, cFormat) {
     const time_str = format.replace(/{(y|m|M|d|h|i|s|a)+}/g, (result, key) => {
         let value = formatObj[key];
         if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1];
-        if (key === 'M') return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][value -1];
+        if (key === 'M') return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][value - 1];
         if (result.length > 0 && value < 10) {
             value = '0' + value;
         }
@@ -42,7 +42,7 @@ export function formatByOptions(val, options, objKey, objValue, text = '-') {
     if (val == undefined) {
         return text;
     }
-    options.forEach(function(item) {
+    options.forEach(function (item) {
         if (val == item[objKey]) {
             return text = item[objValue];
         }

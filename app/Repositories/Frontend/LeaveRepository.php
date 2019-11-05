@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Frontend;
 
 use App\Service\ApiService;
@@ -34,7 +35,6 @@ class LeaveRepository extends CommonRepository
         if (!$result) {
             return ['code' => ['leave', '4001']];
         }
-        $data['created_at'] = date('d M Y', $data['created_at']);
         return [
             'data'    => $data,
             'message' => ['leave', '1001'],
