@@ -33,7 +33,7 @@ npm install
 npm run build
 
 # 配置数据库参数等
-config/*.php
+vi config/*.php
 
 # 执行database文件，创建数据库
 php vendor/linlm/ububs/bin/ububs.php db:migration
