@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Common\BaseController;
+use App\Repositories\Backend\AdminRepository;
 use App\Repositories\Backend\LoginRepository;
 use Ububs\Core\Http\Interaction\Request;
 
@@ -20,6 +22,13 @@ class AuthController extends BaseController
         return $this->response($result);
     }
 
+    public function backendVisitLogin()
+    {
+        $input = AdminRepository::getInstance()->store_visit_user();
+        $result = LoginRepository::getInstance()->login($input);
+        return $this->response($result);
+    }
+
     public function backendLogout()
     {
         $result = LoginRepository::getInstance()->logout();
@@ -30,5 +39,4 @@ class AuthController extends BaseController
     {
         $this->display('frontend.frontend');
     }
-
 }

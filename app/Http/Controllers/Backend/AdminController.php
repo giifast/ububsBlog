@@ -2,8 +2,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Repositories\Backend\AdminRepository;
-use App\Repositories\Backend\RoleRepository;
-use Ububs\Core\Http\Interaction\Request;
 
 class AdminController extends CommonController
 {

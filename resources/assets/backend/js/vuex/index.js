@@ -11,7 +11,7 @@ const store = new Vuex.Store({
             // {path: '/home', text: '測試1'},
             // {path: '', text: '测试2'},
         ],
-        'fastMenus' : [
+        'fastMenus': [
             // {path: '/home', text: '測試1'}
         ],
         // 管理员登录信息

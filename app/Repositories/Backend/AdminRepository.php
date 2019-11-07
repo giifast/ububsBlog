@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Repositories\Backend;
 
 class AdminRepository extends CommonRepository
 {
 
     public $table  = 'admin';
-    public $fields = ['id', 'account', 'mail', 'last_login_ip', 'last_login_time', 'status'];
+    public $fields = ['id', 'account', 'role_id', 'mail', 'last_login_ip', 'last_login_time', 'status'];
 
     /**
      * 获取列表
@@ -73,6 +74,20 @@ class AdminRepository extends CommonRepository
             return ['code' => ['common', '1002']];
         }
         return ['message' => ['common', '1001']];
+    }
+
+    public function store_visit_user()
+    {
+        $t = time();
+        $input = [
+            'account' => 'visit_' . $t,
+            'mail' => $t . '@qq.com',
+            'password' => '123123',
+            'role_id' => '2',
+            'status' => '1'
+        ];
+        $this->store($input);
+        return $input;
     }
 
     /**

@@ -36,6 +36,20 @@ export default {
                 }
             })
         },
+        visitLogin() {
+            let _this = this;
+            _this.loading = true;
+            axios.post('/backend/visit-login', _this.loginForm).then((response) => {
+                let { data, message } = response.data;
+                localStorage.setItem('ububsAdminData', JSON.stringify(data.list));
+                _this.$store.commit('setStateValue', { 'loading': false, 'adminData': JSON.parse(localStorage.getItem('ububsAdminData')) });
+                _this.$Message.success(message);
+                _this.$router.push({ path: '/home' });
+                _this.loading = true;
+            }).catch((error) => {
+                _this.loading = true;
+            });
+        },
         reset(name) {
             this.$refs[name].resetFields();
         }

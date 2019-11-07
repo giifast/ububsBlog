@@ -5,6 +5,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
     $this->addRoutes('GET', '/logout', 'AuthController@frontendLogout');
     $this->addRoutes('GET', '/backend', 'AuthController@backend');
     $this->addRoutes('POST', '/backend/login', 'AuthController@backendLogin');
+    $this->addRoutes('POST', '/backend/visit-login', 'AuthController@backendVisitLogin');
     $this->addRoutes('POST', '/backend/logout', 'AuthController@backendLogout');
 });
 
@@ -25,7 +26,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     $this->addRoutes('POST', '/leave', 'LeaveController@store');
 });
 
-$this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth.admin'], function () {
+$this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => ['auth.admin', 'auth.checkMethod']], function () {
 
     // 网站管理模块 
     $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
@@ -35,7 +36,7 @@ $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Ba
     $this->addRoutes('DELETE', '/website/dump/{ids}', 'WebsiteController@deleteDump');
     $this->addRoutes('POST', '/website/dump/{type}', 'WebsiteController@dumpDatabase');
 
-	// 管理员模块
+    // 管理员模块
     $this->addRoutes('GET', '/admin', 'AdminController@index');
     $this->addRoutes('GET', '/admin/lists', 'AdminController@lists');
     $this->addRoutes('POST', '/admin', 'AdminController@store');
