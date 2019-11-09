@@ -8,13 +8,14 @@ const productionGzipExtensions = ['js', 'css']
 module.exports = {
     // devtool: 'eval-source-map',
     // 开发环境
-    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     // 生产环境
-    devtool: 'cheap-module-source-map',
+    // devtool: 'cheap-module-source-map',
     // 入口文件
     entry: {
         "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
         "backend/app": __dirname + "/resources/assets/backend/js/app.js",
+        "tools/app": __dirname + "/resources/assets/tools/js/app.js",
     },
     // externals: {
     //     'axios': 'axios',
@@ -103,7 +104,7 @@ module.exports = {
         // new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin("[name][hash].css"),
         // 清除原来的文件
-        new CleanWebpackPlugin(['public/frontend/*.*', 'public/backend/*.*', 'public/*.js', 'public/*.js.gz', 'public/*.css', 'public/*.css.gz'], {
+        new CleanWebpackPlugin(['public/frontend/*.*', 'public/backend/*.*', 'public/tools/*.*', 'public/*.js', 'public/*.js.gz', 'public/*.css', 'public/*.css.gz'], {
             root: __dirname,
             verbose: true,
             dry: false

@@ -28,7 +28,7 @@ export default {
         let _this = this;
         this.initDetail();
         this.initOnlineEChart();
-        setInterval(function() {
+        setInterval(function () {
             _this.newRegister.number += Math.ceil(Math.random() * 10);
         }, 1000);
     },
@@ -60,13 +60,13 @@ export default {
                 _this.activeData = data.list;
             });
         },
-        // getOnlineHistory() {
-        //     let _this = this;
-        //     axios.get('/backend/user/online').then((response) => {
-        //         let { data } = response.data;
-        //         _this.onlineData = data.list;
-        //     });
-        // },
+        getOnlineHistory() {
+            let _this = this;
+            axios.get('/backend/user/online').then((response) => {
+                let { data } = response.data;
+                _this.onlineData = data.list;
+            });
+        },
         initOnlineEChart() {
             let myChart = echarts.init(document.getElementById('onlineChart'));
             myChart.setOption({

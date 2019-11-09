@@ -39,4 +39,9 @@ class AuthController extends BaseController
     {
         $this->display('frontend.frontend');
     }
+
+    public function tools()
+    {
+        $this->display('tools.tools');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 $this->addGroup(['namespace' => 'App\Http\Controllers\Auth'], function () {
     $this->addRoutes('GET', '/', 'AuthController@frontend');
+    $this->addRoutes('GET', '/tools', 'AuthController@tools');
     $this->addRoutes('GET', '/login', 'AuthController@frontendLogin');
     $this->addRoutes('GET', '/logout', 'AuthController@frontendLogout');
     $this->addRoutes('GET', '/backend', 'AuthController@backend');

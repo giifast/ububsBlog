@@ -22,7 +22,7 @@
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.30.1",
     "img-loader": "^2.0.1",
-    "iview": "^2.9.2",
+    "view-design": "^4.0.0",
     "node-sass": "^4.7.2",
     "nprogress": "^0.2.0",
     "postcss-loader": "^2.1.0",

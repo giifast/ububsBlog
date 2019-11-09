@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Ububs\Core\Component\Middleware\Adapter\VerifyCsrfToken as VerifyCsrfTokenMiddleware;
@@ -6,8 +7,7 @@ use Ububs\Core\Component\Middleware\Adapter\VerifyCsrfToken as VerifyCsrfTokenMi
 class VerifyCsrfToken extends VerifyCsrfTokenMiddleware
 {
 
-	protected $except = [
-        '/', '/backend', '/download'
+    protected $except = [
+        '/', '/tools', '/backend', '/download'
     ];
-
 }

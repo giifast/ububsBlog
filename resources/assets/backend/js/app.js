@@ -9,8 +9,8 @@ import './axios';
 import router from './router';
 import './plugin';
 import * as filters from './filter';
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import iView from 'view-design';
+import 'view-design/dist/styles/iview.css';
 
 Vue.use(iView);
 
@@ -22,9 +22,9 @@ Object.keys(filters).forEach(key => {
 const app = new Vue({
     beforeCreate() {
         // 初始化 adminData
-    	if (localStorage.hasOwnProperty('ububsAdminData')) {
-    		this.$store.commit('setStateValue', { 'adminData': JSON.parse(localStorage.getItem('ububsAdminData')) });
-    	}
+        if (localStorage.hasOwnProperty('ububsAdminData')) {
+            this.$store.commit('setStateValue', { 'adminData': JSON.parse(localStorage.getItem('ububsAdminData')) });
+        }
 
         // 初始化 fastMenu
         if (localStorage.hasOwnProperty('ububsFastMenus')) {

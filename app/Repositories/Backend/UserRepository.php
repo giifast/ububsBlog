@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Backend;
 
 use Ububs\Core\Component\Db\Db;
@@ -109,7 +110,7 @@ class UserRepository extends CommonRepository
     }
 
     // 在线记录
-    public function onlineHistory($id)
+    public function onlineHistory()
     {
         $result['list'] = [];
         return $result;

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Backend;
 
 use App\Repositories\Backend\UserRepository;
@@ -78,9 +79,9 @@ class UserController extends CommonController
     }
 
     // 在线记录
-    public function onlineHistory($id)
+    public function onlineHistory()
     {
-        $result = UserRepository::getInstance()->onlineHistory($id);
+        $result = UserRepository::getInstance()->onlineHistory();
         return $this->response($result);
     }
 }

@@ -2,11 +2,12 @@
 
 return [
     'server_type'        => 'swoole_http_server',
-    'server_client'      => '\App\Http\Client',
+    'swoole_callback_client'      => '\App\Http\Client',
     'swoole_http_server' => [
         'host'                     => '0.0.0.0',
         'port'                     => '9501',
         'worker_num'               => 4,
+        'log_file'                 => '/tmp/swoole.log',
         'daemonize'                => false,
         'max_request'              => 10000,
         // 抢占模式

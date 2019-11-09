@@ -68,9 +68,18 @@ body {
                 i {
                     margin: 20px 30px 0;
                     cursor: pointer;
+                    transition: all 0.2s ease-in-out;  
+                    -webkit-transition: all 0.2s ease-in-out;  
+                    -moz-transition: all 0.2s ease-in-out;  
+                    -o-transition: all 0.2s ease-in-out; 
                 }
                 i:hover {
                     color: #00CDCD;
+                    transform: rotate(180deg);  
+                    -webkit-transform: rotate(180deg);  
+                    -moz-transform: rotate(180deg);  
+                    -o-transform: rotate(180deg);  
+                    -ms-transform: rotate(180deg); 
                 }
             }
             .header-breadcrumb {
@@ -81,7 +90,7 @@ body {
                 padding-right: 20px;
                 .menu-container {
                     display: inline-block;
-                    margin-right: 15px;
+                    margin-right: 5px;
                     a {
                         position: relative;
                         display: inline-block;
@@ -107,7 +116,6 @@ body {
 
 .table-header {
     margin-bottom: 20px;
-    .search-box {}
     .fastmenu-box {
         text-align: right;
     }
