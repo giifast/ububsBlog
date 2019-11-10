@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Frontend;
 
 class ArticleRepository extends CommonRepository

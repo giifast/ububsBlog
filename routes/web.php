@@ -15,7 +15,7 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Common'], function () {
     $this->addRoutes('GET', '/download', 'FileController@download');
     $this->addRoutes('GET', '/download/key/{module}/{id}', 'FileController@getKey');
 });
-
+// 前端
 $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     $this->addRoutes('GET', '/website', 'IndexController@website');
     $this->addRoutes('GET', '/about', 'IndexController@about');
@@ -27,6 +27,14 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     $this->addRoutes('POST', '/leave', 'LeaveController@store');
 });
 
+// 工具类
+$this->addGroup(['prefix' => '/tools', 'namespace' => 'App\Http\Controllers\Tools'], function () {
+    $this->addRoutes('GET', '/chatrooms', 'ChatController@lists');
+    $this->addRoutes('GET', '/chatroom/{$id}', 'ChatController@show');
+    $this->addRoutes('POST', '/chatroom', 'ChatController@store');
+});
+
+// 后台
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => ['auth.admin', 'auth.checkMethod']], function () {
 
     // 网站管理模块 

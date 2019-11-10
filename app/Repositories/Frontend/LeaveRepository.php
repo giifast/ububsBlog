@@ -3,7 +3,6 @@
 namespace App\Repositories\Frontend;
 
 use App\Service\ApiService;
-use Ububs\Core\Component\Db\Db;
 
 class LeaveRepository extends CommonRepository
 {

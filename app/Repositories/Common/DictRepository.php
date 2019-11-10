@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Common;
 
 use Ububs\Core\Component\Db\Db;

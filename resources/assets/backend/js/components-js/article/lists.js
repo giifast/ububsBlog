@@ -206,11 +206,11 @@ export default {
                 }
             });
         },
-        currentPageChange: function(currentPage) {
+        currentPageChange: function (currentPage) {
             this.pagination.currentPage = currentPage;
             this.lists();
         },
-        pageSizeChange: function(pageSize) {
+        pageSizeChange: function (pageSize) {
             this.pagination.pageSize = pageSize;
             this.lists();
         }

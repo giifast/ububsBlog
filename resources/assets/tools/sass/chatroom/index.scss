@@ -1,0 +1,19 @@
+.website-content-container {
+    height: 100%;
+    .content-container {
+        height: 90%;
+        .c-rooms {
+            width: 70%;
+            position: absolute;
+            left: 15%;
+            top: 35%;
+            .demo-auto-complete-count {
+                float: right;
+                color: #999;
+            }
+            .c-button {
+                margin-top: 10px;
+            }
+        }
+    }
+}
