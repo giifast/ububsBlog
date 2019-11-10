@@ -15,7 +15,7 @@ class LoginRepository extends CommonRepository
      */
     public function login($input)
     {
-        $account = $input['account'] ?? '';
+        $account  = $input['account'] ?? '';
         $password = $input['password'] ?? '';
         $remember = $input['remember'] ?? false;
         if (!$account || !$password) {
@@ -26,9 +26,9 @@ class LoginRepository extends CommonRepository
             return ['code' => ['login', '0002']];
         }
         return [
-            'list' => $result['list'],
-            'token' => $result['__UBUBS_TOKEN__'],
-            'message' => ['login', '0003']
+            'list'      => $result['list'],
+            'token'     => $result['__UBUBS_TOKEN__'],
+            'message'   => ['login', '0003']
         ];
     }
 
