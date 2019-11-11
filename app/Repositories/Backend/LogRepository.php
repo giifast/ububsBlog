@@ -1,8 +1,8 @@
 <?php
 namespace App\Repositories\Backend;
 
-use Ububs\Core\Component\Auth\Auth;
 use FwSwoole\Core\Request;
+use Ububs\Core\Component\Auth\Auth;
 use Ububs\Core\Component\Db\Db;
 
 class LogRepository extends CommonRepository
@@ -25,13 +25,13 @@ class LogRepository extends CommonRepository
         $params     = isset($data['params']) ? json_encode($data['params']) : '';
         $message    = isset($data['message']) ? json_encode($data['message']) : ($result['message'] ? $result['message'] : '');
         $createData = [
-            'admin_id'      => Auth::getInstance('admin')->id(),
-            'action'        => Request::getPathInfo(),
-            'type'          => self::$recordTypeMessage[$type],
+            'admin_id'       => Auth::getInstance('admin')->id(),
+            'action'         => Request::getPathInfo(),
+            'type'           => self::$recordTypeMessage[$type],
             'request_method' => Request::getMethod(),
-            'params'        => $params,
-            'status'        => $result['status'],
-            'message'       => $message,
+            'params'         => $params,
+            'status'         => $result['status'],
+            'message'        => $message,
         ];
         DB::table(self::TABLE_NAME)->create($createData);
         return true;

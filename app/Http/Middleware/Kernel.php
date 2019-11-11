@@ -14,7 +14,7 @@ class Kernel extends KernelMiddleware
      * @var array
      */
     public $routeMiddleware = [
-        'auth.admin' => \App\Http\Middleware\AuthLogin::class,
+        'auth.admin'       => \App\Http\Middleware\AuthLogin::class,
         'auth.checkMethod' => \App\Http\Middleware\AuthCheckMethod::class,
     ];
 }

@@ -38,7 +38,7 @@ class WebsiteRepository extends CommonRepository
         $result = TaskManager::getInstance()->task($input, function (\swoole_server $serv, $task_id, $data) {
             $path = DbService::getInstance()->dumpDatabase($data['name']);
             $this->getDB()->create([
-                'title'      => $data['title'], 
+                'title'      => $data['title'],
                 'admin_id'   => $data['admin_id'],
                 'path'       => $path,
                 'created_at' => time(),

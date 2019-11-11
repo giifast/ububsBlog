@@ -6,7 +6,7 @@ use Ububs\Core\Component\Db\Db;
 class LeaveRepository extends CommonRepository
 {
 
-    public $table = 'leave_message';
+    public $table  = 'leave_message';
     public $fields = ['id', 'content', 'mail', 'ip_address', 'address', 'created_at', 'status'];
 
     /**
@@ -96,7 +96,7 @@ class LeaveRepository extends CommonRepository
             return false;
         }
         $data = [
-            'status'   => isset($input['status']) ? intval($input['status']) : 0,
+            'status' => isset($input['status']) ? intval($input['status']) : 0,
         ];
         return $data;
     }

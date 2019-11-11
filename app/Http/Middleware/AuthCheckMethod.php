@@ -8,7 +8,7 @@ use Ububs\Core\Http\Interaction\Request;
 class AuthCheckMethod
 {
     public $codeMessage = [
-        400 => '未授权'
+        400 => '未授权',
     ];
 
     public function handle()

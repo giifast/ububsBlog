@@ -54,7 +54,7 @@ class AdminController extends CommonController
     // 详情
     public function show($id)
     {
-        $result          = AdminRepository::getInstance()->show($id);
+        $result = AdminRepository::getInstance()->show($id);
         return $this->response($result);
     }
 }

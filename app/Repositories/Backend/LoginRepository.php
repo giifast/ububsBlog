@@ -3,7 +3,6 @@
 namespace App\Repositories\Backend;
 
 use Ububs\Core\Component\Auth\Auth;
-use Ububs\Core\Component\Db\Db;
 
 class LoginRepository extends CommonRepository
 {
@@ -26,9 +25,9 @@ class LoginRepository extends CommonRepository
             return ['code' => ['login', '0002']];
         }
         return [
-            'list'      => $result['list'],
-            'token'     => $result['__UBUBS_TOKEN__'],
-            'message'   => ['login', '0003']
+            'list'    => $result['list'],
+            'token'   => $result['__UBUBS_TOKEN__'],
+            'message' => ['login', '0003'],
         ];
     }
 

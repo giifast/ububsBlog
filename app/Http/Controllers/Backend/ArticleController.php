@@ -11,8 +11,8 @@ class ArticleController extends CommonController
     // 列表页面
     public function index()
     {
-        $input  = Request::get();
-        $result = ArticleRepository::getInstance()->lists($input);
+        $input             = Request::get();
+        $result            = ArticleRepository::getInstance()->lists($input);
         $articleOptions    = ArticleRepository::getInstance()->options();
         $dictOptions       = DictRepository::getInstance()->options(['article_status']);
         $result['options'] = array_merge($articleOptions, $dictOptions);
@@ -114,7 +114,7 @@ class ArticleController extends CommonController
     // 详情
     public function detail($id)
     {
-        $result = ArticleRepository::getInstance()->detail($id);
+        $result            = ArticleRepository::getInstance()->detail($id);
         $articleOptions    = ArticleRepository::getInstance()->options();
         $dictOptions       = DictRepository::getInstance()->options(['article_status', 'category']);
         $result['options'] = array_merge($articleOptions, $dictOptions);

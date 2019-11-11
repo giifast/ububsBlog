@@ -91,8 +91,8 @@ class FileRepository extends BaseRepository
          * ];
          */
         $encrypt = time() . '|' . $module . '|' . $id;
-        $configs        = isset(config('download')[$module]) ? config('download')[$module] : [];
-        $enTime         = isset($configs['valid_time']) ? $configs['valid_time'] : 0;
+        $configs = isset(config('download')[$module]) ? config('download')[$module] : [];
+        $enTime  = isset($configs['valid_time']) ? $configs['valid_time'] : 0;
         // 浏览器url不可包含的特殊字符要过滤
         $result['data'] = str_replace('+', '_', encryptionWithTime($encrypt, '', $enTime));
         return $result;
@@ -114,8 +114,8 @@ class FileRepository extends BaseRepository
             return ['code' => ['file', '1002']];
         }
         list($time, $module, $id) = explode('|', $encrypt);
-        $configs       = isset(config('download')[$module]) ? config('download')[$module] : [];
-        $class         = isset($configs['class']) ? $configs['class'] : '';
+        $configs                  = isset(config('download')[$module]) ? config('download')[$module] : [];
+        $class                    = isset($configs['class']) ? $configs['class'] : '';
         if (!$class || !$id) {
             return ['code' => ['file', '1002']];
         }

@@ -8,5 +8,4 @@ class RegisterController extends CommonController
     {
 
     }
-
 }

@@ -5,7 +5,7 @@ use Ububs\Core\Component\Db\Db;
 
 class RoleRepository extends CommonRepository
 {
-    public $table = 'role';
+    public $table  = 'role';
     public $fields = ['id', 'name', 'status'];
 
     /**
@@ -62,8 +62,8 @@ class RoleRepository extends CommonRepository
     public function options()
     {
         return Db::table('role')->selects(['id', 'name', 'menu_ids'])->where([
-            'type' => 1,
-            'status' => 1
+            'type'   => 1,
+            'status' => 1,
         ])->get();
     }
 }

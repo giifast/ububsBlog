@@ -9,7 +9,7 @@ class LeaveRepository extends CommonRepository
     // 正常
     const COMMON_STATUS = 1;
 
-    public $table = 'leave_message';
+    public $table  = 'leave_message';
     public $fields = ['id', 'content', 'address', 'created_at'];
 
     /**

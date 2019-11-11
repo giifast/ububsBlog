@@ -1,14 +1,11 @@
 <?php
 namespace App\Http\Controllers\Backend;
 
-use Ububs\Core\Component\Db\Db;
-
-
 class IndexController extends CommonController
 {
     public function __construct()
     {
-        
+
     }
 
     public function index()
@@ -18,9 +15,6 @@ class IndexController extends CommonController
 
     public function test()
     {
-        
+
     }
 }
-
-
-

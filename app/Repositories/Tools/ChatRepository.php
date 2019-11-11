@@ -15,7 +15,9 @@ class ChatRepository extends CommonRepository
     public function lists(array $input)
     {
         list($fields, $pages, $wheres) = $this->parseParams($input);
-        $result['lists'] = $this->getDB()->selects($fields)->where($wheres)->where('status', self::COMMON_STATUS)->get();
+        $result['lists']               = $this->getDB()->selects($fields)->where($wheres)->where('status', self::COMMON_STATUS)->get();
+        $ids                           = array_column($result['lists'], 'id');
+        $result['onlines']             = $this->getOnlines($ids);
         return $result;
     }
 
@@ -52,11 +54,16 @@ class ChatRepository extends CommonRepository
         }
         $data = [
 
-            'name'             => $input['name'] ?? '',
-            'creator'          => Auth::getInstance('admin')->id(),
-            'created_at'       => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
-            'status'           => $input['status'] ?? self::COMMON_STATUS,
+            'name'       => $input['name'] ?? '',
+            'creator'    => Auth::getInstance('admin')->id(),
+            'created_at' => (isset($input['created_at']) && $input['created_at']) ? strtotime($input['created_at']) : time(),
+            'status'     => $input['status'] ?? self::COMMON_STATUS,
         ];
         return $data;
+    }
+
+    public function getOnlines(array $ids)
+    {
+        return [];
     }
 }

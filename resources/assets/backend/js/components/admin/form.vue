@@ -38,7 +38,6 @@
                     </Form>
                     </Col>
                     <Col :sm="24" :md="12">
-
                     </Col>
                 </Row>
             </div>

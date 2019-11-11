@@ -1,9 +1,9 @@
-<?php 
+<?php
 namespace App\Service;
 
 class BaseService
 {
-	protected static $instance;
+    protected static $instance;
 
     public static function getInstance()
     {

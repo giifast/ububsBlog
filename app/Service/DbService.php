@@ -18,7 +18,7 @@ class DbService extends BaseService
             if (!is_dir($dir)) {
                 dir_make($dir);
             }
-            $path   = $dir . DS . date('YmdHis') . rand() . rand() . '.sql';
+            $path = $dir . DS . date('YmdHis') . rand() . rand() . '.sql';
             foreach ($tablesQuery as $key => $item) {
                 $tables[] = array_values($item)[0];
             }

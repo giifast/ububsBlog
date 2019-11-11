@@ -8,6 +8,6 @@ class VerifyCsrfToken extends VerifyCsrfTokenMiddleware
 {
 
     protected $except = [
-        '/', '/tools', '/backend', '/download'
+        '/', '/tools', '/backend', '/download',
     ];
 }

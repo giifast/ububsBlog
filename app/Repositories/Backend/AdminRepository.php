@@ -78,13 +78,13 @@ class AdminRepository extends CommonRepository
 
     public function store_visit_user()
     {
-        $t = time();
+        $t     = time();
         $input = [
-            'account' => 'visit_' . $t,
-            'mail' => $t . '@qq.com',
+            'account'  => 'visit_' . $t,
+            'mail'     => $t . '@qq.com',
             'password' => '123123',
-            'role_id' => '2',
-            'status' => '1'
+            'role_id'  => '2',
+            'status'   => '1',
         ];
         $this->store($input);
         return $input;

@@ -15,7 +15,7 @@ class DictRepository extends BaseRepository
     public function options($codeArr)
     {
         $result = [];
-        $lists = Db::table('dict')->selects(['code', 'text', 'value'])->whereIn('code', $codeArr)->where(['status' => 1])->get();
+        $lists  = Db::table('dict')->selects(['code', 'text', 'value'])->whereIn('code', $codeArr)->where(['status' => 1])->get();
         if (!empty($lists)) {
             foreach ($lists as $key => $item) {
                 $result[$item['code']][] = $item;

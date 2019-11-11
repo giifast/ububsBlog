@@ -50,5 +50,8 @@ export default {
                 }
             }
         },
+        filterSearch(value, option) {
+            return option.toUpperCase().indexOf(value.toUpperCase()) !== -1;
+        }
     },
 }

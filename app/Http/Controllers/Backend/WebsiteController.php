@@ -1,14 +1,13 @@
 <?php
 namespace App\Http\Controllers\Backend;
 
-use Ububs\Core\Component\Db\Db;
 use App\Repositories\Backend\WebsiteRepository;
 
 class WebsiteController extends CommonController
 {
     public function __construct()
     {
-        
+
     }
 
     public function showSetting()
@@ -19,7 +18,7 @@ class WebsiteController extends CommonController
 
     public function saveSetting()
     {
-        $input = $this->request('post');
+        $input  = $this->request('post');
         $result = WebsiteRepository::getInstance()->saveSetting($input);
         return $this->response($result);
     }
@@ -32,14 +31,14 @@ class WebsiteController extends CommonController
 
     public function dumpIndex()
     {
-        $input = $this->request('get');
+        $input  = $this->request('get');
         $result = WebsiteRepository::getInstance()->dumpLists($input);
         return $this->response($result);
     }
 
     public function dumpLists()
     {
-        $input = $this->request('get');
+        $input  = $this->request('get');
         $result = WebsiteRepository::getInstance()->dumpLists($input);
         return $this->response($result);
     }
@@ -50,6 +49,3 @@ class WebsiteController extends CommonController
         return $this->response($result);
     }
 }
-
-
-
