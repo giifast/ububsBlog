@@ -1,10 +1,10 @@
 <template>
   <div class="user-info-container">
     <div class="header-info-container">
-      <p class="user-face"><a class="user-link" href="#"><img src="/resources/images/face.jpg" alt=""></a></p>
+      <p class="user-face"><a class="user-link" href="#"><img src="/resources/images/logo.jpeg" alt=""></a></p>
     </div>
     <div class="footer-info-container">
-      <h1 class="website-title">mingo·lin</h1>
+      <h1 class="website-title">mingo Lin</h1>
       <div class="website-sign">Do more and say less</div>
       <div class="website-menu">
         <p>

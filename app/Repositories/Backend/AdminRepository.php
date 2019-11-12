@@ -98,9 +98,6 @@ class AdminRepository extends CommonRepository
      */
     public function update($id, $input)
     {
-        if (!$exist = $this->getDB()->where('id', $id)->exist()) {
-            return ['code' => ['common', '5003']];
-        }
         if (!$data = $this->validate($input, 'update')) {
             return ['code' => ['common', '1003']];
         }
@@ -108,7 +105,7 @@ class AdminRepository extends CommonRepository
         if (!$result) {
             return ['code' => ['common', '3002']];
         }
-        return ['message' => ['common', '1001']];
+        return ['message' => ['common', '3001']];
     }
 
     /**

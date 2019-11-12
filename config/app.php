@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'server_type'        => 'swoole_http_server',
-    'swoole_callback_client'      => '\App\Http\Client',
-    'swoole_http_server' => [
+    'server_type'       => 'http_server',
+    'callback_client'   => '\App\Http\Client',
+    'server'            => [
         'host'                     => '0.0.0.0',
         'port'                     => '9501',
         'worker_num'               => 4,
@@ -11,15 +11,16 @@ return [
         'daemonize'                => false,
         'max_request'              => 10000,
         // 抢占模式
-        'dispatch_mode'            => 3,
+        'dispatch_mode'            => 2,
         'debug_mode'               => 1,
         'task_worker_num'          => 4,
         // 心跳检查间隔时间
         'heartbeat_check_interval' => 100,
         // 连接最大的空闲时间
         'heartbeat_idle_time'      => 300,
+        'http'                     => true,
     ],
-    'logs'               => [
+    'logs'              => [
         /**
          * 日志记录的间隔
          * one : 记录同一个文件
@@ -37,8 +38,8 @@ return [
          */
         'file_name_suffix'     => 'php',
     ],
-    'timezone'           => 'Asia/Shanghai',
-    'database'           => [
+    'timezone'          => 'Asia/Shanghai',
+    'database'          => [
         // 暂时只支持pdo连接方式
         'type'         => 'pdo',
         'host'         => '127.0.0.1',
@@ -48,13 +49,13 @@ return [
         'password'     => '123456',
         'charset'      => 'utf8',
     ],
-    'website_encrypt'    => 'linlm1994@gmail.com',
-    'encrypt_key'        => '29dade9304436266ab7b487132bd8b1a98bc7641',
-    'cache'              => [
+    'website_encrypt'   => 'linlm1994@gmail.com',
+    'encrypt_key'       => '29dade9304436266ab7b487132bd8b1a98bc7641',
+    'cache'             => [
         'type' => 'redis',
         'port' => 6379,
     ],
-    'mail'               => [
+    'mail'              => [
         'deiver'   => 'smtp',
         'host'     => 'smtp.qq.com',
         'port'     => 465,
@@ -63,5 +64,5 @@ return [
         'password' => 'plzicovtdtzgbhjg',
         'fromName' => 'Mailer',
     ],
-    'token_expire_time' => 7200
+    'token_expire_time' => 7200,
 ];
