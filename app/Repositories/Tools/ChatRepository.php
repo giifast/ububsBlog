@@ -3,6 +3,7 @@
 namespace App\Repositories\Tools;
 
 use Ububs\Core\Component\Auth\Auth;
+use Ububs\Core\Component\Db\Db;
 
 class ChatRepository extends CommonRepository
 {
@@ -45,6 +46,15 @@ class ChatRepository extends CommonRepository
             return ['code' => ['common', '1002']];
         }
         return ['message' => ['common', '1001']];
+    }
+
+    public function chats(int $id)
+    {
+        $lists = Db::table('chat_contents')->selects(['id', 'ip', 'content', 'created_at'])->where('rid', $id)->orderBy('id', 'desc')->get();
+        $ids   = array_column($lists, 'id');
+        array_multisort($ids, SORT_ASC, $lists);
+        $result['lists'] = $lists;
+        return $result;
     }
 
     private function validate(array $input)

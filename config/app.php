@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'server_type'       => 'http_server',
+    'server_type'       => 'websocket_server',
     'callback_client'   => '\App\Http\Client',
     'server'            => [
         'host'                     => '0.0.0.0',
@@ -11,13 +11,13 @@ return [
         'daemonize'                => false,
         'max_request'              => 10000,
         // 抢占模式
-        'dispatch_mode'            => 2,
-        'debug_mode'               => 1,
+        'dispatch_mode'            => 4,
+        'debug_mode'               => 0,
         'task_worker_num'          => 4,
         // 心跳检查间隔时间
-        'heartbeat_check_interval' => 100,
+        'heartbeat_check_interval' => 30 * 1000,
         // 连接最大的空闲时间
-        'heartbeat_idle_time'      => 300,
+        'heartbeat_idle_time'      => 30 * 1000,
         'http'                     => true,
     ],
     'logs'              => [

@@ -37,7 +37,7 @@ class ArticleRepository extends CommonRepository
      */
     public function options()
     {
-        $uid                     = Auth::id();
+        $uid                     = Auth::guard('admin')->id();
         $result['tags']          = Db::table('tag')->selects(['id', 'name'])->get();
         $result['categoryMenus'] = Db::table('category_menu')->get();
         return $result;

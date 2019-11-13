@@ -1,0 +1,35 @@
+.website-content-container {
+  height: 100%;
+
+  .content-container {
+    height: 90%;
+
+    .c-content {
+      width: 70%;
+      position: absolute;
+      left: 15%;
+      top: 5%;
+      border: 1px solid #D3D3D3;
+      border-radius: 4px;
+      padding: 10px 25px;
+
+      .c-show {
+        height: 550px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .c-self .ivu-list-item-meta-title {
+          color: #0E5AE9;
+        }
+      }
+
+      .c-input {
+        margin-top: 10px;
+
+        .c-submit {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

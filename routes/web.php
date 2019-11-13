@@ -30,14 +30,15 @@ $this->addGroup(['namespace' => 'App\Http\Controllers\Frontend'], function () {
 // 工具类
 $this->addGroup(['prefix' => '/tools', 'namespace' => 'App\Http\Controllers\Tools'], function () {
     $this->addRoutes('GET', '/chatrooms', 'ChatController@lists');
-    $this->addRoutes('GET', '/chatroom/{$id}', 'ChatController@show');
+    $this->addRoutes('GET', '/chatroom/{id}', 'ChatController@show');
+    $this->addRoutes('GET', '/chatroom/chats/{id}', 'ChatController@chats');
     $this->addRoutes('POST', '/chatroom', 'ChatController@store');
 });
 
 // 后台
 $this->addGroup(['prefix' => '/backend', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => ['auth.admin', 'auth.checkMethod']], function () {
 
-    // 网站管理模块 
+    // 网站管理模块
     $this->addRoutes('GET', '/website/setting', 'WebsiteController@showSetting');
     $this->addRoutes('PUT', '/website/setting', 'WebsiteController@saveSetting');
     $this->addRoutes('GET', '/website/dump', 'WebsiteController@dumpIndex');

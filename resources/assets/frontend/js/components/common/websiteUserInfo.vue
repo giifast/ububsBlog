@@ -1,7 +1,7 @@
 <template>
   <div class="user-info-container">
     <div class="header-info-container">
-      <p class="user-face"><a class="user-link" href="#"><img src="/resources/images/logo.jpeg" alt=""></a></p>
+      <p class="user-face"><a class="user-link" href="#"><img src="/resources/images/logo.jpeg" alt="logo"></a></p>
     </div>
     <div class="footer-info-container">
       <h1 class="website-title">mingo Lin</h1>

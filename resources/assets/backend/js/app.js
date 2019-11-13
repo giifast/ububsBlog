@@ -16,21 +16,21 @@ Vue.use(iView);
 
 //注册全局的过滤函数
 Object.keys(filters).forEach(key => {
-    Vue.filter(key, filters[key]);
+  Vue.filter(key, filters[key]);
 });
 
 const app = new Vue({
-    beforeCreate() {
-        // 初始化 adminData
-        if (localStorage.hasOwnProperty('ububsAdminData')) {
-            this.$store.commit('setStateValue', { 'adminData': JSON.parse(localStorage.getItem('ububsAdminData')) });
-        }
+  beforeCreate() {
+    // 初始化 adminData
+    if (localStorage.hasOwnProperty('ububsAdminData')) {
+      this.$store.commit('setStateValue', { 'adminData': JSON.parse(localStorage.getItem('ububsAdminData')) });
+    }
 
-        // 初始化 fastMenu
-        if (localStorage.hasOwnProperty('ububsFastMenus')) {
-            this.$store.commit('setStateValue', { 'fastMenus': JSON.parse(localStorage.getItem('ububsFastMenus')) });
-        }
-    },
-    router,
-    store
+    // 初始化 fastMenu
+    if (localStorage.hasOwnProperty('ububsFastMenus')) {
+      this.$store.commit('setStateValue', { 'fastMenus': JSON.parse(localStorage.getItem('ububsFastMenus')) });
+    }
+  },
+  router,
+  store
 }).$mount('#app');
