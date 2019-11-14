@@ -12,26 +12,39 @@ export default {
       timeoutObj: null, //心跳心跳倒计时
       serverTimeoutObj: null, //心跳倒计时
       timeoutnum: null, //断开 重连倒计时
-      lastRunTime: Date.now(), //上次播放声音的时间
-      fd: 10000
+      pagination: {
+        currentPage: 1,
+        pageSize: 20,
+      },
+      search: {
+        id: {
+          'value': '',
+          'type': '<'
+        },
+      }
     }
   },
   beforeMount() {
     let _this = this;
+    _this.chatroom();
     _this.chatLists();
-  },
-  mounted() {
-    let _this = this;
     if ('WebSocket' in window) {
       _this.websocketInit();
     } else {
       _this.$Message.error('当前浏览器不支持websocket');
     }
   },
+  mounted() {
+    let _this = this;
+  },
   watch: {
     '$route'(to, from) {
       let _this = this;
       _this.id = to.params.id;
+      _this.lists = [];
+      _this.search.id['value'] = '';
+      _this.ws.close();
+      _this.chatroom();
       _this.chatLists();
       if ('WebSocket' in window) {
         _this.websocketInit();
@@ -41,13 +54,29 @@ export default {
     }
   },
   methods: {
+    chatroom: function() {
+      let _this = this;
+      axios.get('/tools/chatroom/' + _this.id).then((response) => {}).catch((error) => {
+        _this.$Message.error(error);
+        _this.$router.push({ path: '/404' });
+      });
+    },
     chatLists: function() {
       let _this = this;
-      axios.get('/tools/chatroom/chats/' + _this.id).then((response) => {
+      let paramsData = {
+        'pagination': _this.pagination,
+        'search': Vue.parseSearch(_this.search)
+      };
+      axios.get('/tools/chatroom/chats/' + _this.id, { params: paramsData }).then((response) => {
         let { data, message } = response.data;
-        _this.lists = data.lists;
+        for (let i = 0; i < Object.keys(data.lists).length; i++) {
+          _this.lists.unshift(data.lists[i]);
+        }
+        if (_this.search.id.value == '' && Object.keys(_this.lists).length > 0) {
+          _this.search.id['value'] = _this.lists[0]['id'];
+          _this.scrollBottom();
+        }
         _this.loading = false;
-        _this.scrollBottom();
       });
     },
     websocketInit: function() {
@@ -124,9 +153,7 @@ export default {
             if (!datas.fd) {
               return false;
             }
-            let key = _this.createFdKey();
             _this.lists.push({
-              'id': key,
               'ip': datas.ip,
               'content': datas.msg
             });
@@ -141,9 +168,7 @@ export default {
           if (!datas.fd) {
             return false;
           }
-          let key = _this.createFdKey();
           _this.lists.push({
-            'id': key,
             'ip': datas.ip,
             'content': datas.msg
           });
@@ -175,25 +200,36 @@ export default {
       }
       _this.send_loading = true;
       _this.ws.send(_this.content);
-      let key = _this.createFdKey();
       _this.lists.push({
-        'id': key,
         'ip': '我',
         'content': _this.content,
+        'created_at': parseInt(new Date().getTime() / 1000),
         'isme': true
       });
+      _this.content = '';
       _this.scrollBottom();
       _this.send_loading = false;
     },
     scrollBottom: function() {
       this.$nextTick(function() {
-        let div = document.getElementById('c-show');
-        div.scrollTop = div.scrollHeight;
+        let oj = document.getElementsByClassName('ivu-scroll-container');
+        oj[0].scrollTop = oj[0].scrollHeight;
       })
     },
-    createFdKey: function(fd) {
-      this.fd++;
-      return this.fd;
+    handleReachTop() {
+      let _this = this;
+      return new Promise(resolve => {
+        _this.pagination.currentPage++;
+        _this.chatLists();
+        resolve();
+      });
+    },
+    generateAvatar: function(str) {
+      var sum = 0;
+      for (var i = 0; i < str.length; i++) {
+        sum += str.charCodeAt(i);
+      }
+      return (sum % 10) + 1;
     }
   }
 }

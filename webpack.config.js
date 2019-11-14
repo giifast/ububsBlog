@@ -4,6 +4,11 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = ['js', 'css'];
+const WebpackOnBuildPlugin = require('on-build-webpack');
+const fs = require("fs");
+//设置为你的目标文件夹地址
+const buildDir = './public/';
+const path = require('path');
 
 module.exports = {
   // devtool: 'eval-source-map',
@@ -13,9 +18,9 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   // 入口文件
   entry: {
-    "frontend/app": __dirname + "/resources/assets/frontend/js/app.js",
-    "backend/app": __dirname + "/resources/assets/backend/js/app.js",
-    "tools/app": __dirname + "/resources/assets/tools/js/app.js",
+    "frontend-app": __dirname + "/resources/assets/frontend/js/app.js",
+    "backend-app": __dirname + "/resources/assets/backend/js/app.js",
+    "tools-app": __dirname + "/resources/assets/tools/js/app.js",
   },
   // externals: {
   //     'axios': 'axios',
@@ -36,6 +41,14 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.common.js'
     }
+  },
+  watchOptions: {
+    //检测修改的时间，以毫秒为单位
+    poll: 1000,
+    //防止重复保存（Ctrl+S）而发生重复编译错误。这里设置的500是半秒内重复保存，不进行打包操作
+    aggregateTimeout: 500,
+    //不监听的目录
+    ignored: /node_modules/,
   },
   module: {
     rules: [{
@@ -93,6 +106,24 @@ module.exports = {
     // }),
     new webpack.BannerPlugin('版权所有，翻版必究'),
     new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    new WebpackOnBuildPlugin(function(stats) {
+      const newlyCreatedAssets = stats.compilation.assets
+      const unlinked = []
+      const files = fs.readdirSync(path.resolve(buildDir))
+      if (files.length) {
+        // 过滤一下非js文件
+        let dfiles = files.filter(f => /.*\.(js|css|gz|map)$/.test(f))
+        dfiles.forEach(file => {
+          if (!newlyCreatedAssets[file]) {
+            fs.unlinkSync(path.resolve(buildDir + file))
+            unlinked.push(file)
+          }
+        })
+        if (unlinked.length > 0) {
+          console.log('删除文件: ', unlinked)
+        }
+      }
+    }),
     // 根据模版自动生成文件
     // new HtmlWebpackPlugin({
     //     template: __dirname + "/test/indexTest.tmpl.html"

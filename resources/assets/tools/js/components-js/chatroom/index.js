@@ -34,7 +34,7 @@ export default {
     },
     join(name) {
       let _this = this;
-      if (!name) {
+      if (typeof name != 'string') {
         name = _this.name;
       }
       for (let i in _this.rooms) {
@@ -42,11 +42,12 @@ export default {
           if (_this.rooms[i]['id'] == -1) {
             axios.post('/tools/chatroom', { 'name': name }).then((response) => {
               let { data, message } = response.data;
-              _this.$Message.success(message);
-              _this.$router.push({ path: '/chatroom/show/' + data.list.id });
+              _this.$Message.success('房间创建成功');
+              _this.$router.push({ path: '/chatroom/show/' + data.list['id'] });
             });
+          } else {
+            _this.$router.push({ path: '/chatroom/show/' + _this.rooms[i]['id'] });
           }
-          _this.$router.push({ path: '/chatroom/show/' + _this.rooms[i]['id'] });
           break;
         }
       }

@@ -30,7 +30,7 @@ class ChatRepository extends CommonRepository
             'status' => self::COMMON_STATUS,
         ])->first();
         if (empty($list)) {
-            return $result;
+            return ['code' => ['chat', '1001']];
         }
         $result['list'] = $list;
         return $result;
@@ -41,19 +41,22 @@ class ChatRepository extends CommonRepository
         if (!$data = $this->validate($input)) {
             return ['code' => ['common', '1003']];
         }
-        $result = $this->getDB()->create($data);
-        if (!$result) {
+        $data['id'] = $this->getDB()->createGetId($data);
+        if (!$data['id']) {
             return ['code' => ['common', '1002']];
         }
-        return ['message' => ['common', '1001']];
+        $ret['list'] = $data;
+        return $ret;
     }
 
-    public function chats(int $id)
+    public function chats(int $id, array $input)
     {
-        $lists = Db::table('chat_contents')->selects(['id', 'ip', 'content', 'created_at'])->where('rid', $id)->orderBy('id', 'desc')->get();
-        $ids   = array_column($lists, 'id');
-        array_multisort($ids, SORT_ASC, $lists);
-        $result['lists'] = $lists;
+        list($fields, $pages, $wheres) = $this->parseParams($input);
+        $query                         = Db::table('chat_contents')->selects(['id', 'ip', 'content', 'created_at'])->where('rid', $id)->where($wheres)->orderBy('id', 'desc');
+        if (isset($input['pagination'])) {
+            $query->pagination($pages);
+        }
+        $result['lists'] = $query->get();
         return $result;
     }
 

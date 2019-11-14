@@ -157,6 +157,7 @@ class Client
      * @return [type]         [description]
      */
     public function onClose($serv, $fd)
-    {}
-
+    {
+        $serv->table->del($fd);
+    }
 }

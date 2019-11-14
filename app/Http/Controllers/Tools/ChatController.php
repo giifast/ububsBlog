@@ -29,7 +29,8 @@ class ChatController extends CommonController
 
     public function chats(int $id)
     {
-        $result = ChatRepository::getInstance()->chats($id);
+        $input  = Request::get();
+        $result = ChatRepository::getInstance()->chats($id, $input);
         return $this->response($result);
     }
 }
