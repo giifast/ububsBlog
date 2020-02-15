@@ -43,6 +43,6 @@
     "echarts": "^4.0.4",
     "image-webpack-loader": "*",
     "mavon-editor": "^2.5.2",
-    "yarn": "^1.19.1"
+    "yarn": "^1.22.0"
   }
 }
